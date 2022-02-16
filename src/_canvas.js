@@ -1,3 +1,15 @@
+/* <script id="canvas-script" src="_canvas.js"></script>
+<script>
+var loadModule = async () => {
+  let hljs = await import("/_highlight.js");
+   document.querySelectorAll('pre code').forEach((block) => {
+hljs.highlightBlock(block);
+});
+  
+};
+loadModule();
+</script>  implement logic for sketchpad, replacing a sketchpad token with it*/
+
 if (document.body.globalOptions.sketchpad) {
   /* former anki_globals code*/
   function checkParams() {
