@@ -1,0 +1,46 @@
+@import "_aside_inline.scss";
+@import "_ruby.scss";
+@import "_quotes.scss";
+@import "_ipa.scss";
+
+del {
+  text-decoration: line-through;
+}
+ins {
+  text-decoration: underline;
+}
+a {
+  filter: brightness(0.9);
+  color: currentColor;
+  text-decoration: underline var(--color-light) dashed;
+}
+dfn {
+  font-style: italic;
+}
+cite {
+  font-variant: small-caps;
+}
+mark {
+  background-color: #ff0;
+}
+.conceptual-metaphor {
+  font-variant: small-caps;
+}
+.highlightMain {
+  border-bottom: 0.1em solid var(--color-light);
+}
+code {
+  font-size: 0.87em;
+  @include display-retrievable("inline-block");
+  background: var(--color-light);
+  padding: 0.3rem 0.2rem 0.1rem 0.2rem;
+  border-radius: 0.1rem;
+}
+span {
+  @include display-retrievable("inline");
+}
+
+
+::selection {
+  background-color: rgba(0, 0, 0, 0.1);
+}

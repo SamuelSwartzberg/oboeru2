@@ -1,0 +1,58 @@
+
+pre code {
+  box-sizing: border-box;
+  width: 10000px;
+  max-width: 100%;
+  @include font-size-retrievable(1rem);
+  padding: 1.5em;
+  @include margin-top-bottom();
+  @include display-retrievable("block");
+  border: none;
+  word-break: break-all;
+  line-height: 1;
+  tab-size: 2;
+  position: relative;
+
+  $code-color-map: (
+    "css": "#008fb3",
+    "html": "#f64",
+    "js": "#cc9600",
+    "sh": "#eb0000",
+    "bash": "#eb0000",
+    "cs": "#9742ff",
+    "java": "#017dbc",
+    "md": "#e4016f",
+    "py": "#02adff",
+    "lua": "#7070ff",
+  );
+
+  @each $code-name, $code-color in $code-color-map {
+    &.#{$code-name} {
+      --codetype-color: #{$code-color};
+    }
+  }
+  &::after {
+    content: attr(data-displaycodetype);
+    text-transform: uppercase;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    color: var(--codetype-color);
+    z-index: 99;
+    font-size: 1.5em;
+  }
+  span.optional-details {
+    max-width: 8ch;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    vertical-align: bottom;
+    white-space: nowrap;
+  }
+  hr {
+    @include display-retrievable("block");
+    background-color: currentcolor;
+    border-color: currentcolor;
+    border-style: solid;
+  }
+}

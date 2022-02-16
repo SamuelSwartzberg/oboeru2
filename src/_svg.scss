@@ -1,0 +1,17 @@
+svg {
+  @include display-retrievable("block");
+}
+
+// If it's a foreignObject, it's probably html
+body.is-front svg foreignObject .all-cloze {
+  letter-spacing: 0;
+  font-size: 0 !important;
+  font-family: inherit;
+  text-shadow: none;
+}
+
+//Make sure that alignment of foreignobject always makes sense
+svg foreignObject {
+  height: 2.2ex !important;
+  width: 50% !important;
+}

@@ -1,0 +1,6 @@
+.magnified {
+  font-size: 1.5em;
+}
+ruby.magnified rt {
+  @include display-retrievable("block");
+}

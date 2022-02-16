@@ -1,0 +1,23 @@
+body {
+  @include font-size-retrievable(1.1rem);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", Arial, sans-serif,
+    "Noto Color Emoji", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.2;
+  margin: 1em;
+  margin-bottom: 2em;
+  --color-lightest: #0000000a;
+  --color-light: #00000011;
+}
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, "Noto Color Emoji", "Apple Color Emoji",
+    "AppleColorEmoji", "Noto Color Emoji", monospace;
+}
+
+
+/* Layouting: Sizing and alignment for the regular elements*/
+body > #qa, body > #content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}

@@ -1,0 +1,55 @@
+
+kbd{
+  @include boxlike();
+  border-color: #0002;
+  @include center-flex();
+  min-height: 1.5em;
+  min-width: 1.5em;
+  padding: 0 0.125em;
+  box-sizing: border-box;
+}
+
+kbd.modifier {
+  $key-map: (
+    "shift": (
+      "color": "#ff2880",
+      "symbol": "⇧",
+    ),
+    "fn": (
+      "color": "#de00e4",
+      "symbol": "fn",
+    ),
+    "ctrl": (
+      "color": "#00cef1",
+      "symbol": "⌃",
+    ),
+    "alt": (
+      "color": "#5fbe16",
+      "symbol": "⌥",
+    ),
+    "cmd": (
+      "color": "#dbaf10",
+      "symbol": "⌘",
+    ),
+    "win": (
+      "color": "#dbaf10",
+      "symbol": "⊞",
+    ),
+    );
+  @each $key-key, $key-value in $key-map {
+    &.#{$key-key} {
+      --modifier-bg-color: #{map-get($key-value, "color")};
+    }
+    &.#{$key-key}::before {
+      content: map-get($key-value, "symbol");
+    }
+  }
+  background-color: var(--modifier-bg-color);
+  color: #fff;
+}
+kbd.tab::before {
+  content: "⇥";
+}
+kbd.space::before {
+  content: "␣";
+}

@@ -1,0 +1,20 @@
+.extra-info-button-section {
+  position: fixed;  
+  bottom: 0;
+  right: 0;
+  display: flex;
+  font-size: 0.8em;
+  margin: 1rem;
+  z-index: 100;
+  &__button {
+    @include center-flex();
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    @include boxlike();
+    display: none;
+  }
+  &__button.show {
+    display: block;
+  }
+  
+}

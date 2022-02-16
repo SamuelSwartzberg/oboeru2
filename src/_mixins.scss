@@ -1,0 +1,55 @@
+@mixin font-size-retrievable($size) {
+  font-size: var( --font-size-retrievable);
+  --font-size-retrievable: #{$size};
+}
+
+@mixin display-retrievable($display) {
+  display: var( --display-retrievable);
+  --display-retrievable: #{$display};
+}
+
+@mixin margin-top-bottom() {
+  margin-block-start: 1.25em;
+  margin-block-end: 1.25em;
+}
+
+@mixin boxlike {
+  border-radius: 0.2em;
+  color: var(--color-dark);
+  background-color: var(--color-lightest);
+  border: 0.1em solid var(--color-lightest);
+}
+
+@mixin block-element(){
+  @include margin-top-bottom();
+  @include display-retrievable("block");
+}
+
+@mixin center-flex{
+  @include display-retrievable("inline-flex");
+  justify-content: center;
+  align-items: center;
+}
+@mixin button-size {
+  width: 2rem;
+  height: 2rem;
+}
+@mixin bold {
+  font-weight: bold;
+}
+
+@mixin cardlet{
+  @include boxlike();
+  margin-bottom: 0.25em;
+  padding: 1em;
+}
+
+@mixin hide-by-size {
+  font-size: 0px;
+  line-height: 0px;
+}
+
+@mixin restore-size {
+  font-size: var(--font-size-retrievable);
+  line-height: initial;
+}

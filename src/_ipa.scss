@@ -1,0 +1,19 @@
+.ipa {
+  line-height: 100%; /*Make sure that large IPA symbols don't kill alignment*/
+  &::before,
+  &::after {
+    opacity: 0.2;
+  }
+  &:before {
+    content: "[";
+  }
+  &:after {
+    content: "]";
+  }
+  &.phoneme:before {
+    content: "/";
+  }
+  &.phoneme:after {
+    content: "/";
+  }
+}

@@ -1,0 +1,114 @@
+/*Reset Anki-specific behaviors*/
+body {
+  overflow-wrap: break-word;
+  overflow-anchor: none;
+}
+img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
+.card,
+body.nightMode.card {
+  background-color: white;
+}
+.MJXc-display {
+  margin: 0 !important;
+}
+
+body font {
+  color: unset;
+}
+
+:root button {
+  font: inherit;
+  color: inherit;
+}
+
+div,
+img,
+textarea,
+body,
+p,
+pre,
+#content {
+  padding: 0;
+  margin: 0;
+}
+blockquote,
+abbr,
+acronym,
+address,
+big,
+cite,
+del,
+dfn,
+ins,
+section,
+summary,
+time,
+mark,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+
+font,
+ins,
+del,
+cite,
+var,
+address,
+dfn,
+tt,
+code,
+kbd,
+samp,
+a,
+pre,
+xmp,
+plaintext,
+listing {
+  font-style: unset;
+  text-decoration: unset;
+  font-family: unset;
+}
+blockquote {
+  quotes: none;
+  &::before,
+  &::after {
+    content: "";
+    content: none;
+  }
+}
+
+hr,
+br,
+#_flag,
+#_mark,
+#MathJax-Element-4 ~ br {
+  display: none;
+}

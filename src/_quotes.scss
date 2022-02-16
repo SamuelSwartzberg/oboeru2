@@ -1,0 +1,19 @@
+q {
+  quotes: "｢" "｣";
+  @include display-retrievable("inline-block");
+  font-size: 0.9em;
+  filter: brightness(0.9);
+  &::before,
+  &::after {
+    position: relative;
+    @include display-retrievable("inline-block");
+    opacity: 0.3;
+    padding: 0 0.1em;
+  }
+  &::before {
+    top: -0.1em;
+  }
+  &::after {
+    top: 0.2em;
+  }
+}

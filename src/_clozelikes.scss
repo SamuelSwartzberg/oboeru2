@@ -1,0 +1,56 @@
+
+.active-cloze {
+  margin: 0 0.25em;
+  --content-when-scrambled: var(--content-when-clozed);
+}
+body.is-front .active-cloze > * {
+  display: none;
+}
+
+body.is-front{
+  .c-active, .s-active {
+    @include hide-by-size();
+  }
+  .c-active::after, .s-active::after {
+    @include restore-size();
+    content: var(--content-when-active);
+  }
+  .c-active > * {
+    display: none;
+  }
+  .h-active{
+    display: none;
+  }
+  .uc-active, .us-active{
+    @include restore-size();
+  }
+  .uc-active::after, .us-active::after{
+    content: none;
+  }
+  .uh-active{
+    display: var(--display-retrievable);
+  }
+}
+body.is-back{
+  .hb-active{
+    display: none;
+  }
+  .uhb-active{
+    display: var(--display-retrievable);
+  }
+}
+.c-active {
+  --content-when-active: "[...]";
+  font-weight: bold;
+}
+.s-active {
+  --content-when-active: var(--content-when-scrambled);
+}
+
+* {
+  --content-when-scrambled: "$ç®";
+}
+
+div, p, blockquote {
+  --content-when-scrambled: "ctd...";
+}

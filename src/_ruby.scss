@@ -1,0 +1,18 @@
+rt {
+  @include display-retrievable("none");
+  &.show {
+    @include display-retrievable("block");
+  }
+  &.force {
+    display: block !important;
+  }
+}
+
+.container__body {
+  & svg, & img {
+    @include boxlike();
+  }
+  & > svg, & > img {
+    min-width: 100%;
+  }
+}

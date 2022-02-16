@@ -1,0 +1,23 @@
+.onion-box {
+  display: flex;
+  flex-flow: row wrap;
+  text-align: center;
+  @include boxlike();
+  align-items: center;
+  justify-content: space-evenly;
+  filter: hue-rotate(45deg);
+  background-color: #4ebeff99;
+  > * {
+    margin: 0.5rem;
+    flex: 1 1 33%;
+  }
+  > :first-child {
+    flex: 1 1 100%;
+  }
+/*   > :last-child {
+    flex: 1 1 65%;
+  } */
+  > :only-child {
+    flex: 1 1 100%;
+  }
+}

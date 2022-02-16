@@ -1,0 +1,15 @@
+.aside {
+  color: var(--color-light);
+  opacity: 1;
+  font-size: 0.9em;
+  &::before {
+    content: "[";
+    opacity: 0.4;
+    padding-right: 0.1em;
+  }
+  &::after {
+    content: "]";
+    opacity: 0.4;
+    padding-left: 0.1em;
+  }
+}
