@@ -1,3 +1,10 @@
-dfn {
-  font-style: italic;
+dfn::after {
+  content: "«";
+  padding-left: 0.1em;
+  color: #00000088;
+}
+dfn::before {
+  content: "»";
+  padding-right: 0.1em;
+  color: #00000088;
 }

@@ -110,7 +110,6 @@ function parseValuePartsToObject(
     all: false,
     group: null,
   };
-  console.log(specifierValueParts);
 
   for (const part of specifierValueParts) {
     if (part === "a" || part === "b") specifierObject.group = part;
@@ -129,10 +128,7 @@ function getKeyAndParsedSpecifierFromSpecifier(
   specifier: string
 ): [string, clozeLikeSpecifier] | undefined {
   try {
-    console.log(specifier);
-
     let [specifierKey, specifierValue] = parseSpecifierIntoKeyValue(specifier);
-    console.log(specifierKey, specifierValue);
 
     let isCloze = specifierKey === "c";
     let specifierValueParts = splitSpecifierIntoConstituents(specifierValue);
@@ -140,8 +136,6 @@ function getKeyAndParsedSpecifierFromSpecifier(
       parseValuePartsToObject(specifierValueParts, isCloze);
     return [specifierKey, specifierValuesParsedToObject];
   } catch (e) {
-    console.log(e);
-
     return undefined;
   }
 }
