@@ -36,3 +36,13 @@ export function scrollClozeIntoView(): void {
     window.scrollBy(0, -100);
   }
 }
+
+export function formatTags(): void {
+  var tagContainer = document.querySelector("#tag-container");
+  if (tagContainer) {
+    tagContainer.innerHTML = tagContainer.innerHTML
+      .split("::")
+      .map((tagElement: string) => tagElement.replace(/-/g, " "))
+      .join('<span class="breadcrumb-separator"> / </span>');
+  } else throw new Error("No tag container found, but one should be present.");
+}
