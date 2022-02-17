@@ -1,14 +1,8 @@
-import {
-  parseClozeLikesToTree,
-  replaceClozeLikes,
-} from "./cloze-syntax-parser";
+import { parseClozeLikesToTree, replaceClozeLikes } from "./clozelike";
 
-import {
-  parseToplevel,
-  replaceParsedSectionsWithContent,
-} from "./container-parsing";
+import { parseToplevel, replaceParsedSectionsWithContent } from "./container";
 
-import { formatInlineLevel } from "./inline-parsing";
+import { formatInlineLevel } from "./inline";
 
 export function parseCard(futureContainerHTML: string): string {
   futureContainerHTML = replaceParsedSectionsWithContent(

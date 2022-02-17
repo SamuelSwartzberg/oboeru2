@@ -1,4 +1,4 @@
-import { formatSectionLevel } from "./section";
+import { formatSectionLevel } from "../section";
 
 function countLeadingHashSigns(line: string): number {
   for (let i = 0; i < line.length; i++) {

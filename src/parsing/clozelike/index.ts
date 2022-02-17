@@ -1,5 +1,5 @@
-import { currentCardIndex } from "../anki-card";
-import { separateIntoSpecifiersAndNonspecifiers } from "./globals";
+import { currentCardIndex } from "../../anki-card";
+import { separateIntoSpecifiersAndNonspecifiers } from "../globals";
 
 var currentClozeIndex = 1;
 
