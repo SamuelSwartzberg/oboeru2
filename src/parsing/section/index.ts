@@ -1,6 +1,8 @@
 // TODO: Since <article>s are not nested, parent headings cannot be made visible when in children, except by making the whole group visible, which is nonsense. This needs to be fixed, probably by nesting
 
-function formatSectionLevel(rawHTMLText: string): string {
+import { separateIntoSpecifiersAndNonspecifiers } from "../globals";
+
+export function formatSectionLevel(rawHTMLText: string): string {
   let formattedHTML: string = "";
   let isGroupShow = false;
   if (rawHTMLText === "") {
@@ -136,48 +138,6 @@ function isCellSpecifier(specifier: Specifier): specifier is CellSpecifier {
 
 type Specifier = CellSpecifier | TableSpecifier;
 
-function parseAsTable(rawHTMLText: string, isGroupShow: boolean) {
-  let tableSpec = parseSpecifiers(rawHTMLText, {
-    nonspecifier: "",
-    class: "",
-    style: "",
-    headerrows: "1",
-  } as TableSpecifier);
-  let headerrows: number = parseInt(tableSpec.headerrows, 10);
-  if (isNaN(headerrows)) {
-    headerrows = 1;
-  }
-  let rows: string[] = tableSpec.nonspecifier.split("\n");
-  let [header, body] = [
-    parseListOfRows(rows.slice(0, headerrows), "th").join("\n"),
-    parseListOfRows(rows.slice(headerrows), "td").join("\n"),
-  ];
-  return `<table class="${!isGroupShow ? "cloze-group " : ""}${
-    tableSpec.class
-  } section" style="${
-    tableSpec.style
-  }"><thead>${header}</thead><tbody>${body}</tbody></table>`;
-}
-
-function parseListOfRows(
-  listOfRows: string[],
-  cellType: "th" | "td"
-): string[] {
-  return listOfRows.map((row) => parseRow(row, cellType));
-}
-
-function parseRow(row: string, cellType: "th" | "td"): string {
-  let isGroupShow: boolean = false;
-  if (row.startsWith("!")) {
-    isGroupShow = true;
-    row = row.slice(1);
-  }
-  return `<tr class="${!isGroupShow ? "cloze-group" : ""}">${row
-    .split("|")
-    .map((cell) => surroundCellByCellHTML(cell, cellType))
-    .join("")}</tr>`;
-}
-
 function parseSpecifiers<SomeSpec extends Specifier>(
   contents: string,
   approvedSpecifierObject: SomeSpec
@@ -195,87 +155,4 @@ function parseSpecifiers<SomeSpec extends Specifier>(
   approvedSpecifierObject["nonspecifier"] = nonspecifier;
 
   return specifiers as SomeSpec;
-}
-
-function surroundCellByCellHTML(cellContents: string, cellType: "th" | "td") {
-  let _;
-  let tableSpecs = parseSpecifiers(cellContents, {
-    nonspecifier: "",
-    class: "",
-    style: "",
-    span: "",
-    type: cellType,
-  } as CellSpecifier);
-  let span = tableSpecs.span.split(",");
-  span.push("1", "1"); // default values for span, will be ignored if there are enough already
-  let parsedSpan = span.map((spanSpec: string) => {
-    let parsedSpanSpec = parseInt(spanSpec, 10);
-    return Number.isNaN(parsedSpanSpec) ? 1 : parsedSpanSpec;
-  });
-  return `<${tableSpecs.type} colspan="${parsedSpan}" rowspan="${parsedSpan}" class="${tableSpecs.class}" style="${tableSpecs.style}">${tableSpecs.nonspecifier}</${tableSpecs.type}>`;
-}
-/* 
-function parseAsOnionBox(
-  unparsedOnionBoxString: string,
-  isGroupShow: boolean
-): string {
-  let onionBoxStructure = parseOnionBoxStructure(unparsedOnionBoxString);
-  return `<section class="${
-    !isGroupShow ? "cloze-group" : " "
-  } section">${formatOnionBox(onionBoxStructure)}</section>`;
-}
-
-function formatOnionBox(onionBoxStructure) {
-  let returnString = "";
-  for (let [key, value] of Object.entries(onionBoxStructure)) {
-    if (value === "leaf") {
-      returnString += `<div class="onion-box"><span>${key}</span></div>`;
-    } else {
-      returnString += `<div class="onion-box"><span>${key}</span>${formatOnionBox(
-        value
-      )}</div>`;
-    }
-  }
-  return returnString;
-}
-
-function parseOnionBoxStructure(unparsedOnionBoxString: string) {
-  // an onion box is a nested box that uses labeled bracket notation to describe its layout
-  let onionBox = {};
-  let unparsedChildrenCharArray = [...unparsedOnionBoxString];
-  let chainOfDepth = [];
-  let label = "";
-  let readingLabel = false;
-  let currentLevel = onionBox;
-  for (let currentChar of unparsedChildrenCharArray) {
-    if (currentChar === "[") {
-      label = "";
-      readingLabel = true; // if we hit an open bracket, we need to start reading the label, any other actions can wait until we've read the label
-    } else if (currentChar === "]") {
-      if (readingLabel === true) {
-        readingLabel = false;
-        currentLevel[label] = "leaf";
-        chainOfDepth.push(currentLevel);
-      }
-      chainOfDepth.pop();
-      currentLevel = chainOfDepth[chainOfDepth.length - 1];
-    } else if (currentChar === " ") {
-      // once we hit a space, we've finished reading the label, and we know there will be children
-      readingLabel = false;
-      // since we know there will be children, we need to prepare a new object, make that the current object and add it to the reference chain, and make the previous current object refer to the new object
-      let newLevel = {};
-      currentLevel[label] = newLevel;
-      currentLevel = newLevel;
-      chainOfDepth.push(currentLevel);
-    } else if (readingLabel) {
-      label += currentChar;
-    }
-  }
-  return onionBox;
-} */
-
-function parseAsFlexContainer(rawHTMLText: string, isGroupShow: boolean) {
-  return `<div class="flex-container ${
-    !isGroupShow ? "cloze-group" : " "
-  } section">${rawHTMLText}</div>`;
 }

@@ -1,3 +1,5 @@
+import { formatSectionLevel } from "./section-parsing";
+
 function countLeadingHashSigns(line: string): number {
   for (let i = 0; i < line.length; i++) {
     if (line[i] !== "#") return i;
