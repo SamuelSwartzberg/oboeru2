@@ -1,0 +1,7 @@
+blockquote {
+  @include display-retrievable("block");
+  border-left: 0.2em solid var(--color-light);
+  margin: 0.2em 0;
+  padding-left: 0.5em;
+  color: #333;
+}

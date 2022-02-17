@@ -1,0 +1,36 @@
+@import "css_reset.scss";
+@import "desktop_only.scss";
+@import "js_only_elements.scss";
+@import "svg.scss";
+
+body {
+  @include font-size-retrievable(1.1rem);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+    "Helvetica Neue", Arial, sans-serif, "Noto Color Emoji", "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol";
+  line-height: 1.2;
+  margin: 1em;
+  margin-bottom: 2em;
+  --color-lightest: #0000000a;
+  --color-light: #00000011;
+}
+code {
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,
+    "Noto Color Emoji", "Apple Color Emoji", "AppleColorEmoji",
+    "Noto Color Emoji", monospace;
+}
+
+/*
+#content is the label applied to the child of body, but containing the div #qa on ankidroid
+On desktop, #qa is a direct child of body, and on both platforms, #qa  contains the actual html we wrote
+since #qa is broken on android, we need to refer to it with .question or .answer respectively - not anymore
+*/
+
+/* Layouting: Sizing and alignment for the regular elements*/
+body > #qa,
+body > #content {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100vh;
+}

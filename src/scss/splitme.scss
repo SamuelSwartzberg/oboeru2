@@ -1,66 +1,8 @@
-@import "_lists.scss";
-@import "_headings.scss";
-@import "_tables.scss";
-@import "_onion-box.scss";
-@import "_code.scss";
 
-section {
-  @include display-retrievable("block");
-}
 
-article {
-  @include display-retrievable("block");
-}
 
-.headered-container {
-  margin-block-start: 1.75em;
-  margin-block-end: 1.25em;
-}
 
-.section {
-  margin-block-start: 0.75em;
-  margin-block-end: 1.25em;
-  @include boxlike();
-}
 
-.text-section{
-  @include display-retrievable("block");
-  padding: 0.25em 0.75em;
-}
 
-.sub-section{
-  margin: 0.5em 0;
-}
 
-blockquote {
-  @include display-retrievable("block");
-  border-left: 0.2em solid var(--color-light);
-  margin: 0.2em 0;
-  padding-left: 0.5em;
-  color: #333;
-}
 
-pre {
-  white-space: pre-wrap;
-  line-height: 0; /*fix for css adding unwanted whitespace*/
-}
-
-.line{
-  @include display-retrievable("block");
-}
-.line:last-child{
-  margin-block-end: 0;
-}
-
-.line.sub {
-  opacity: 0.7;
-  font-size: 0.8em;
-  margin-top: -0.25em;
-  margin-block-end: 0.5em;
-}
-
-@for $indent-level from 0 to 10{
-  .indent-#{$indent-level}{
-    margin-left: #{$indent-level*0.66}ch;
-  }
-}

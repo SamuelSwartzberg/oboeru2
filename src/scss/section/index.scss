@@ -2,3 +2,10 @@
 @import "onion-box.scss";
 @import "sketchpad.scss";
 @import "table.scss";
+@import "text-section.scss";
+
+.section {
+  margin-block-start: 0.75em;
+  margin-block-end: 1.25em;
+  @include boxlike();
+}

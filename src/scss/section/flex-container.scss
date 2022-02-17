@@ -17,7 +17,7 @@
     }
   }
 
-  .is-cloze-scramble-or-hide.fullsize{
+  .is-cloze-scramble-or-hide.fullsize {
     flex-basis: 100%;
     flex-shrink: 0;
   }
@@ -28,7 +28,7 @@
   }
 }
 span > img {
-  width:  100%;
+  width: 100%;
 }
 img {
   @include display-retrievable(inline-block);

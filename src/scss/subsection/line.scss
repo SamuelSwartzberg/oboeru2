@@ -1,0 +1,13 @@
+.line {
+  @include display-retrievable("block");
+}
+.line:last-child {
+  margin-block-end: 0;
+}
+
+.line.sub {
+  opacity: 0.7;
+  font-size: 0.8em;
+  margin-top: -0.25em;
+  margin-block-end: 0.5em;
+}

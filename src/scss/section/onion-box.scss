@@ -2,6 +2,7 @@
   display: flex;
   flex-flow: row wrap;
   text-align: center;
+  @include display-retrievable("block");
   @include boxlike();
   align-items: center;
   justify-content: space-evenly;
@@ -14,7 +15,7 @@
   > :first-child {
     flex: 1 1 100%;
   }
-/*   > :last-child {
+  /*   > :last-child {
     flex: 1 1 65%;
   } */
   > :only-child {

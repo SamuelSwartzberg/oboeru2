@@ -1,28 +1,14 @@
-/*
-#content is the label applied to the child of body, but containing the div #qa on ankidroid
-On desktop, #qa is a direct child of body, and on both platforms, #qa  contains the actual html we wrote
-since #qa is broken on android, we need to refer to it with .question or .answer respectively - not anymore
-*/
+@import "baseline";
+@import "clozelikes";
+@import "headered-container";
+@import "globals";
+@import "inline";
+@import "interactivity";
+@import "section";
+@import "subsection";
 
-@import "_atom-one-light.css";
-@import "_mixins.scss";
-@import "_css_reset.scss";
-@import "_desktop_only.scss";
-@import "_basic_layout.scss";
-@import "_img.scss";
-@import "_block_styling.scss";
-@import "_inline_styling.scss";
-@import "_magnification.scss";
-@import "_key.scss";
-@import "_extra_info_button.scss";
-@import "_svg.scss";
-@import "_sketchpad.scss";
-@import "_clozelikes.scss";
-@import "_js_only_elements.scss";
-
-
-
-.sandbox { // for css built diagrams, etc, so styles don't bleed through
+.sandbox {
+  // for css built diagrams, etc, so styles don't bleed through
   all: initial;
   font-size: 1em;
 }
