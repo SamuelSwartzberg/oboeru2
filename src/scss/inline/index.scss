@@ -1,7 +1,9 @@
-@import "_aside_inline.scss";
-@import "_ruby.scss";
-@import "_quotes.scss";
-@import "_ipa.scss";
+@import "aside.scss";
+@import "ruby.scss";
+@import "quotes.scss";
+@import "ipa.scss";
+
+// TODO: harmonize this with classes possible in js
 
 del {
   text-decoration: line-through;
@@ -23,12 +25,7 @@ cite {
 mark {
   background-color: #ff0;
 }
-.conceptual-metaphor {
-  font-variant: small-caps;
-}
-.highlightMain {
-  border-bottom: 0.1em solid var(--color-light);
-}
+
 code {
   font-size: 0.87em;
   @include display-retrievable("inline-block");
@@ -39,7 +36,6 @@ code {
 span {
   @include display-retrievable("inline");
 }
-
 
 ::selection {
   background-color: rgba(0, 0, 0, 0.1);

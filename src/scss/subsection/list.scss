@@ -9,22 +9,12 @@ ol {
 ol {
   list-style-type: decimal;
 }
-dl {
-  @include block-element();
-  dt {
-    font-style: italic;
-  }
-  dd {
-    padding-left: 0.5em;
-  }
-}
 
-
-li.ordered::before{
+li.ordered::before {
   counter-increment: list;
   content: counter(list) ". ";
 }
 
-li.unordered::before{
+li.unordered::before {
   content: "- ";
 }
