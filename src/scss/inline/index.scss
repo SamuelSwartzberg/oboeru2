@@ -3,37 +3,15 @@
 @import "quotes.scss";
 @import "ipa.scss";
 @import "key.scss";
+@import "del-ins.scss";
+@import "a.scss";
+@import "cite.scss";
+@import "code.scss";
+@import "dfn.scss";
+@import "mark.scss";
 
 // TODO: harmonize this with classes possible in js
 
-del {
-  text-decoration: line-through;
-}
-ins {
-  text-decoration: underline;
-}
-a {
-  filter: brightness(0.9);
-  color: currentColor;
-  text-decoration: underline var(--color-light) dashed;
-}
-dfn {
-  font-style: italic;
-}
-cite {
-  font-variant: small-caps;
-}
-mark {
-  background-color: #ff0;
-}
-
-code {
-  font-size: 0.87em;
-  @include display-retrievable("inline-block");
-  background: var(--color-light);
-  padding: 0.3rem 0.2rem 0.1rem 0.2rem;
-  border-radius: 0.1rem;
-}
 span {
   @include display-retrievable("inline");
 }
