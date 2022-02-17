@@ -10,6 +10,6 @@
     "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "build": "npx webpack && sass src/index.scss > dist/_bundle.css && cp dist/* ../Anki2/User\\ 1/collection.media"
+    "build": "npx webpack && sass src/scss/index.scss > dist/_bundle.css && cp dist/* ../Anki2/User\\ 1/collection.media"
   }
 }
