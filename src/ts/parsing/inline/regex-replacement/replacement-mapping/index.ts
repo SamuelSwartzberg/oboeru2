@@ -68,6 +68,16 @@ var textWrapperHTMLWrapperMap: TextWrapperHTMLWrapperMap = {
       end: "</u>",
     },
   },
+  mdStyleDelCustom: {
+    delimiters: {
+      start: "〜",
+      end: "〜",
+    },
+    replacements: {
+      start: "<del>",
+      end: "</del>",
+    },
+  },
   definitions: {
     delimiters: {
       start: "»",
