@@ -56,11 +56,3 @@ Find a full reference of the inline syntax in [the file implementing it](/src/ts
 ### Clozelikes
 
 Oboeru replaces anki's native `{{c<n>::}}` clozes with a more featureful syntax of things called clozelikes.
-
-## TODO
-
-Inline formatting only on visible stuff.
-Image own syntax.
-Abstract tree parsing away.
-Sketchpad insertion
-Code highlighting & codetypes, etc.
