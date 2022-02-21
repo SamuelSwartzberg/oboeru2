@@ -62,3 +62,5 @@ Oboeru replaces anki's native `{{c<n>::}}` clozes with a more featureful syntax 
 Inline formatting only on visible stuff.
 Image own syntax.
 Abstract tree parsing away.
+Sketchpad insertion
+Code highlighting & codetypes, etc.
