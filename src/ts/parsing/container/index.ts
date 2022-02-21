@@ -65,7 +65,7 @@ type treeNodeRoot = { children: treeNode[]; title: "root" };
 type treeNodeLeaf = { children: string[]; title: "section" };
 type treeNode = treeNodeRoot | treeNodeGeneric | treeNodeLeaf;
 
-export function parseToplevel(rawHTML: string): treeNode {
+function parseToplevel(rawHTML: string): treeNode {
   let unparsedLines: string[] = rawHTML.split("\n");
   let toplevel: treeNode = { children: [], title: "root" };
   let chainOfDepth: treeNode[] = [toplevel];
@@ -127,9 +127,7 @@ export function parseToplevel(rawHTML: string): treeNode {
   return toplevel;
 }
 
-export function replaceParsedSectionsWithContent(
-  parsedSections: treeNode
-): string {
+function replaceParsedSectionsWithContent(parsedSections: treeNode): string {
   if (parsedSections.children.length === 0) {
     return "";
   } else if (parsedSections.title === "section") {
@@ -154,4 +152,8 @@ export function replaceParsedSectionsWithContent(
         (parsedSections as treeNodeGeneric).depth - 1
       } headered-container cloze-group">${newHeader}${newContent}</article>`;
   }
+}
+
+export function parseStructure(html: string): string {
+  return replaceParsedSectionsWithContent(parseToplevel(html));
 }
