@@ -18,7 +18,8 @@
   /*   > :last-child {
     flex: 1 1 65%;
   } */
-  > :only-child {
+  > span:only-child {
     flex: 1 1 100%;
+    padding-bottom: 2em;
   }
 }
