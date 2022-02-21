@@ -1,3 +1,10 @@
+import {
+  buildTree,
+  ContentComponent,
+  TreeBuilderArr,
+  TreeNode,
+} from "../parse-to-tree";
+
 var GROUP = {
   START: "⟮" as const,
   END: "⟯" as const,
@@ -36,4 +43,33 @@ export function parseClozeLikesToTree(
   }
   clozeArray.push(label);
   return clozeArray;
+}
+
+function stringWithClozelikesToTreeComponentArray(
+  inputStr: string
+): TreeBuilderArr {
+  let clozeComponentArray: TreeBuilderArr = inputStr
+    .split(GROUP.START)
+    .flatMap((partGoingDeeper) => {
+      let [partActuallyGoingDeeper, ...partsGoingHigher] =
+        partGoingDeeper.split(GROUP.END);
+      let downStringSplit: TreeBuilderArr = [
+        { upDown: 1 },
+        { content: partActuallyGoingDeeper },
+      ];
+      let upStringSplit: TreeBuilderArr = partsGoingHigher.flatMap(
+        (partGoingHigher) => [{ upDown: -1 }, { content: partGoingHigher }]
+      );
+      let resArr: TreeBuilderArr = [...downStringSplit, ...upStringSplit];
+      return resArr;
+    });
+  return clozeComponentArray.filter(
+    (component) =>
+      component.hasOwnProperty("content") &&
+      (component as ContentComponent).content !== ""
+  );
+}
+
+export function parseClozeLikesToTree2(html: string): TreeNode {
+  return buildTree(stringWithClozelikesToTreeComponentArray(html));
 }

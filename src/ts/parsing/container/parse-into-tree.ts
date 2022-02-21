@@ -1,3 +1,5 @@
+import { buildTree, TreeBuilderArr, TreeNode } from "../parse-to-tree";
+
 function countLeadingHashSigns(line: string): number {
   for (let i = 0; i < line.length; i++) {
     if (line[i] !== "#") return i;
@@ -123,4 +125,51 @@ export function parseToplevel(rawHTML: string): treeNode {
     children: contents,
   });
   return toplevel;
+}
+
+function containerSectionStringToTreeComponentArray(
+  inputStr: string
+): TreeBuilderArr {
+  let parts = inputStr
+    .trim()
+    .split("\n\n\n")
+    .flatMap((sectionsWithInterspersedContainers) => {
+      let headerOrSubsections =
+        sectionsWithInterspersedContainers.split("\n\n");
+      let outArr = [];
+      let acc: string[] = [];
+      for (const headerOrSubsection of headerOrSubsections) {
+        if (headerOrSubsection.startsWith("#")) {
+          if (acc.length > 0) {
+            outArr.push(acc.join("\n\n"));
+            acc = [];
+          }
+          outArr.push(headerOrSubsection);
+        } else acc.push(headerOrSubsection);
+      }
+      if (acc.length > 0) outArr.push(acc.join("\n\n"));
+      return outArr;
+    });
+  let treeComponents: TreeBuilderArr = [];
+  let prevAmountLeadingHashSigns = 0;
+  for (const part of parts) {
+    let amountLeadingHashSigns: number = countLeadingHashSigns(part);
+    if (amountLeadingHashSigns > 0) {
+      let [header, isGroupShow] = parseHeaderIntoFlagsAndContent(
+        part,
+        amountLeadingHashSigns
+      );
+      treeComponents.push({
+        header: header,
+        isGroupShow: isGroupShow,
+        upDown: amountLeadingHashSigns - prevAmountLeadingHashSigns,
+      });
+      prevAmountLeadingHashSigns = amountLeadingHashSigns;
+    } else treeComponents.push({ content: part });
+  }
+  return treeComponents;
+}
+
+function parseToplevel2(html: string): TreeNode {
+  return buildTree(containerSectionStringToTreeComponentArray(html));
 }
