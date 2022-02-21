@@ -138,6 +138,36 @@ var textWrapperHTMLWrapperMap: TextWrapperHTMLWrapperMap = {
       end: "</span>",
     },
   },
+  sub: {
+    delimiters: {
+      start: "⎵",
+      end: "⎵",
+    },
+    replacements: {
+      start: "<sub>",
+      end: "</sub>",
+    },
+  },
+  sup: {
+    delimiters: {
+      start: "⎴",
+      end: "⎴",
+    },
+    replacements: {
+      start: "<sup>",
+      end: "</sup>",
+    },
+  },
+  fakeAngleBracketEscape: {
+    delimiters: {
+      start: "‹",
+      end: "›",
+    },
+    replacements: {
+      start: "&lt;",
+      end: "&gt;",
+    },
+  },
   ipaPhon: {
     delimiters: {
       start: "／",
