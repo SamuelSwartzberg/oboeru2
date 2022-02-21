@@ -2,7 +2,8 @@ export function separateIntoSpecifiersAndNonspecifiers<T>(
   contents: string,
   parseSpecifierIntoKeyValueCallback: (
     specifier: string
-  ) => [string, T] | undefined
+  ) => [string, T] | undefined,
+  defaultSpecifierIfNoSpecifierFound?: string
 ): [
   string,
   {
@@ -14,6 +15,9 @@ export function separateIntoSpecifiersAndNonspecifiers<T>(
   let specifiers: {
     [k: string]: T;
   } = {};
+  if (constituents.length === 1 && defaultSpecifierIfNoSpecifierFound) {
+    constituents.unshift(defaultSpecifierIfNoSpecifierFound);
+  }
   for (let i = 0; i < constituents.length; i++) {
     // make sure that only approved specifiers count as specifiers, to allow ; in the contents
     if (i === constituents.length - 1) {

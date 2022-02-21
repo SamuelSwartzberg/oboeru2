@@ -162,7 +162,8 @@ function getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(specifierM
 export function processCustomClozelikes(contents: string): string {
   let [nonspecifier, specifiers] = separateIntoSpecifiersAndNonspecifiers(
     contents,
-    getKeyAndParsedSpecifierFromSpecifier
+    getKeyAndParsedSpecifierFromSpecifier,
+    "c+"
   );
 
   if (Object.keys(specifiers).length === 0) return contents;
