@@ -185,9 +185,7 @@ var GROUP = {
 };
 type possiblyRecursiveStringArray = (string | possiblyRecursiveStringArray)[];
 
-export function parseClozeLikesToTree(
-  text: string
-): possiblyRecursiveStringArray {
+function parseClozeLikesToTree(text: string): possiblyRecursiveStringArray {
   let clozeArray: possiblyRecursiveStringArray = [];
   let unparsedChildrenCharArray: string[] = [...text];
   let chainOfDepth: possiblyRecursiveStringArray[] = [clozeArray];
@@ -216,7 +214,7 @@ export function parseClozeLikesToTree(
   return clozeArray;
 }
 
-export function replaceClozeLikes(
+function replaceClozeLikes(
   clozeLikeArrayTree: possiblyRecursiveStringArray,
   isTop: boolean
 ): string {
@@ -240,4 +238,8 @@ export function replaceClozeLikes(
           .join("")
       );
   }
+}
+
+export function parseClozelikes(html: string): string {
+  return replaceClozeLikes(parseClozeLikesToTree(html), true);
 }
