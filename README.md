@@ -43,9 +43,15 @@ tables, flex containers and onion boxes are begun by `table:`, `flex-container` 
 
 Onion boxes are there to graphically depict subset/superset relationships. After the initial `onion-box:` line, every line provides a label, with the indentation (2 spaces or tabs) indicating how deeply nested it is. TODO unimplemented
 
-### flex containers
+#### flex containers
 
 Flex containers are what they sound like, flexbox based containers to contain all listed elements 
+
+### inline syntax
+
+Oboeru supports a set of inline syntax elements for inline formatting for things such as `<b>`, `<u>`, `<code>`, `<dfn>`, etc.  
+Oboeru's syntax for inline elements is *reminiscent* of the syntax used in markdown (where extant), but in fact does not use the more common symbols such as \*, but instead unicode lookalikes such as ＊. This decision may be controversial, however I think the increased readability of the plain source text without needing to escape many characters justifies this decision. I can heartily recommend the text expander `espanso` for inserting these characters easily.  
+Find a full reference of the inline syntax in [the file implementing it](/src/ts/parsing/inline/regex-replacement/index.ts).
 
 ### Clozelikes
 
@@ -55,3 +61,4 @@ Oboeru replaces anki's native `{{c<n>::}}` clozes with a more featureful syntax 
 
 Inline formatting only on visible stuff.
 Image own syntax.
+Abstract tree parsing away.
