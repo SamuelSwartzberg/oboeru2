@@ -142,7 +142,7 @@ function getKeyAndParsedSpecifierFromSpecifier(
 
 function tryAddHint(hint: string) {
   if (hint.length > 0) {
-    return `style="--content-when-active: ${hint}"`;
+    return `style='--content-when-active: "${hint}"'`;
   }
 }
 
