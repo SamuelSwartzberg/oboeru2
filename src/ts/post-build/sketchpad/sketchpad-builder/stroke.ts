@@ -12,6 +12,10 @@ export class Stroke {
     medium: 13,
     large: 40,
   };
+  static initialValueName = {
+    color: "black",
+    size: "small",
+  };
   static getPossibleSizes() {
     return Object.keys(Stroke.sizes);
   }
@@ -31,5 +35,8 @@ export class Stroke {
   static getSizeValue(size: string) {
     if (this.isValidSize(size)) return this.sizes[size];
     else throw new Error("invalid size");
+  }
+  static getInitialValueName(type: "color" | "size") {
+    return this.initialValueName[type];
   }
 }

@@ -11,18 +11,31 @@ function getClosestSketchpadSection(
   return sketchpadSection;
 }
 
+function getSizeAndColor(sketchpadSection: HTMLElement): [number, string] {
+  if (!(sketchpadSection.dataset.color && sketchpadSection.dataset.size))
+    throw new Error("no color or size so cannot proceed");
+  let [rawSize, rawColor] = [
+    sketchpadSection.dataset.size,
+    sketchpadSection.dataset.color,
+  ];
+  let [strokeSize, strokeColor] = [
+    Stroke.getSizeValue(rawSize),
+    Stroke.getColorValue(rawColor),
+  ];
+  return [strokeSize, strokeColor];
+}
+
 // Draws a line between the specified position on the supplied canvas name
 // Parameters are: A canvas context, the x position, the y position, the size of the dot
 function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
   const sketchpadSection = getClosestSketchpadSection(ctx);
   const [lastX, lastY] = getLastPos(sketchpadSection) || [x, y];
-  ctx.strokeStyle = Stroke.getColorValue(sketchpadSection.dataset.color);
+  [ctx.lineWidth, ctx.strokeStyle] = getSizeAndColor(sketchpadSection);
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.beginPath();
   ctx.moveTo(lastX, lastY);
   ctx.lineTo(x, y);
-  ctx.lineWidth = Stroke.getSizeValue(sketchpadSection.dataset.size);
   ctx.stroke();
   ctx.closePath();
   setLastPos(sketchpadSection, [x, y]);
