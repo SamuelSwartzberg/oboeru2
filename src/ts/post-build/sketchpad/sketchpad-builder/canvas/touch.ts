@@ -1,4 +1,4 @@
-function getTouchPos(e: TouchEvent): [number, number] {
+export function getTouchPos(e: TouchEvent): [number, number] {
   if (e.touches && e.touches.length == 1) {
     // Only deal with one finger
     var touch = e.touches[0]; // Get the information for finger #1

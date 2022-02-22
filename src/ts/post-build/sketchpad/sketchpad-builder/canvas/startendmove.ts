@@ -41,9 +41,17 @@ function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
   setLastPos(sketchpadSection, [x, y]);
 }
 
+function initializeCanvas(canvas: HTMLCanvasElement) {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+}
+
 export function start(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
+    console.log("start");
+
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
+
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "true";
     drawFunction(ctx, e);
   };
@@ -51,10 +59,19 @@ export function start(ctx: CanvasRenderingContext2D) {
 
 export function move(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
+    console.log("move");
+
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
+
+    if (sketchpadSection.dataset.dirty !== "true") {
+      initializeCanvas(ctx.canvas);
+      sketchpadSection.dataset.mousedown = "false";
+      sketchpadSection.dataset.dirty = "true";
+    }
+
     if (
       e instanceof TouchEvent ||
-      sketchpadSection.dataset.mousedown === "false"
+      sketchpadSection.dataset.mousedown === "true"
     )
       drawFunction(ctx, e);
   };
@@ -62,6 +79,7 @@ export function move(ctx: CanvasRenderingContext2D) {
 
 export function end(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
+    console.log("end");
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
     unsetLastPos(sketchpadSection);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "false";

@@ -1,4 +1,4 @@
-function getMousePos(e: MouseEvent): [number, number] {
+export function getMousePos(e: MouseEvent): [number, number] {
   let [mouseX, mouseY] = [0, 0];
   if (e.offsetX) {
     mouseX = e.offsetX;
