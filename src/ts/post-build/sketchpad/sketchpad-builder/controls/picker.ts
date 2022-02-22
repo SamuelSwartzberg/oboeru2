@@ -30,6 +30,8 @@ function buildIndividualPicker(value: string, type: string): HTMLDivElement {
 }
 
 function setNew(e: Event) {
+  console.log(e);
+
   const target = e.target;
   if (target instanceof HTMLElement) {
     const parentSketchpadSection = target.closest(".sketchpad-section");

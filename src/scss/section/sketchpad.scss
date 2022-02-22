@@ -4,13 +4,6 @@
   background-repeat: no-repeat;
   background-size: cover;
   position: relative;
-  &__sidebar {
-    position: absolute;
-    right: 1em;
-    top: 1em;
-    height: 100%;
-    width: 2.5em;
-  }
   .sketchpad-canvas {
     width: 100%;
     height: 100%;
@@ -23,6 +16,7 @@
     right: 0;
     bottom: 0;
     height: 2.75em;
+    z-index: 1;
 
     &__color {
       height: 1.25em;
@@ -30,6 +24,37 @@
       width: 2em;
       background-color: var(--color);
       border-radius: 0.75em;
+    }
+  }
+  .size-picker {
+    display: flex;
+    position: absolute;
+    right: 1em;
+    top: 1em;
+    width: 3em;
+    height: 100%;
+    flex-flow: column nowrap;
+    z-index: 1;
+  }
+
+  .size-picker__size {
+    height: 3em;
+    margin-bottom: 1em;
+    box-sizing: border-box;
+    background-color: black;
+    background-clip: content-box;
+    border-radius: 1.5em;
+  }
+
+  $sizes: (
+    small: 0.5em,
+    medium: 1em,
+    large: 1.5em,
+  );
+
+  @each $key, $val in $sizes {
+    .size-picker__size--#{$key} {
+      padding: 1.5em - $val;
     }
   }
 }

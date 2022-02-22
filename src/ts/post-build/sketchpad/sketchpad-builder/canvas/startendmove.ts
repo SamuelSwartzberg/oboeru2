@@ -2,6 +2,8 @@ import { getClosestSketchpadSection } from "..";
 import { saveSketchpad } from "../front-back-io";
 import { Stroke } from "../stroke";
 import { getLastPos, setLastPos, unsetLastPos } from "./lastpos";
+import { getMousePos } from "./mouse";
+import { getTouchPos } from "./touch";
 
 export function getClosestSketchpadSectionFromContext(
   ctx: CanvasRenderingContext2D
