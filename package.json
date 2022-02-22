@@ -11,5 +11,8 @@
   },
   "scripts": {
     "build": "npx webpack && sass src/scss/index.scss > dist/_bundle.css && cp dist/* ../Anki2/User\\ 1/collection.media"
+  },
+  "dependencies": {
+    "highlight.js": "^11.4.0"
   }
 }
