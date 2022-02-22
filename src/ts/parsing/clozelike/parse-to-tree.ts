@@ -53,8 +53,6 @@ function stringWithClozelikesToTreeComponentArray(
     .flatMap((partGoingDeeper) => {
       let [partActuallyGoingDeeper, ...partsGoingHigher] =
         partGoingDeeper.split(GROUP.END);
-      console.log(partActuallyGoingDeeper);
-      console.log(partsGoingHigher);
 
       let downStringSplit: TreeBuilderArr = [
         { upDown: 1 },
@@ -70,7 +68,5 @@ function stringWithClozelikesToTreeComponentArray(
 }
 
 export function parseClozeLikesToTree2(html: string): TreeNode {
-  console.log(stringWithClozelikesToTreeComponentArray(html));
-
   return buildTree(stringWithClozelikesToTreeComponentArray(html));
 }
