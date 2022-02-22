@@ -43,7 +43,7 @@ function parseOnionBoxStructure(unparsedOnionBoxString: string) {
       }
       chainOfDepth.pop();
       currentLevel = chainOfDepth[chainOfDepth.length - 1];
-    } else if (currentChar === " ") {
+    } else if (currentChar === " " || currentChar === "\n" || currentChar === "\t") {
       // once we hit a space, we've finished reading the label, and we know there will be children
       readingLabel = false;
       // since we know there will be children, we need to prepare a new object, make that the current object and add it to the reference chain, and make the previous current object refer to the new object
