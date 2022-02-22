@@ -118,6 +118,26 @@ var textWrapperHTMLWrapperMap: TextWrapperHTMLWrapperMap = {
       end: "</q>",
     },
   },
+  a: {
+    delimiters: {
+      start: "⇱",
+      end: "⇲",
+    },
+    replacements: {
+      start: "<a>",
+      end: "</a>",
+    },
+  },
+  img: {
+    delimiters: {
+      start: "✫",
+      end: "✫",
+    },
+    replacements: {
+      start: '<img src="',
+      end: '"></img>',
+    },
+  },
   aside: {
     delimiters: {
       start: "⦗",
