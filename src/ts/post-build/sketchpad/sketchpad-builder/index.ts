@@ -1,23 +1,23 @@
 import { buildCanvas } from "./canvas";
 import { buildColorPicker } from "./controls/color-picker";
-import colorPickerSvg from "./controls/color-picker-toggle.svg";
 import { buildSizePicker } from "./controls/size-picker";
 
 export function addSketchpad(nearestSection: Element) {
-  throw new Error("Function not implemented.");
+  if (!nearestSection.parentElement)
+    throw new Error(
+      "section we wanted to add the sketchpad to doesn't have a parent, which is odd."
+    );
+  nearestSection.parentElement.appendChild(buildSketchpad());
 }
 
-export function buildSketchpad(): void {
+export function buildSketchpad(): HTMLElement {
   const sketchpadSection = document.createElement("section");
   sketchpadSection.classList.add("section", "sketchpad-section");
   const sketchpadSectionSidebar = document.createElement("div");
   sketchpadSectionSidebar.classList.add("sketchpad-section__sidebar");
-  const colorPickerToggle = document.createElement("div");
-  colorPickerToggle.classList.add("color-picker-toggle");
-  colorPickerToggle.innerHTML = colorPickerSvg;
-  sketchpadSectionSidebar.appendChild(colorPickerToggle);
   sketchpadSectionSidebar.appendChild(buildSizePicker());
   sketchpadSection.appendChild(sketchpadSectionSidebar);
   sketchpadSection.appendChild(buildCanvas());
   sketchpadSection.appendChild(buildColorPicker());
+  return sketchpadSection;
 }

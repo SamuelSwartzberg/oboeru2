@@ -12,14 +12,15 @@ export function buildPicker(type: string): HTMLDivElement {
   return picker;
 }
 
-function buildIndividualPicker(color: string, type: string): HTMLDivElement {
-  const colorPickerColor = document.createElement("div");
-  colorPickerColor.classList.add(
+function buildIndividualPicker(value: string, type: string): HTMLDivElement {
+  const pickerItem = document.createElement("div");
+  pickerItem.classList.add(
     `${type}-picker__${type}`,
-    `${type}-picker__${type}--` + color
+    `${type}-picker__${type}--` + value
   );
-  colorPickerColor.addEventListener("click", setNew);
-  return colorPickerColor;
+  pickerItem.style.setProperty(`--${type}`, value);
+  pickerItem.addEventListener("click", setNew);
+  return pickerItem;
 }
 
 function setNew(e: Event) {

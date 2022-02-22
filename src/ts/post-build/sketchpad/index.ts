@@ -7,13 +7,16 @@ function isKanji(ch: string): boolean {
 } // from https://www.darrenlester.com/blog/recognising-japanese-characters-with-javascript
 
 export function addSketchpadIfClozesWithKanji() {
-  let activeClozes = document.querySelectorAll(".cloze-active");
+  console.log("addSketchpadIfClozesWithKanji");
+
+  let activeClozes = document.querySelectorAll(".c-active");
   let clozesWithKanji = Array.from(activeClozes).filter((cloze) => {
     if (cloze.textContent) {
       return Array.from(cloze.textContent).some(isKanji);
     } else return false;
   });
   clozesWithKanji.forEach((cloze) => {
+    console.log(`Adding sketchpad to cloze ${cloze.textContent}`);
     let nearestSection = cloze.closest(".section");
     if (nearestSection) {
       addSketchpad(nearestSection);
