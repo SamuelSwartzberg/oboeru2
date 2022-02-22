@@ -13,6 +13,7 @@
     "build": "npx webpack && sass src/scss/index.scss > dist/_bundle.css && cp dist/* ../Anki2/User\\ 1/collection.media"
   },
   "dependencies": {
+    "@types/webpack-env": "^1.16.3",
     "highlight.js": "^11.4.0"
   }
 }
