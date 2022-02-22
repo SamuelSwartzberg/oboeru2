@@ -21,7 +21,7 @@ export class Stroke {
   static isValidColor(color: string): color is keyof typeof Stroke.colors {
     return color in this.colors;
   }
-  static getColorValue(color: string) {
+  static getColorValue(color: string): string {
     if (this.isValidColor(color)) return this.colors[color];
     else throw new Error("invalid color");
   }

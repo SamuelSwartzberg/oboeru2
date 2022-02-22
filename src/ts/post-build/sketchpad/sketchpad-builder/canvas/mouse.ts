@@ -1,5 +1,5 @@
-function getMousePos(e) {
-  if (!e) var e = event;
+function getMousePos(e: MouseEvent): [number, number] {
+  let mouseX, mouseY;
   if (e.offsetX) {
     mouseX = e.offsetX;
     mouseY = e.offsetY;
@@ -9,4 +9,5 @@ function getMousePos(e) {
     mouseY = e.layerY;
     console.log("layer");
   }
+  return [mouseX, mouseY];
 }
