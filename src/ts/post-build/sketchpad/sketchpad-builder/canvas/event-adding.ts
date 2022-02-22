@@ -1,3 +1,5 @@
+import { end, move, start } from "./startendmove";
+
 export function addEvents(
   canvas: HTMLCanvasElement,
   ctx: CanvasRenderingContext2D

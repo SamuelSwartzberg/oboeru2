@@ -41,7 +41,7 @@ function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
   setLastPos(sketchpadSection, [x, y]);
 }
 
-function start(ctx: CanvasRenderingContext2D) {
+export function start(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
     const sketchpadSection = getClosestSketchpadSection(ctx);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "true";
@@ -49,7 +49,7 @@ function start(ctx: CanvasRenderingContext2D) {
   };
 }
 
-function move(ctx: CanvasRenderingContext2D) {
+export function move(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
     const sketchpadSection = getClosestSketchpadSection(ctx);
     if (
@@ -60,7 +60,7 @@ function move(ctx: CanvasRenderingContext2D) {
   };
 }
 
-function end(ctx: CanvasRenderingContext2D) {
+export function end(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
     const sketchpadSection = getClosestSketchpadSection(ctx);
     unsetLastPos(sketchpadSection);

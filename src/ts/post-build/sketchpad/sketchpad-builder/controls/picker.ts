@@ -1,8 +1,11 @@
 import { Stroke } from "../stroke";
 
 export function buildPicker(type: string): HTMLDivElement {
+  if (type !== "color" && type !== "size")
+    throw new Error("Picker type must be color or size.");
   const picker = document.createElement("div");
   picker.classList.add(`${type}-picker`);
+  picker.dataset[type] = Stroke.getInitialValueName(type);
   for (const color of Stroke.getPossibleColors()) {
     picker.appendChild(buildIndividualPicker(color, type));
   }

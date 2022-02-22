@@ -13,4 +13,5 @@ export function buildCanvas(): HTMLCanvasElement {
     throw new Error(
       "Canvas context is not a CanvasRenderingContext2D or doesn't exist"
     );
+  return canvas;
 }
