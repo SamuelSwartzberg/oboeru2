@@ -12,7 +12,7 @@ export function buildPicker(
 
   getClosestSketchpadSection(sketchpadSection).dataset[type] =
     Stroke.getInitialValueName(type);
-  for (const color of Stroke.getPossibleColors()) {
+  for (const color of Stroke.getPossibleValues(type)) {
     picker.appendChild(buildIndividualPicker(color, type));
   }
   return picker;

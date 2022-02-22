@@ -16,6 +16,11 @@ export class Stroke {
     color: "black",
     size: "small",
   };
+  static getPossibleValues(type: "color" | "size"): string[] {
+    if (type === "color") return this.getPossibleColors();
+    else if (type === "size") return this.getPossibleSizes();
+    else throw new Error("invalid type");
+  }
   static getPossibleSizes() {
     return Object.keys(Stroke.sizes);
   }
