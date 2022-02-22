@@ -13,6 +13,10 @@ if (isBackOriginal) {
   document.body.classList.add("is-front");
 }
 
+export function isFront(): boolean {
+  return document.body.classList.contains("is-front");
+}
+
 export function currentCardIndex(): number {
   let bodyClassListArray = Array.from(document.body.classList.values());
   let classIndicatingClass = bodyClassListArray.find(

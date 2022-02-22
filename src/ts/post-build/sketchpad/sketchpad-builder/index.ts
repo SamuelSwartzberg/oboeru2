@@ -1,3 +1,4 @@
+import { buildCanvas } from "./canvas";
 import { buildColorPicker } from "./controls/color-picker";
 import colorPickerSvg from "./controls/color-picker-toggle.svg";
 import { buildSizePicker } from "./controls/size-picker";
@@ -17,5 +18,6 @@ export function buildSketchpad(): void {
   sketchpadSectionSidebar.appendChild(colorPickerToggle);
   sketchpadSectionSidebar.appendChild(buildSizePicker());
   sketchpadSection.appendChild(sketchpadSectionSidebar);
+  sketchpadSection.appendChild(buildCanvas());
   sketchpadSection.appendChild(buildColorPicker());
 }

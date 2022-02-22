@@ -1,4 +1,4 @@
-import { Stroke } from "../painting/stroke";
+import { Stroke } from "../stroke";
 
 export function buildPicker(type: string): HTMLDivElement {
   const picker = document.createElement("div");
