@@ -1,3 +1,7 @@
+import { formatInlineLevel } from "../parsing/inline";
+
 export function formatVisibleClozeGroups() {
-  throw new Error("Function not implemented.");
+  document.querySelectorAll(".group-active").forEach((group) => {
+    group.innerHTML = formatInlineLevel(group.innerHTML);
+  });
 }
