@@ -1,14 +1,12 @@
+import { getClosestSketchpadSection } from "..";
 import { saveSketchpad } from "../front-back-io";
 import { Stroke } from "../stroke";
 import { getLastPos, setLastPos, unsetLastPos } from "./lastpos";
 
-function getClosestSketchpadSection(
+export function getClosestSketchpadSectionFromContext(
   ctx: CanvasRenderingContext2D
 ): HTMLElement {
-  const sketchpadSection = ctx.canvas.closest(".sketchpad-section");
-  if (!(sketchpadSection && sketchpadSection instanceof HTMLElement))
-    throw new Error("no parent sketchpad so cannot proceed");
-  return sketchpadSection;
+  return getClosestSketchpadSection(ctx.canvas);
 }
 
 function getSizeAndColor(sketchpadSection: HTMLElement): [number, string] {
@@ -28,7 +26,7 @@ function getSizeAndColor(sketchpadSection: HTMLElement): [number, string] {
 // Draws a line between the specified position on the supplied canvas name
 // Parameters are: A canvas context, the x position, the y position, the size of the dot
 function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
-  const sketchpadSection = getClosestSketchpadSection(ctx);
+  const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
   const [lastX, lastY] = getLastPos(sketchpadSection) || [x, y];
   [ctx.lineWidth, ctx.strokeStyle] = getSizeAndColor(sketchpadSection);
   ctx.lineCap = "round";
@@ -43,7 +41,7 @@ function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
 
 export function start(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    const sketchpadSection = getClosestSketchpadSection(ctx);
+    const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "true";
     drawFunction(ctx, e);
   };
@@ -51,7 +49,7 @@ export function start(ctx: CanvasRenderingContext2D) {
 
 export function move(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    const sketchpadSection = getClosestSketchpadSection(ctx);
+    const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
     if (
       e instanceof TouchEvent ||
       sketchpadSection.dataset.mousedown === "false"
@@ -62,7 +60,7 @@ export function move(ctx: CanvasRenderingContext2D) {
 
 export function end(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    const sketchpadSection = getClosestSketchpadSection(ctx);
+    const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
     unsetLastPos(sketchpadSection);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "false";
     saveSketchpad(ctx.canvas.toDataURL());

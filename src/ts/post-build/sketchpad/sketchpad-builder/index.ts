@@ -15,9 +15,16 @@ export function buildSketchpad(): HTMLElement {
   sketchpadSection.classList.add("section", "sketchpad-section");
   const sketchpadSectionSidebar = document.createElement("div");
   sketchpadSectionSidebar.classList.add("sketchpad-section__sidebar");
-  sketchpadSectionSidebar.appendChild(buildSizePicker());
+  sketchpadSectionSidebar.appendChild(buildSizePicker(sketchpadSection));
   sketchpadSection.appendChild(sketchpadSectionSidebar);
   sketchpadSection.appendChild(buildCanvas());
-  sketchpadSection.appendChild(buildColorPicker());
+  sketchpadSection.appendChild(buildColorPicker(sketchpadSection));
+  return sketchpadSection;
+}
+
+export function getClosestSketchpadSection(elem: HTMLElement): HTMLElement {
+  const sketchpadSection = elem.closest(".sketchpad-section");
+  if (!(sketchpadSection && sketchpadSection instanceof HTMLElement))
+    throw new Error("no parent sketchpad so cannot proceed");
   return sketchpadSection;
 }

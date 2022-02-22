@@ -1,11 +1,17 @@
+import { getClosestSketchpadSection } from "..";
 import { Stroke } from "../stroke";
 
-export function buildPicker(type: string): HTMLDivElement {
+export function buildPicker(
+  type: string,
+  sketchpadSection: HTMLElement
+): HTMLDivElement {
   if (type !== "color" && type !== "size")
     throw new Error("Picker type must be color or size.");
   const picker = document.createElement("div");
   picker.classList.add(`${type}-picker`);
-  picker.dataset[type] = Stroke.getInitialValueName(type);
+
+  getClosestSketchpadSection(sketchpadSection).dataset[type] =
+    Stroke.getInitialValueName(type);
   for (const color of Stroke.getPossibleColors()) {
     picker.appendChild(buildIndividualPicker(color, type));
   }
