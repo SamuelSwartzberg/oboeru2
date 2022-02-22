@@ -14,31 +14,12 @@ pre code {
   tab-size: 2;
   position: relative;
 
-  $code-color-map: (
-    "css": "#008fb3",
-    "html": "#f64",
-    "js": "#cc9600",
-    "sh": "#eb0000",
-    "bash": "#eb0000",
-    "cs": "#9742ff",
-    "java": "#017dbc",
-    "md": "#e4016f",
-    "py": "#02adff",
-    "lua": "#7070ff",
-  );
-
-  @each $code-name, $code-color in $code-color-map {
-    &.#{$code-name} {
-      --codetype-color: #{$code-color};
-    }
-  }
   &::after {
-    content: attr(data-displaycodetype);
+    content: attr(data-code-label);
     text-transform: uppercase;
     position: absolute;
     top: 0.5rem;
     right: 0.5rem;
-    color: var(--codetype-color);
     z-index: 99;
     font-size: 1.5em;
   }
