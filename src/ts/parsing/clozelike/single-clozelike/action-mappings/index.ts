@@ -1,5 +1,4 @@
-import { currentCardIndex } from "../../anki-card";
-import { separateIntoSpecifiersAndNonspecifiers } from "../globals";
+import { splitActionMappingStringIntoNameAndTargetsString } from "./split-action-mapping-string";
 
 var currentClozeIndex = 1;
 
@@ -76,36 +75,25 @@ function extractNumbersThatThingAppliesTo(
   else return [handleIndividualNumberSpecifier(part, isCloze)];
 }
 
-function parseSpecifierIntoKeyValue(specifier: string): [string, string] {
-  let prefixLength = 0;
-  if (specifier[0] === "u") prefixLength++;
-  // starts with u, so at least 2 long
-  if (specifier[prefixLength] === "h" && specifier[prefixLength + 1] === "r")
-    prefixLength += 2;
-  // hr/uhr are always one longer
-  else if (["c", "s", "h"].some((item) => specifier[prefixLength] === item))
-    prefixLength++;
-  else throw new Error("Tried to parse non-specifier into specifier.");
-  return [specifier.slice(0, prefixLength), specifier.slice(prefixLength)];
-}
-
-function splitSpecifierIntoConstituents(specifierValue: string): string[] {
+function splitActionTargetStringIntoActionTargets(
+  specifierValue: string
+): string[] {
   return specifierValue.split(",");
 }
 
 type groupIfAny = "a" | "b" | null;
-type clozeLikeSpecifier = {
+export type ActionTargetsObject = {
   cardsForWhichToApply: number[];
   all: boolean;
   group: groupIfAny;
   hint?: string;
 };
 
-function parseValuePartsToObject(
+function actionTargetsToObject(
   specifierValueParts: string[],
   isCloze: boolean
-): clozeLikeSpecifier {
-  let specifierObject: clozeLikeSpecifier = {
+): ActionTargetsObject {
+  let specifierObject: ActionTargetsObject = {
     cardsForWhichToApply: [],
     all: false,
     group: null,
@@ -124,56 +112,22 @@ function parseValuePartsToObject(
   return specifierObject;
 }
 
-function getKeyAndParsedSpecifierFromSpecifier(
-  specifier: string
-): [string, clozeLikeSpecifier] | undefined {
+export function getActionNameAndActionTargetsFromActionMappingString(
+  actionMappingString: string
+): [string, ActionTargetsObject] | undefined {
   try {
-    let [specifierKey, specifierValue] = parseSpecifierIntoKeyValue(specifier);
+    let [actionName, actionTargetsString] =
+      splitActionMappingStringIntoNameAndTargetsString(actionMappingString);
 
-    let isCloze = specifierKey === "c";
-    let specifierValueParts = splitSpecifierIntoConstituents(specifierValue);
-    let specifierValuesParsedToObject: clozeLikeSpecifier =
-      parseValuePartsToObject(specifierValueParts, isCloze);
-    return [specifierKey, specifierValuesParsedToObject];
+    let isCloze = actionName === "c";
+    let actionTargets =
+      splitActionTargetStringIntoActionTargets(actionTargetsString);
+    let actionTargetsAsObject: ActionTargetsObject = actionTargetsToObject(
+      actionTargets,
+      isCloze
+    );
+    return [actionName, actionTargetsAsObject];
   } catch (e) {
     return undefined;
   }
-}
-
-function tryAddHint(hint: string) {
-  if (hint.length > 0) {
-    return `style='--content-when-active: "${hint}"'`;
-  }
-}
-
-function getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(specifierMapping: {
-  [k: string]: clozeLikeSpecifier;
-}): string[] {
-  return Object.entries(specifierMapping).map(([specifierType, specifier]) => {
-    let classList: string[] = [];
-    if (specifier.group) classList.push(`${specifierType}-${specifier.group}`);
-    if (specifier.all) classList.push(`${specifierType}-active`);
-    else if (specifier.cardsForWhichToApply.includes(currentCardIndex()))
-      classList.push(`${specifierType}-active`);
-    return classList.join(" ");
-  });
-}
-
-export function processCustomClozelikes(contents: string): string {
-  let [nonspecifier, specifiers] = separateIntoSpecifiersAndNonspecifiers(
-    contents,
-    getKeyAndParsedSpecifierFromSpecifier,
-    "c+"
-  );
-
-  if (Object.keys(specifiers).length === 0) return contents;
-  let [clozelikeBody, ...possiblyHint] = nonspecifier.split("::");
-  let hint: string = Array.isArray(possiblyHint) ? possiblyHint.join("::") : "";
-  let activityClasses =
-    getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(specifiers);
-  return `<span class="is-cloze-scramble-or-hide ${activityClasses.join(
-    " "
-  )}" ${
-    activityClasses.includes("c-active") ? tryAddHint(hint) : ""
-  }>${clozelikeBody}</span>`;
 }
