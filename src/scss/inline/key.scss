@@ -1,5 +1,4 @@
-
-kbd{
+kbd {
   @include boxlike();
   border-color: #0002;
   @include center-flex();
@@ -35,7 +34,7 @@ kbd.modifier {
       "color": "#dbaf10",
       "symbol": "⊞",
     ),
-    );
+  );
   @each $key-key, $key-value in $key-map {
     &.#{$key-key} {
       --modifier-bg-color: #{map-get($key-value, "color")};
@@ -46,10 +45,4 @@ kbd.modifier {
   }
   background-color: var(--modifier-bg-color);
   color: #fff;
-}
-kbd.tab::before {
-  content: "⇥";
-}
-kbd.space::before {
-  content: "␣";
 }

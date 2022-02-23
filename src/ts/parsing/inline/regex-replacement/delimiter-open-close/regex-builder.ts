@@ -19,14 +19,14 @@ function buildReplacementsFromReplacementDelimiters(
   return `${replacements.start}$1${replacements.end}`;
 }
 
-export function buildRegex(
+export function buildDelimiterRegex(
   delimiters: TextWrapperHTMLWrapperMapEntry["delimiters"]
 ): RegExp {
   if (delimiters instanceof RegExp) return delimiters;
   else return buildRegexFromDelimiters(delimiters);
 }
 
-export function buildReplacements(
+export function buildDelimiterReplacements(
   replacements: TextWrapperHTMLWrapperMapEntry["replacements"]
 ): string | ((substring: string, ...args: any[]) => string) {
   if (isTextWrapperHTMLWrapperMapEntryDelimSpecifier(replacements))
