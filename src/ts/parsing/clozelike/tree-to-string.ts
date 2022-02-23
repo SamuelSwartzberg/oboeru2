@@ -1,4 +1,4 @@
-import { processCustomClozelikes } from "./parse-clozelike";
+import { processCustomClozelikes } from "./single-clozelike";
 import { possiblyRecursiveStringArray } from "./parse-to-tree";
 
 export function replaceClozeLikes(
