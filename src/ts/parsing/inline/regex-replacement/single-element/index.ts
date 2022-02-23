@@ -12,6 +12,14 @@ var elementReplacementMap: ElementReplacementMap = {
     match: "＆",
     replacement: "&amp;",
   },
+  openingAngleBracket: {
+    match: "‹",
+    replacement: "&lt;",
+  },
+  closingAngleBracket: {
+    match: "›",
+    replacement: "&gt;",
+  },
 };
 
 export function getElementAndReplacement(): [RegExp | string, string][] {
