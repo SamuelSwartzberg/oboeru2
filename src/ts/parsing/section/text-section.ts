@@ -26,7 +26,7 @@ function parseIntoLineLike(section: string): string {
     let currentlyBlockquote = false;
     for (let subsectionLine of subsectionLines) {
       let newSubsectionLine: string = subsectionLine.replace(
-        /^(\^?)((?:&gt; )?)((?:- )?)((?:\d\. )?)(!?)(<[^>]+>)?(.*)$/g,
+        /^(\^?)((?:＞ )?)((?:- )?)((?:\d\. )?)(!?)(<[^>]+>)?(.*)$/g,
         (
           match,
           isSmall,
