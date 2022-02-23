@@ -10,17 +10,17 @@ export function getIncrementSyntaxCharacters(): readonly string[] {
 }
 
 export function handleIncrementINATP(
-  specifier: string,
+  incrementINATPstring: string,
   isCloze: boolean
 ): number {
   let viewModeOnly: boolean = false;
-  if (specifier.length > 1 && specifier.startsWith("_")) {
+  if (incrementINATPstring.length > 1 && incrementINATPstring.startsWith("_")) {
     viewModeOnly = true;
-    specifier = specifier.slice(1);
+    incrementINATPstring = incrementINATPstring.slice(1);
   }
   let [incrementOperator, incrementRest] = [
-    specifier.slice(0, 1),
-    specifier.slice(1),
+    incrementINATPstring.slice(0, 1),
+    incrementINATPstring.slice(1),
   ];
   if (!INCREMENT_SYNTAX_CHARACTERS.includes(incrementOperator))
     throw new Error(

@@ -1,12 +1,12 @@
 import { setCurrentClozeIndex } from "./current-cloze-index";
 
 export function handleAbsoluteINATP(
-  specifier: string,
+  absoluteINATPstring: string,
   isCloze: boolean
 ): number {
-  let tryParseInt = parseInt(specifier, 10);
-  if (isNaN(tryParseInt))
-    throw new Error(`Invalid number specifier: ${specifier}`);
-  if (isCloze) setCurrentClozeIndex(tryParseInt);
-  return tryParseInt;
+  let tryParseAbsoluteINATP = parseInt(absoluteINATPstring, 10);
+  if (isNaN(tryParseAbsoluteINATP))
+    throw new Error(`Invalid number specifier: ${absoluteINATPstring}`);
+  if (isCloze) setCurrentClozeIndex(tryParseAbsoluteINATP);
+  return tryParseAbsoluteINATP;
 }
