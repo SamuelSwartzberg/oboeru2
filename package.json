@@ -10,7 +10,15 @@
     "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "build": "npx webpack && sass src/scss/index.scss > dist/_bundle.css && cp dist/* ../Anki2/User\\ 1/collection.media"
+    "build": "npm run build-anki",
+    "build-anki": "npx webpack && sass src/scss/index.scss > dist/_bundle.css",
+    "postbuild": "cp dist/* \"${npm_package_config_paths_collection-media}\""
+  },
+  "config": {
+    "paths": {
+      "espanso": "../../res/config/.config/espanso/user",
+      "collection-media": "../Anki2/User\\ 1/collection.media"
+    }
   },
   "dependencies": {
     "@types/webpack-env": "^1.16.3",
