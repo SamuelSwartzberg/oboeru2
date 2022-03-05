@@ -1,0 +1,72 @@
+{
+  "mdStyleBacktickCode": {
+    "delimiters": "`",
+    "replacements": { "start": "<code>", "end": "</code>" }
+  },
+  "mdStyleBoldCustom": {
+    "delimiters": "⁑",
+    "replacements": { "start": "<b>", "end": "</b>" }
+  },
+  "mdStyleItalicCustom": {
+    "delimiters": "＊",
+    "replacements": { "start": "<i>", "end": "</i>" }
+  },
+  "mdStyleUnderlineCustom": {
+    "delimiters": "＿",
+    "replacements": { "start": "<u>", "end": "</u>" }
+  },
+  "mdStyleDelCustom": {
+    "delimiters": "〜",
+    "replacements": { "start": "<del>", "end": "</del>" }
+  },
+  "img": {
+    "delimiters": "✫",
+    "replacements": { "start": "<img src=\"", "end": "\"></img>" }
+  },
+  "definitions": {
+    "delimiters": { "start": "»", "end": "«" },
+    "replacements": { "start": "<dfn>", "end": "</dfn>" }
+  },
+  "cite": {
+    "delimiters": { "start": "『", "end": "』" },
+    "replacements": { "start": "<cite>", "end": "</cite>" }
+  },
+  "mark": {
+    "delimiters": { "start": "☞", "end": "☜" },
+    "replacements": { "start": "<mark>", "end": "</mark>" }
+  },
+  "q": {
+    "delimiters": { "start": "「", "end": "」" },
+    "replacements": { "start": "<q>", "end": "</q>" }
+  },
+  "a": {
+    "delimiters": { "start": "⇱", "end": "⇲" },
+    "replacements": { "start": "<a>", "end": "</a>" }
+  },
+  "aside": {
+    "delimiters": { "start": "⦗", "end": "⦘" },
+    "replacements": { "start": "<span class=\"aside\">", "end": "</span>" }
+  },
+  "ipa": {
+    "delimiters": { "start": "［", "end": "］" },
+    "replacements": { "start": "<span class=\"ipa\">", "end": "</span>" }
+  },
+  "sub": {
+    "delimiters": "⎵",
+    "replacements": { "start": "<sub>", "end": "</sub>" }
+  },
+  "sup": {
+    "delimiters": "⎴",
+    "replacements": { "start": "<sup>", "end": "</sup>" }
+  },
+  "ipaPhon": {
+    "delimiters": "／",
+    "replacements": {
+      "start": "<span class=\"ipa phoneme\">",
+      "end": "</span>"
+    }
+  },
+  "ampersand": { "delimiters": "＆", "replacements": "&amp;" },
+  "openingAngleBracket": { "delimiters": "‹", "replacements": "&lt;" },
+  "closingAngleBracket": { "delimiters": "›", "replacements": "&gt;" }
+}

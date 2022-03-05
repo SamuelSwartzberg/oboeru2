@@ -1,4 +1,4 @@
-import { getRegexReplacementPairs } from "./regex-replacement";
+import { getRegexReplacementPairs } from "./regex-replacement/simple";
 
 export function formatInlineLevel(htmlBlob: string): string {
   console.time("formatInlineLevelRegex");
