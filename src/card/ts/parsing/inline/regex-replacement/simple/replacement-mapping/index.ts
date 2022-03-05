@@ -1,4 +1,4 @@
-import replacementMappingping from "replacement-mapping.json";
+import replacementMapping from "replacement-mapping.json";
 
 export interface ElementReplacement {
   delimiters: string | StartEnd;
@@ -24,5 +24,11 @@ export function isStartEnd(value: any): value is StartEnd {
 }
 
 export function getReplacementMapping(): ElementReplacementMapping {
-  return replacementMappingping;
+  let mdStyleEntries: [string, ElementReplacement][] = Object.entries(
+    replacementMapping.mdStyle
+  );
+  let escapeEntries: [string, ElementReplacement][] = Object.entries(
+    replacementMapping.escapes
+  );
+  return Object.fromEntries([...mdStyleEntries, ...escapeEntries]);
 }
