@@ -18,7 +18,7 @@
   "config": {
     "paths": {
       "espanso": "../../res/config/.config/espanso/user",
-      "collection-media": "../Anki2/User\\ 1/collection.media"
+      "collection-media": "../Anki2/_/collection.media"
     }
   },
   "dependencies": {
