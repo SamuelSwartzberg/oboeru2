@@ -71,6 +71,7 @@
   "escapes": {
     "amp": { "delimiters": "＆", "replacements": "&amp;" },
     "lt": { "delimiters": "‹", "replacements": "&lt;" },
-    "gt": { "delimiters": "›", "replacements": "&gt;" }
+    "gt": { "delimiters": "›", "replacements": "&gt;" },
+    "7c": { "delimiters": "｜", "replacements": "|" }
   }
 }
