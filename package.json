@@ -11,8 +11,9 @@
     "webpack-cli": "^4.9.2"
   },
   "scripts": {
-    "build": "run-p build-anki",
-    "build-anki": "npx webpack && sass src/scss/index.scss > dist/_bundle.css",
+    "build": "run-p build-general build-anki",
+    "build-general": "npx webpack",
+    "build-anki": "sass src/card/scss/index.scss > dist/_bundle.css",
     "postbuild": "cp dist/* \"${npm_package_config_paths_collection-media}\""
   },
   "config": {

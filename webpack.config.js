@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  entry: ["./src/ts/index.ts"],
+  entry: "./src/card/ts/index.ts",
   module: {
     rules: [
       {
