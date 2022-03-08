@@ -61,5 +61,11 @@ function surroundCellByCellHTML(cellContents: string, cellType: "th" | "td") {
     let parsedSpanSpec = parseInt(spanSpec, 10);
     return Number.isNaN(parsedSpanSpec) ? 1 : parsedSpanSpec;
   });
-  return `<${tableSpecs.type} colspan="${parsedSpan}" rowspan="${parsedSpan}" class="${tableSpecs.class}" style="${tableSpecs.style}">${tableSpecs.nonspecifier}</${tableSpecs.type}>`;
+  return `<${
+    tableSpecs.type
+  } colspan="${parsedSpan}" rowspan="${parsedSpan}" class="${
+    tableSpecs.class
+  }" style="${tableSpecs.style}">${tableSpecs.nonspecifier.trim()}</${
+    tableSpecs.type
+  }>`;
 }
