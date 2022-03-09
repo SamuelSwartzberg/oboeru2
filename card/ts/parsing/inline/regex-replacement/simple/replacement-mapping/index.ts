@@ -1,4 +1,4 @@
-import replacementMapping from "replacement-mapping.json";
+import replacementMapping from "./replacement-mapping.json";
 
 export interface ElementReplacement {
   delimiters: string | StartEnd;
