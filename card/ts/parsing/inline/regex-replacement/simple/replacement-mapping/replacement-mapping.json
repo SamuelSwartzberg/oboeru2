@@ -68,6 +68,32 @@
       }
     }
   },
+  "ebnf": {
+    "repetition": {
+      "delimiters": {
+        "start": "｛",
+        "end": "｝"
+      },
+      "replacements": {
+        "start": "<span class=\"enbf-metacharacter repetition\">{</span>",
+        "end": "<span class=\"enbf-metacharacter repetition\">}</span>"
+      }
+    },
+    "repetition": {
+      "delimiters": {
+        "start": "〖",
+        "end": "〗"
+      },
+      "replacements": {
+        "start": "<span class=\"enbf-metacharacter option\">{</span>",
+        "end": "<span class=\"enbf-metacharacter option\">}</span>"
+      }
+    },
+    "alternation": {
+      "delimiters": "¦",
+      "replacements": "<span class=\"enbf-metacharacter alternation\">|</span>"
+    }
+  },
   "escapes": {
     "amp": { "delimiters": "＆", "replacements": "&amp;" },
     "lt": { "delimiters": "‹", "replacements": "&lt;" },
