@@ -3,7 +3,7 @@ declare module "replacement-mapping.json" {
   export default value;
 }
 
-interface StructuredElementReplacementMap {
+export interface StructuredElementReplacementMap {
   mdStyle: ElementReplacementMap;
   escapes: ElementReplacementMap;
 }

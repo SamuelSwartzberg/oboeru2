@@ -1,3 +1,4 @@
+import { StructuredElementReplacementMap } from "./replacement-mapping";
 import replacementMapping from "./replacement-mapping.json";
 
 export interface ElementReplacement {
@@ -5,7 +6,7 @@ export interface ElementReplacement {
   replacements: string | StartEnd;
 }
 
-interface ElementReplacementMapping {
+export interface ElementReplacementMap {
   [key: string]: ElementReplacement;
 }
 
@@ -23,7 +24,7 @@ export function isStartEnd(value: any): value is StartEnd {
   );
 }
 
-export function getReplacementMapping(): ElementReplacementMapping {
+export function getReplacementMapping(): ElementReplacementMap {
   let mdStyleEntries: [string, ElementReplacement][] = Object.entries(
     replacementMapping.mdStyle
   );
@@ -31,4 +32,8 @@ export function getReplacementMapping(): ElementReplacementMapping {
     replacementMapping.escapes
   );
   return Object.fromEntries([...mdStyleEntries, ...escapeEntries]);
+}
+
+export function getReplacementMappingUnflattened(): StructuredElementReplacementMap {
+  return replacementMapping;
 }

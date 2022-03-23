@@ -20,7 +20,7 @@ module.exports = {
   },
   output: {
     filename: "_bundle.js",
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "dist/card"),
   },
   mode: "production",
 };

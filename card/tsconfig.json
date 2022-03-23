@@ -28,6 +28,7 @@
     "module": "commonjs",                                /* Specify what module code is generated. */
     "rootDirs": [
       "../utilities", 
+      "../tools",
       "./"
     ],                                  /* Specify the root folder within your source files. */
     // "moduleResolution": "node",                       /* Specify how TypeScript looks up a file from a given module specifier. */
