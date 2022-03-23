@@ -1,4 +1,4 @@
-var currentClozeIndex = 1;
+var currentClozeIndex = 0;
 
 export function setCurrentClozeIndex(index: number): void {
   currentClozeIndex = index;

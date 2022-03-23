@@ -30,7 +30,6 @@ function buildBasicMdStyleShortcuts(
   );
   // sort mdStyleEntries by length of key to make sure one-character shortcuts don't have their keys eaten up
   mdStyleEntries.sort((a, b) => a[0].length - b[0].length);
-  console.log(mdStyleEntries);
 
   for (const [htmlName, mapping] of mdStyleEntries) {
     let usedChar = getUsedChar(htmlName, usedCharArray);
@@ -45,11 +44,9 @@ function buildBasicMdStyleShortcuts(
       key: usedChar,
       delimiters: mapping.delimiters,
     };
-    console.log(shortcut);
 
     shortcuts.push(shortcut);
   }
-  console.log(JSON.stringify(shortcuts, null, 2));
   return [shortcuts, usedCharArray];
 }
 
@@ -68,24 +65,31 @@ function applyDelimiterMutatorSpecifier(
   delimiter: StartEnd,
   delimiterMutatorSpecifier: DelimiterMutatorSpecifier
 ): StartEnd {
+  let returnStartEnd: StartEnd = {
+    start: delimiter.start,
+    end: delimiter.end,
+  };
+  console.log(delimiterMutatorSpecifier);
+
   if (delimiterMutatorSpecifier.wrapOutside) {
-    delimiter.start =
+    returnStartEnd.start =
       delimiterMutatorSpecifier.wrapOutside.start + delimiter.start;
-    delimiter.end = delimiter.end + delimiterMutatorSpecifier.wrapOutside.end;
+    returnStartEnd.end =
+      delimiter.end + delimiterMutatorSpecifier.wrapOutside.end;
   }
   if (delimiterMutatorSpecifier.wrapInside) {
-    delimiter.start =
-      delimiter.start + delimiterMutatorSpecifier.wrapInside.start;
-    delimiter.end = delimiterMutatorSpecifier.wrapInside.end + delimiter.end;
+    returnStartEnd.start =
+      returnStartEnd.start + delimiterMutatorSpecifier.wrapInside.start;
+    returnStartEnd.end =
+      delimiterMutatorSpecifier.wrapInside.end + returnStartEnd.end;
   }
-  return delimiter;
+  return returnStartEnd;
 }
 
 let possibleModifierMap: { [key: string]: DelimiterMutatorSpecifier } = {
-  "": {},
   shift: {
     wrapInside: {
-      start: "⟮c+;",
+      start: "⟮",
       end: "⟯",
     },
   },
@@ -105,31 +109,38 @@ let possibleModifierMap: { [key: string]: DelimiterMutatorSpecifier } = {
 
 let possibleModifierOutsideMap = Object.entries(possibleModifierMap).map(
   ([modifierString, delimiterMutatorSpecifier]) => {
+    let delimiterMutatorSpecifierClone = { ...delimiterMutatorSpecifier };
     modifierString = modifierString + " ctrl";
-    delimiterMutatorSpecifier.wrapOutside =
-      delimiterMutatorSpecifier.wrapInside;
-    delete delimiterMutatorSpecifier.wrapInside;
-    return [modifierString, delimiterMutatorSpecifier];
+    delimiterMutatorSpecifierClone.wrapOutside =
+      delimiterMutatorSpecifierClone.wrapInside;
+    delete delimiterMutatorSpecifierClone.wrapInside;
+    return [modifierString, delimiterMutatorSpecifierClone];
   }
 );
+
+console.log(possibleModifierMap);
+console.log(possibleModifierOutsideMap);
 
 possibleModifierMap = Object.fromEntries([
   ...Object.entries(possibleModifierMap),
   ...possibleModifierOutsideMap,
 ]);
 
+console.log(possibleModifierMap);
+
 function buildDerivedMdStyleShortcuts(
   shortcuts: Shortcut[],
   usedCharArray: string[]
 ): [Shortcut[], string[]] {
-  shortcuts.flatMap((shortcut) => {
+  shortcuts = shortcuts.flatMap((shortcut) => {
     let mappedShortcuts: Shortcut[] = [];
+    mappedShortcuts.push(shortcut);
     for (const [modifierString, delimiterMutatorSpecifier] of Object.entries(
       possibleModifierMap
     )) {
       let newShortcut: Shortcut = {
         key: shortcut.key,
-        modifiers: modifierString.split("\n"),
+        modifiers: modifierString.split(" "),
         delimiters: applyDelimiterMutatorSpecifier(
           shortcut.delimiters,
           delimiterMutatorSpecifier
@@ -157,16 +168,24 @@ function buildMdStyleShortcuts(
   return [shortcuts, usedCharArray];
 }
 
-export function buildHammerspoonShortcuts() {
+type ShortcutAsArray = [string[], string, { start: string; end: string }];
+
+export function buildHammerspoonShortcuts(): ShortcutAsArray[] {
   let [shortcuts, usedCharArray] = buildClozeShortcuts();
   [shortcuts, usedCharArray] = buildMdStyleShortcuts(shortcuts, usedCharArray);
-  console.log(JSON.stringify(shortcuts, null, 2));
+
+  const shortcutAsArray: ShortcutAsArray[] = shortcuts.map((shortcut) => [
+    shortcut.modifiers,
+    shortcut.key,
+    shortcut.delimiters,
+  ]);
+  return shortcutAsArray;
 }
 
 function getUsedChar(htmlName: string, usedCharArray: string[]): string {
   const aliases: { [key: string]: string } = {
-    sub: "_",
-    sup: "^",
+    sub: "0",
+    sup: "1",
   };
 
   // if we have an explicit alias, use that
@@ -176,7 +195,8 @@ function getUsedChar(htmlName: string, usedCharArray: string[]): string {
   }
 
   // else use a character from its name that hasn't been used yet
-  for (const char of htmlName) {
+  for (let char of htmlName) {
+    char = char.toLowerCase();
     if (!usedCharArray.includes(char)) {
       usedCharArray.push(char);
       return char;

@@ -1,26 +1,44 @@
-import { processCustomClozelikes } from "./single-clozelike";
+import {
+  annnotateWithCountedNumber,
+  processCustomClozelikesToString,
+} from "./single-clozelike";
 import { possiblyRecursiveStringArray } from "./parse-to-tree";
 
 export function replaceClozeLikes(
   clozeLikeArrayTree: possiblyRecursiveStringArray,
   isTop: boolean
 ): string {
+  return reduceTree(clozeLikeArrayTree, isTop, processCustomClozelikesToString);
+}
+
+export function annotateClozesInStructureWithCountedNumber(
+  clozeLikeArrayTree: possiblyRecursiveStringArray,
+  isTop: boolean
+): string {
+  return reduceTree(clozeLikeArrayTree, isTop, annnotateWithCountedNumber);
+}
+
+function reduceTree(
+  clozeLikeArrayTree: possiblyRecursiveStringArray,
+  isTop: boolean,
+  reducerFunc: (contents: string) => string
+): string {
   if (Array.isArray(clozeLikeArrayTree) && clozeLikeArrayTree.length === 1) {
-    return processCustomClozelikes(clozeLikeArrayTree[0] as string);
+    return reducerFunc(clozeLikeArrayTree[0] as string);
   } else if (!Array.isArray(clozeLikeArrayTree)) {
     return clozeLikeArrayTree;
   } else {
     if (isTop)
       return clozeLikeArrayTree
         .map((elem) =>
-          replaceClozeLikes(elem as possiblyRecursiveStringArray, false)
+          reduceTree(elem as possiblyRecursiveStringArray, false, reducerFunc)
         )
         .join("");
     else
-      return processCustomClozelikes(
+      return reducerFunc(
         clozeLikeArrayTree
           .map((elem) =>
-            replaceClozeLikes(elem as possiblyRecursiveStringArray, false)
+            reduceTree(elem as possiblyRecursiveStringArray, false, reducerFunc)
           )
           .join("")
       );

@@ -20,7 +20,29 @@ export function actionTargetsToObject(
         ...handleNumericActionTargetPart(actionTargetPart, isCloze)
       );
     }
-    // else do nothing
   }
   return actionTargetsObject;
+}
+
+export function actionTargetsToResolvedNumber(
+  actionTargets: string[],
+  isCloze: boolean
+): string[] {
+  let newActionTargets: string[] = [];
+  for (const actionTargetPart of actionTargets) {
+    if (
+      actionTargetPart === "a" ||
+      actionTargetPart === "b" ||
+      actionTargetPart === "∞"
+    )
+      newActionTargets.push(actionTargetPart);
+    else {
+      newActionTargets.push(
+        ...handleNumericActionTargetPart(actionTargetPart, isCloze).map(
+          (actionTarget) => actionTarget.toString()
+        )
+      );
+    }
+  }
+  return newActionTargets;
 }
