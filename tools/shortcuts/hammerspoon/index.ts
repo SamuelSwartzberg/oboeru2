@@ -123,7 +123,7 @@ function buildDerivedMdStyleShortcuts(
   usedCharArray: string[]
 ): [Shortcut[], string[]] {
   shortcuts.flatMap((shortcut) => {
-    let shortcuts: Shortcut[] = [];
+    let mappedShortcuts: Shortcut[] = [];
     for (const [modifierString, delimiterMutatorSpecifier] of Object.entries(
       possibleModifierMap
     )) {
@@ -135,9 +135,9 @@ function buildDerivedMdStyleShortcuts(
           delimiterMutatorSpecifier
         ),
       };
-      shortcuts.push(newShortcut);
+      mappedShortcuts.push(newShortcut);
     }
-    return shortcuts;
+    return mappedShortcuts;
   });
   return [shortcuts, usedCharArray];
 }
