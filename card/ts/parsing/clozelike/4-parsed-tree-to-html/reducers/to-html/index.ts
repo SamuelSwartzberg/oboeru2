@@ -1,38 +1,33 @@
-import { TreeElement } from "../../../3-tree-transformation/globals";
 import { WithParsedActionMappings } from "../../../3-tree-transformation/mappers/parse-action-mapping-to-action-targets";
+import { NarrowTreeElement } from "../../reduce-tree";
 import { getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers } from "./action-mapping-to-classes";
 import { clozelikeHTMLFromStringConstituents } from "./clozelike-html-from-string-components";
 import { getHintStyleDeclarationIfAny } from "./hint";
 
-export function getStringFromTypeWithStringOrStringStringValueAndChildrenPotentiallyClozelike(
-  treeElement: TreeElement<WithParsedActionMappings>
-  stringContentsWithStringifiedChildren: string
+export function getStringFromWithParsedActionMappingsTreeElement(
+  treeElement: NarrowTreeElement<WithParsedActionMappings>
 ): string {
-  if (isClozelike(valueAndChildrenAndPotentiallyClozelike)) {
-    return getHTMLFromClozelike(
-      valueAndChildrenAndPotentiallyClozelike,
-      stringContentsWithStringifiedChildren
-    );
+  if (treeElement.contents.clozelike) {
+    return getHTMLFromClozelike(treeElement);
   } else {
-    let value;
-    if (Array.isArray(valueAndChildrenAndPotentiallyClozelike.value)) {
-      value = valueAndChildrenAndPotentiallyClozelike.value.join("");
-    } else value = valueAndChildrenAndPotentiallyClozelike.value;
-    return value;
+    return treeElement.value;
   }
 }
 
 function getHTMLFromClozelike(
-  clozelike: Clozelike,
-  stringContentsWithStringifiedChildren: string
+  treeElement: NarrowTreeElement<WithParsedActionMappings>
 ): string {
+  if (!treeElement.contents.parsedActionMappings)
+    throw new Error(
+      `The clozelike with textcontent "${treeElement.value}" has no parsed action mappings, which is not allowed (and should be impossible, since it is coded to default to a cloze).`
+    );
   const activityClasses =
     getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(
-      clozelike.specifiers
+      treeElement.contents.parsedActionMappings
     ).join(" ");
   return clozelikeHTMLFromStringConstituents(
-    stringContentsWithStringifiedChildren,
+    treeElement.value,
     activityClasses,
-    getHintStyleDeclarationIfAny(clozelike.hint)
+    getHintStyleDeclarationIfAny(treeElement.contents.hint)
   );
 }

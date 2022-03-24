@@ -1,44 +1,43 @@
-import {
-  TypeWithStringOrStringStringValueAndChildren,
-  TypeWithStringOrStringStringValueAndChildrenCanAlsoBe,
-} from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
+import { TreeElement } from "../3-tree-transformation/globals";
 
-export function reduceTree<
-  T extends TypeWithStringOrStringStringValueAndChildrenCanAlsoBe<T>
->(
-  valueAndChildrenAndPotentiallyT:
-    | T
-    | TypeWithStringOrStringStringValueAndChildren,
+export type NarrowTreeElement<T> = TreeElement<T> & {
+  value: string;
+};
+
+export function reduceTree<T>(
+  treeElement: TreeElement<T>,
   isTop: boolean,
-  reducerFunc: (
-    contents: T | TypeWithStringOrStringStringValueAndChildren,
-    reducedValue: string
-  ) => string
+  reducerFunc: (treeElement: NarrowTreeElement<T>) => string
 ): string {
-  if (valueAndChildrenAndPotentiallyT.children.length === 0) {
-    if (Array.isArray(valueAndChildrenAndPotentiallyT.value)) {
-      valueAndChildrenAndPotentiallyT.value =
-        valueAndChildrenAndPotentiallyT.value.join("");
+  if (treeElement.children.length === 0) {
+    let value: string;
+    if (Array.isArray(treeElement.value)) {
+      value = treeElement.value.join("");
+    } else {
+      value = treeElement.value;
     }
-    return reducerFunc(
-      valueAndChildrenAndPotentiallyT,
-      valueAndChildrenAndPotentiallyT.value
-    );
+    return reducerFunc({
+      ...treeElement,
+      value,
+    });
   } else {
     if (isTop) {
-      return valueAndChildrenAndPotentiallyT.children
+      return treeElement.children
         .map((child) => reduceTree(child, false, reducerFunc))
         .join("");
     } else {
-      const reducedChildren = valueAndChildrenAndPotentiallyT.children.map(
-        (child) => reduceTree(child, false, reducerFunc)
+      const reducedChildren = treeElement.children.map((child) =>
+        reduceTree(child, false, reducerFunc)
       );
-      if (Array.isArray(valueAndChildrenAndPotentiallyT.value)) {
-        const reducedValue =
-          valueAndChildrenAndPotentiallyT.value[0] +
+      if (Array.isArray(treeElement.value)) {
+        const value =
+          treeElement.value[0] +
           reducedChildren.join("") +
-          valueAndChildrenAndPotentiallyT.value[1];
-        return reducerFunc(valueAndChildrenAndPotentiallyT, reducedValue);
+          treeElement.value[1];
+        return reducerFunc({
+          ...treeElement,
+          value,
+        });
       } else {
         throw new Error(
           "should not be possible for the value to not be an array"

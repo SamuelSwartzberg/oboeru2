@@ -1,10 +1,8 @@
 import log from "loglevel";
 import { parseClozelikeStringToTree } from "./1-string-to-tree";
 import { mapTreeToStructuredTree } from "./2-tree-to-structured-tree";
-import {
-  annotateClozesInStructureWithCountedNumber,
-  reduceTreeToHTML,
-} from "./4-parsed-tree-to-html";
+import { mapStructuredTreeToParsedClozelikes } from "./3-tree-transformation";
+import { reduceTreeToHTML } from "./4-parsed-tree-to-html";
 
 export function parseClozelikes(html: string): string {
   const treeWithClozelikesRepresentedAsNestedArrays =
@@ -21,12 +19,4 @@ export function parseClozelikes(html: string): string {
     treeWithClozelikesStoredInChildrenAndValuesSeparatedOut,
     true
   );
-}
-
-export function annotateNumber(html: string): string {
-  throw new Error("Not implemented");
-  // return annotateClozesInStructureWithCountedNumber(
-  //   parseClozeLikesToTree(html),
-  //   true
-  // );
 }
