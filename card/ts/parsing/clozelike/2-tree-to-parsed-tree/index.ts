@@ -20,7 +20,10 @@ export function processCustomClozelikesToString(contents: string): string {
       specifiers
     )}`
   );
-  if (Object.keys(specifiers).length === 0) return contents;
+  if (Object.keys(specifiers).length === 0)
+    throw new Error(
+      `The clozelike with textcontent "${contents}" has no specifiers, which is not allowed (and should be impossible, since it is coded to default to a cloze).`
+    );
   let contentAndHint = splitIntoContentAndHint(nonspecifier);
   let activityClasses =
     getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(
