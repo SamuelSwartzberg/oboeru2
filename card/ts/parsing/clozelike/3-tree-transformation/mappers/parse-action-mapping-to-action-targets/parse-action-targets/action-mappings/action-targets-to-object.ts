@@ -1,4 +1,4 @@
-import { ActionTargetsObject } from ".";
+import { ActionTargetsObject } from "..";
 import { handleNumericActionTargetPart } from "./numeric-action-target-part";
 
 export function actionTargetsToObject(

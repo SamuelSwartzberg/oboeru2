@@ -3,16 +3,12 @@ import { TreeElement } from "./globals";
 export function mapTree<T, U>(
   treeElement: TreeElement<T>,
   isTopLevel: boolean,
-  mapFunction: (element: TreeElement<T>) => U
+  mapFunction: (element: TreeElement<T>) => TreeElement<U>
 ): TreeElement<U> {
   const newChildren = treeElement.children.map((child) =>
     mapTree(child, false, mapFunction)
   );
-  const newContents = mapFunction(treeElement);
-  const newElement = {
-    value: treeElement.value,
-    children: newChildren,
-    contents: newContents,
-  };
+  const newElement = mapFunction(treeElement);
+
   return newElement;
 }

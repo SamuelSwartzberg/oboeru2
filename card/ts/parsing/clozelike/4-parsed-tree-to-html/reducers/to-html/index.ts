@@ -1,16 +1,11 @@
-import { TypeWithStringOrStringStringValueAndChildren } from "../../../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
-import {
-  Clozelike,
-  isClozelike,
-} from "../../../2-tree-to-structured-tree/mappers/to-parsed-clozelike";
+import { TreeElement } from "../../../3-tree-transformation/globals";
+import { WithParsedActionMappings } from "../../../3-tree-transformation/mappers/parse-action-mapping-to-action-targets";
 import { getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers } from "./action-mapping-to-classes";
 import { clozelikeHTMLFromStringConstituents } from "./clozelike-html-from-string-components";
 import { getHintStyleDeclarationIfAny } from "./hint";
 
 export function getStringFromTypeWithStringOrStringStringValueAndChildrenPotentiallyClozelike(
-  valueAndChildrenAndPotentiallyClozelike:
-    | TypeWithStringOrStringStringValueAndChildren
-    | Clozelike,
+  treeElement: TreeElement<WithParsedActionMappings>
   stringContentsWithStringifiedChildren: string
 ): string {
   if (isClozelike(valueAndChildrenAndPotentiallyClozelike)) {

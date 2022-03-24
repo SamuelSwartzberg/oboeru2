@@ -1,7 +1,10 @@
 import { TreeElement } from "../../globals";
 import { WithSeparatedActionMappings } from "../splitting/split-action-mapping";
 import { WithSpecifier } from "../splitting/split-specifier";
-import { ActionTargetsObject, parseActionTargets } from "./to-parsed-clozelike";
+import {
+  ActionTargetsObject,
+  parseActionTargets,
+} from "./parse-action-targets";
 
 type ParsedActionMappings = {
   parsedActionMappings?: {
@@ -24,7 +27,7 @@ export function parseActionMapping(
       for (const [key, value] of Object.entries(
         treeElement.contents.separatedActionMappings
       )) {
-        parsedActionMappings[key] = parseActionTargets(value);
+        parsedActionMappings[key] = parseActionTargets(value, key === "c");
       }
       const newTreeElement: TreeElement<WithParsedActionMappings> = {
         ...treeElement,
