@@ -1,14 +1,27 @@
+import log from "loglevel";
 import { StartEnd } from "./simple/replacement-mapping";
 
+export function unescapedDelimiter(delimiter: string): string {
+  return `(?<!\\\\)${delimiter}`;
+}
+function captureNot(delimiter: string): string {
+  return `([^${delimiter}]+?)`;
+}
+
 export function buildRegexFromDelimiters(delimiter: StartEnd): RegExp {
+  log.debug(`Building regex from delimiters ${JSON.stringify(delimiter)}`);
   return new RegExp(
-    `(?<!\\\\)${delimiter.start}([^${delimiter.start}]+?)(?<!\\\\)${delimiter.end}`,
+    unescapedDelimiter(delimiter.start) +
+      captureNot(delimiter.end) +
+      unescapedDelimiter(delimiter.end),
     "g"
   );
 }
 
 export function buildRegexFromDelimiter(delimiter: string): RegExp {
-  return buildRegexFromDelimiters({ start: delimiter, end: delimiter });
+  const delimiters = { start: delimiter, end: delimiter };
+  log.debug(`Mapping delimiter ${delimiter} to ${JSON.stringify(delimiters)}`);
+  return buildRegexFromDelimiters(delimiters);
 }
 
 export function buildReplacementsFromReplacementDelimiters(

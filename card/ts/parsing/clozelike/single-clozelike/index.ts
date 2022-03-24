@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { separateIntoSpecifiersAndNonspecifiers } from "../../globals";
 import {
   getActionNameAndActionTargetsFromActionMappingString,
@@ -14,7 +15,11 @@ export function processCustomClozelikesToString(contents: string): string {
     getActionNameAndActionTargetsFromActionMappingString,
     "c+"
   );
-
+  log.debug(
+    `The clozelike with textcontent "${contents}" has specifiers: ${JSON.stringify(
+      specifiers
+    )}`
+  );
   if (Object.keys(specifiers).length === 0) return contents;
   let contentAndHint = splitIntoContentAndHint(nonspecifier);
   let activityClasses =

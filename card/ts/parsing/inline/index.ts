@@ -1,5 +1,5 @@
 import log from "loglevel";
-import { getRegexReplacementPairs } from "./regex-replacement/simple";
+import { getRegexReplacementPairs } from "./regex-replacement";
 
 export function formatInlineLevel(htmlBlob: string): string {
   log.debug(
