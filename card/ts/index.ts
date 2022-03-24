@@ -3,9 +3,13 @@ import { formatTags, scrollClozeIntoView } from "./anki-card";
 import { applyEventHandlers } from "./dom-event-manipulators";
 import { setActiveGroups } from "./group-activation";
 import { decoratePostBuild } from "./post-build";
+import log from "loglevel";
 
 var container = document.querySelector(".container");
 if (!container) throw new Error("No main container.");
+
+log.setLevel("debug");
+log.info("Log active.");
 
 formatTags();
 

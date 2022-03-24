@@ -17,12 +17,13 @@
     "build-utils": "(cd utilities && tsc)",
     "build-tools": "(cd tools && ts-node index.ts)",
     "build-anki": "npx webpack && sass card/scss/index.scss > dist/card/_bundle.css",
-    "postbuild": "[[ ! -z \"$ANKI_COLLECTION_MEDIA\" ]] && exit 1; cp dist/card/* \"$ANKI_COLLECTION_MEDIA\""
+    "postbuild": "[[ -z \"$ANKI_COLLECTION_MEDIA\" ]] && exit 1; cp dist/card/* \"$ANKI_COLLECTION_MEDIA\""
   },
   "dependencies": {
     "@types/webpack-env": "^1.16.3",
     "commander": "^9.0.0",
     "highlight.js": "^11.4.0",
+    "loglevel": "^1.8.0",
     "svg-inline-loader": "^0.8.2"
   }
 }

@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { RegexAndReplacement } from "..";
 import {
   buildRegexFromDelimiter,
@@ -10,6 +11,9 @@ import {
 } from "./replacement-mapping";
 
 export function getRegexReplacementPairs(): RegexAndReplacement[] {
+  log.debug(
+    "Getting regex and replacement pairs for simple ones (i.e. those without logic which can be parsed from a json file)."
+  );
   let replacementMapping = getReplacementMapping();
   let regexAndReplacements: RegexAndReplacement[] = [];
   for (let key in replacementMapping) {

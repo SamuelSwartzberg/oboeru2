@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { RegexAndReplacement } from "..";
 import { buildRegexFromDelimiters } from "../regex-builder";
 import { StartEnd } from "../simple/replacement-mapping";
@@ -23,5 +24,8 @@ function buldKbdRegex(): RegexAndReplacement {
 }
 
 export function getRegexReplacementPairs(): RegexAndReplacement[] {
+  log.debug(
+    "Getting regex and replacement pairs for complex ones (i.e. those with logic (currently kbd and ruby)."
+  );
   return [buildRubyRegex(), buldKbdRegex()];
 }

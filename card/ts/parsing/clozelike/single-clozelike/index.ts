@@ -9,24 +9,23 @@ import { clozelikeHTMLFromStringConstituents } from "./structs-to-html/clozelike
 import { getHintStyleDeclarationIfAny } from "./structs-to-html/hint";
 
 export function processCustomClozelikesToString(contents: string): string {
-  // let [nonspecifier, specifiers] = separateIntoSpecifiersAndNonspecifiers(
-  //   contents,
-  //   getActionNameAndActionTargetsFromActionMappingString,
-  //   "c+"
-  // );
+  let [nonspecifier, specifiers] = separateIntoSpecifiersAndNonspecifiers(
+    contents,
+    getActionNameAndActionTargetsFromActionMappingString,
+    "c+"
+  );
 
-  // if (Object.keys(specifiers).length === 0) return contents;
-  // let contentAndHint = splitIntoContentAndHint(nonspecifier);
-  // let activityClasses =
-  //   getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(
-  //     specifiers
-  //   ).join(" ");
-  // return clozelikeHTMLFromStringConstituents(
-  //   contentAndHint.content,
-  //   activityClasses,
-  //   getHintStyleDeclarationIfAny(contentAndHint.hint)
-  // );
-  return "";
+  if (Object.keys(specifiers).length === 0) return contents;
+  let contentAndHint = splitIntoContentAndHint(nonspecifier);
+  let activityClasses =
+    getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(
+      specifiers
+    ).join(" ");
+  return clozelikeHTMLFromStringConstituents(
+    contentAndHint.content,
+    activityClasses,
+    getHintStyleDeclarationIfAny(contentAndHint.hint)
+  );
 }
 
 export function annnotateWithCountedNumber(contents: string): string {

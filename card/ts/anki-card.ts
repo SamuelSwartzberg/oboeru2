@@ -1,5 +1,7 @@
 // Backness to attr
 
+import log from "loglevel";
+
 var backIndicator = document.querySelector(".is-back-indicator");
 var isBackOriginal: boolean = !!backIndicator;
 if (backIndicator) backIndicator.remove(); // Remove the temporary back indicator
@@ -14,7 +16,9 @@ if (isBackOriginal) {
 }
 
 export function isFront(): boolean {
-  return document.body.classList.contains("is-front");
+  const isFront = document.body.classList.contains("is-front");
+  log.debug("Called isFront(), was front: " + isFront);
+  return isFront;
 }
 
 export function currentCardIndex(): number {
@@ -27,26 +31,39 @@ export function currentCardIndex(): number {
       "there is no class on body indicating which cloze this is. We cannot function without such an indication."
     );
   else {
-    return parseInt(classIndicatingClass.slice(4), 10);
+    const parsedCardIndex = parseInt(classIndicatingClass.slice(4), 10);
+    log.debug(
+      `Called currentCardIndex(), which parsed the index of ${parsedCardIndex} from ${classIndicatingClass}.`
+    );
+    return parsedCardIndex;
   }
 }
 
 export function scrollClozeIntoView(): void {
   let firstActiveCloze = document.querySelector(".c-active");
   if (!firstActiveCloze) throw new Error("no active cloze in document");
+  log.debug(`Aquired ${firstActiveCloze.outerHTML} for scrolling into view.`);
   firstActiveCloze.scrollIntoView(true);
   if (!(window.innerHeight + window.scrollY >= document.body.scrollHeight)) {
     // you're not at the bottom of the page
     window.scrollBy(0, -100);
+    log.debug(
+      "Scroll up a bit to better place the cloze (which we can since we're not at the bottom of the page)."
+    );
   }
 }
 
 export function formatTags(): void {
   var tagContainer = document.querySelector("#tag-container");
   if (tagContainer) {
-    tagContainer.innerHTML = tagContainer.innerHTML
+    const oldTagContents = tagContainer.innerHTML;
+    const newTagContents = oldTagContents
       .split("::")
       .map((tagElement: string) => tagElement.replace(/-/g, " "))
       .join('<span class="breadcrumb-separator"> / </span>');
+    tagContainer.innerHTML = newTagContents;
+    log.debug(
+      `Called formatTags(), which formatted the tag container from ${oldTagContents} to ${newTagContents}.`
+    );
   } else throw new Error("No tag container found, but one should be present.");
 }
