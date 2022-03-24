@@ -15,7 +15,6 @@ export type ActionTargetsObject = {
   cardsForWhichToApply: number[];
   all: boolean;
   group: groupIfAny;
-  hint?: string;
 };
 
 export function getActionNameAndActionTargetsFromActionMappingString(
