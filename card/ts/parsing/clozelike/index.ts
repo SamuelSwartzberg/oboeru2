@@ -8,9 +8,12 @@ import {
 
 export function parseClozelikes(html: string): string {
   const clozeLikeTree = parseClozeLikesToTree(html);
-  log.debug("Parsed cloze-like tree: ");
+  log.debug("Parsed string to clozelike tree: ");
   log.debug(clozeLikeTree);
   const parsedTree = mapTreeToParsedTree(clozeLikeTree);
+  log.debug("Transformed clozelike tree to parsed clozelikeTree: ");
+  log.debug(parsedTree);
+
   return reduceTreeToHTML(parsedTree, true);
 }
 
