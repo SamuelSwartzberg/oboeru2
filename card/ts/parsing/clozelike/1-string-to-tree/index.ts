@@ -3,31 +3,28 @@ import {
   ContentComponent,
   TreeBuilderArr,
   TreeNode,
-} from "../parse-to-tree";
+} from "../../parse-to-tree";
+import { possiblyRecursiveTArrayElement } from "../globals";
 
 var GROUP = {
   START: "⟮" as const,
   END: "⟯" as const,
 };
-export type possiblyRecursiveStringArray = (
-  | string
-  | possiblyRecursiveStringArray
-)[];
 
 export function parseClozeLikesToTree(
   text: string
-): possiblyRecursiveStringArray {
-  let clozeArray: possiblyRecursiveStringArray = [];
+): possiblyRecursiveTArray<string> {
+  let clozeArray: possiblyRecursiveTArray<string> = [];
   let unparsedChildrenCharArray: string[] = [...text];
-  let chainOfDepth: possiblyRecursiveStringArray[] = [clozeArray];
+  let chainOfDepth: possiblyRecursiveTArray<string>[] = [clozeArray];
   let label: string = "";
-  let currentLevel: possiblyRecursiveStringArray = clozeArray;
+  let currentLevel: possiblyRecursiveTArray<string> = clozeArray;
   for (let currentChar of unparsedChildrenCharArray) {
     if (currentChar === GROUP.START) {
       if (label.length > 0) {
         currentLevel.push(label);
       }
-      let newLevel: string | string[] = [];
+      let newLevel: possiblyRecursiveTArrayElement<string> = [];
       currentLevel.push(newLevel);
       currentLevel = newLevel;
       chainOfDepth.push(currentLevel);

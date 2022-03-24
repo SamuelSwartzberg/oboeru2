@@ -1,15 +1,20 @@
 import log from "loglevel";
-import { parseClozeLikesToTree, parseClozeLikesToTree2 } from "./parse-to-tree";
+import {
+  parseClozeLikesToTree,
+  parseClozeLikesToTree2,
+} from "./1-string-to-tree";
+import { mapTreeToParsedTree } from "./2-tree-to-parsed-tree";
 import {
   annotateClozesInStructureWithCountedNumber,
-  replaceClozeLikes,
-} from "./tree-to-string";
+  reduceTreeToHTML,
+} from "./3-parsed-tree-to-html";
 
 export function parseClozelikes(html: string): string {
   const clozeLikeTree = parseClozeLikesToTree(html);
   log.debug("Parsed cloze-like tree: ");
   log.debug(clozeLikeTree);
-  return replaceClozeLikes(clozeLikeTree, true);
+  const parsedTree = mapTreeToParsedTree(clozeLikeTree);
+  return reduceTreeToHTML(parsedTree, true);
 }
 
 export function annotateNumber(html: string): string {
