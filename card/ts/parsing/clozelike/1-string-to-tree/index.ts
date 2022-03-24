@@ -4,7 +4,10 @@ import {
   TreeBuilderArr,
   TreeNode,
 } from "../../parse-to-tree";
-import { possiblyRecursiveTArrayElement } from "../globals";
+import {
+  possiblyRecursiveTArray,
+  possiblyRecursiveTArrayElement,
+} from "../globals";
 
 var GROUP = {
   START: "⟮" as const,

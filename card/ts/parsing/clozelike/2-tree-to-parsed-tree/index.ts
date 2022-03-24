@@ -1,8 +1,7 @@
 import { possiblyRecursiveTArray } from "../globals";
 import {
-  ClozelikeWithChildren,
   mapTree,
-  TypeWithValueAndChildren,
+  TypeWithStringOrStringStringValueAndChildren,
 } from "./map-tree";
 import {
   Clozelike,
@@ -11,6 +10,6 @@ import {
 
 export function mapTreeToParsedTree(
   clozeLikeTree: possiblyRecursiveTArray<string>
-): ClozelikeWithChildren | TypeWithValueAndChildren {
+): Clozelike | TypeWithStringOrStringStringValueAndChildren {
   return mapTree<Clozelike>(clozeLikeTree, true, processStringToClozelike);
 }

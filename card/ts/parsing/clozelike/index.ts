@@ -1,8 +1,5 @@
 import log from "loglevel";
-import {
-  parseClozeLikesToTree,
-  parseClozeLikesToTree2,
-} from "./1-string-to-tree";
+import { parseClozeLikesToTree } from "./1-string-to-tree";
 import { mapTreeToParsedTree } from "./2-tree-to-parsed-tree";
 import {
   annotateClozesInStructureWithCountedNumber,
@@ -18,8 +15,9 @@ export function parseClozelikes(html: string): string {
 }
 
 export function annotateNumber(html: string): string {
-  return annotateClozesInStructureWithCountedNumber(
-    parseClozeLikesToTree(html),
-    true
-  );
+  throw new Error("Not implemented");
+  // return annotateClozesInStructureWithCountedNumber(
+  //   parseClozeLikesToTree(html),
+  //   true
+  // );
 }

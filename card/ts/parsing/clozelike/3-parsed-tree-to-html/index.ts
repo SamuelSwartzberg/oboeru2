@@ -1,21 +1,29 @@
-
+import { TypeWithStringOrStringStringValueAndChildren } from "../2-tree-to-parsed-tree/map-tree";
+import { Clozelike } from "../2-tree-to-parsed-tree/mappers/to-parsed-clozelike";
+import { reduceTree } from "./reduce-tree";
 import { annnotateWithCountedNumber } from "./reducers/number-only";
-import { getHTMLFromClozelike } from "./reducers/to-html";
-import { possiblyRecursiveTArray<string> } from "../1-string-to-tree";
+import { getStringFromTypeWithStringOrStringStringValueAndChildrenPotentiallyClozelike } from "./reducers/to-html";
 
 export function reduceTreeToHTML(
-  clozeLikeArrayTree: possiblyRecursiveTArray<string>,
+  clozeLikeArrayTree: Clozelike | TypeWithStringOrStringStringValueAndChildren,
   isTop: boolean
 ): string {
-  return reduceTree(clozeLikeArrayTree, isTop, getHTMLFromClozelike);
+  return reduceTree<Clozelike>(
+    clozeLikeArrayTree,
+    isTop,
+    getStringFromTypeWithStringOrStringStringValueAndChildrenPotentiallyClozelike
+  );
 }
 
 export function annotateClozesInStructureWithCountedNumber(
-  clozeLikeArrayTree: possiblyRecursiveTArray<string>,
+  clozeLikeArrayTree: Clozelike | TypeWithStringOrStringStringValueAndChildren,
   isTop: boolean
 ): string {
-  return reduceTree(clozeLikeArrayTree, isTop, annnotateWithCountedNumber);
+  throw new Error("not implemented");
+  //   return reduceTree<Clozelike>(
+  //     clozeLikeArrayTree,
+  //     isTop,
+  //     annnotateWithCountedNumber
+  //   );
+  //
 }
-
-
-
