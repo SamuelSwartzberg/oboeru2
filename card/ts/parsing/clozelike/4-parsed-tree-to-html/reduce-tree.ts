@@ -1,7 +1,7 @@
 import {
   TypeWithStringOrStringStringValueAndChildren,
   TypeWithStringOrStringStringValueAndChildrenCanAlsoBe,
-} from "../2-tree-to-parsed-tree/map-tree";
+} from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
 
 export function reduceTree<
   T extends TypeWithStringOrStringStringValueAndChildrenCanAlsoBe<T>

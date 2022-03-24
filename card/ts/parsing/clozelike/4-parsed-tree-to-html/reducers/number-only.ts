@@ -1,4 +1,4 @@
-import { Clozelike } from "../../2-tree-to-parsed-tree/mappers/to-parsed-clozelike";
+import { Clozelike } from "../../2-tree-to-structured-tree/mappers/to-parsed-clozelike";
 
 export function annnotateWithCountedNumber(clozelike: Clozelike): string {
   throw new Error("not implemented");

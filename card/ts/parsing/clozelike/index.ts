@@ -1,20 +1,26 @@
 import log from "loglevel";
-import { parseClozeLikesToTree } from "./1-string-to-tree";
-import { mapTreeToParsedTree } from "./2-tree-to-parsed-tree";
+import { parseClozelikeStringToTree } from "./1-string-to-tree";
+import { mapTreeToStructuredTree } from "./2-tree-to-structured-tree";
 import {
   annotateClozesInStructureWithCountedNumber,
   reduceTreeToHTML,
-} from "./3-parsed-tree-to-html";
+} from "./4-parsed-tree-to-html";
 
 export function parseClozelikes(html: string): string {
-  const clozeLikeTree = parseClozeLikesToTree(html);
-  log.debug("Parsed string to clozelike tree: ");
-  log.debug(clozeLikeTree);
-  const parsedTree = mapTreeToParsedTree(clozeLikeTree);
-  log.debug("Transformed clozelike tree to parsed clozelikeTree: ");
-  log.debug(parsedTree);
-
-  return reduceTreeToHTML(parsedTree, true);
+  const treeWithClozelikesRepresentedAsNestedArrays =
+    parseClozelikeStringToTree(html);
+  log.debug(treeWithClozelikesRepresentedAsNestedArrays);
+  const treeWithClozelikesStoredInChildrenAndValuesSeparatedOut =
+    mapTreeToStructuredTree(treeWithClozelikesRepresentedAsNestedArrays);
+  log.debug(treeWithClozelikesStoredInChildrenAndValuesSeparatedOut);
+  const treeWithClozelikesParsedToObject = mapStructuredTreeToParsedClozelikes(
+    treeWithClozelikesStoredInChildrenAndValuesSeparatedOut
+  );
+  log.debug(treeWithClozelikesParsedToObject);
+  return reduceTreeToHTML(
+    treeWithClozelikesStoredInChildrenAndValuesSeparatedOut,
+    true
+  );
 }
 
 export function annotateNumber(html: string): string {

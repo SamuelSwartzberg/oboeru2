@@ -14,7 +14,7 @@ var GROUP = {
   END: "⟯" as const,
 };
 
-export function parseClozeLikesToTree(
+export function parseClozelikeStringToTree(
   text: string
 ): possiblyRecursiveTArray<string> {
   let clozeArray: possiblyRecursiveTArray<string> = [];

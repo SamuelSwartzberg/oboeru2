@@ -1,8 +1,8 @@
-import { TypeWithStringOrStringStringValueAndChildren } from "../../../2-tree-to-parsed-tree/map-tree";
+import { TypeWithStringOrStringStringValueAndChildren } from "../../../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
 import {
   Clozelike,
   isClozelike,
-} from "../../../2-tree-to-parsed-tree/mappers/to-parsed-clozelike";
+} from "../../../2-tree-to-structured-tree/mappers/to-parsed-clozelike";
 import { getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers } from "./action-mapping-to-classes";
 import { clozelikeHTMLFromStringConstituents } from "./clozelike-html-from-string-components";
 import { getHintStyleDeclarationIfAny } from "./hint";

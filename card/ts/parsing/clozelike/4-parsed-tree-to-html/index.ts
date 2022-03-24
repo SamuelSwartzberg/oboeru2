@@ -1,5 +1,5 @@
-import { TypeWithStringOrStringStringValueAndChildren } from "../2-tree-to-parsed-tree/map-tree";
-import { Clozelike } from "../2-tree-to-parsed-tree/mappers/to-parsed-clozelike";
+import { TypeWithStringOrStringStringValueAndChildren } from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
+import { Clozelike } from "../2-tree-to-structured-tree/mappers/to-parsed-clozelike";
 import { reduceTree } from "./reduce-tree";
 import { annnotateWithCountedNumber } from "./reducers/number-only";
 import { getStringFromTypeWithStringOrStringStringValueAndChildrenPotentiallyClozelike } from "./reducers/to-html";

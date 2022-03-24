@@ -1,5 +1,5 @@
 import { currentCardIndex } from "../../../../../anki-card";
-import { ActionTargetsObject } from "../../../2-tree-to-parsed-tree/mappers/to-parsed-clozelike/action-mappings";
+import { ActionTargetsObject } from "../../../2-tree-to-structured-tree/mappers/to-parsed-clozelike/action-mappings";
 
 export function getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers(specifierMapping: {
   [k: string]: ActionTargetsObject;
