@@ -8,7 +8,7 @@ import log from "loglevel";
 var container = document.querySelector(".container");
 if (!container) throw new Error("No main container.");
 
-log.setLevel("debug");
+log.setLevel("info");
 log.info("Log active.");
 
 formatTags();

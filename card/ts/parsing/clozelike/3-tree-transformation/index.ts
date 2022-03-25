@@ -28,7 +28,6 @@ export function mapStructuredTreeToParsedClozelikes(
     separateHintTreeElement,
     true
   );
-
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
     "splitSpecifierTreeELement",

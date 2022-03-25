@@ -9,7 +9,7 @@ var approvedActionTargetCharacters = [
   "_",
   "∞",
   ",",
-  ...numbers,
+  ...numbers.map((n) => n.toString()),
 ];
 
 function isActionMappingCheapTest(str: string): false | undefined {
