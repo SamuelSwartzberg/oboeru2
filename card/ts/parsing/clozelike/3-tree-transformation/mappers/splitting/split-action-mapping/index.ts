@@ -10,7 +10,7 @@ type SeparatedActionMappings = {
 
 export type WithSplitActionMappings = WithSpecifier & SeparatedActionMappings;
 
-export function splitSpecifier(
+export function splitActionMappingTreeElement(
   treeElement: TreeElement<WithSpecifier>
 ): TreeElement<WithSplitActionMappings> {
   if (treeElement.contents.clozelike && treeElement.contents.actionMappings) {

@@ -7,11 +7,15 @@ import {
   WithParsedActionMappings,
 } from "./mappers/parse-action-mapping-to-action-targets";
 import { separateHint, WithHint } from "./mappers/separate-hint";
-import { WithSplitActionMappings } from "./mappers/splitting/split-action-mapping";
+import {
+  splitActionMappingTreeElement,
+  WithSplitActionMappings,
+} from "./mappers/splitting/split-action-mapping";
 import {
   splitSpecifier,
   WithSpecifier,
 } from "./mappers/splitting/split-specifier";
+import { isDifferentTree } from "./tests/diff-tree";
 
 export function mapStructuredTreeToParsedClozelikes(
   structuredTree: TreeElement<BooleanClozelike>
@@ -22,22 +26,36 @@ export function mapStructuredTreeToParsedClozelikes(
     separateHint
   );
   log.debug(hintSeparatedTree);
-  const splitSpeciferTree = mapTree<WithHint, WithSpecifier>(
+
+  const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
-    true,
     splitSpecifier
   );
-  log.debug(splitSpeciferTree);
-  const splitActionMappingTree = mapTree<
+  const splitActionMappingTree = mapAndTestTree<
     WithSpecifier,
     WithSplitActionMappings
-  >(splitSpeciferTree, true, splitSpecifier);
-  log.debug(splitActionMappingTree);
-  const parsedActionMappingTree = mapTree<
+  >(splitSpeciferTree, splitActionMappingTreeElement);
+  const parsedActionMappingTree = mapAndTestTree<
     WithSplitActionMappings,
     WithParsedActionMappings
-  >(splitActionMappingTree, true, parseActionMapping);
-  log.debug(parsedActionMappingTree);
+  >(splitActionMappingTree, parseActionMapping);
   return parsedActionMappingTree;
 }
 splitSpecifier;
+
+function mapAndTestTree<T, U>(
+  treeElement: TreeElement<T>,
+  transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>
+): TreeElement<U> {
+  log.debug(`Transforming tree with ${transformationCallback.name}().`);
+  const newTreeElement = mapTree<T, U>(
+    treeElement,
+    true,
+    transformationCallback
+  );
+  log.debug("The new tree is:");
+  log.debug(newTreeElement);
+  if (!isDifferentTree(treeElement, newTreeElement))
+    throw new Error("The old tree and the new tree are the same.");
+  return newTreeElement;
+}
