@@ -6,6 +6,13 @@ export interface ElementReplacement {
   replacements: string | StartEnd;
 }
 
+export type ElementReplacementDelimitersSE = ElementReplacement & {
+  delimiters: StartEnd;
+};
+export type ElementReplacementDelimitersString = ElementReplacement & {
+  delimiters: string;
+};
+
 export interface ElementReplacementMap {
   [key: string]: ElementReplacement;
 }

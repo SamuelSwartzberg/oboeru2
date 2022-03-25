@@ -2,10 +2,12 @@ import { getRegexReplacementPairs as getRegexReplacementPairsSimple } from "./si
 import { getRegexReplacementPairs as getRegexReplacementPairsComplex } from "./complex";
 import log from "loglevel";
 
-export type RegexAndReplacement = [
-  RegExp | string,
-  string | ((substring: string, ...args: any[]) => string)
-];
+type RegexOrString = RegExp | string;
+type ReplacementStringOrFunc =
+  | string
+  | ((substring: string, ...args: any[]) => string);
+
+export type RegexAndReplacement = [RegexOrString, ReplacementStringOrFunc];
 
 export function getRegexReplacementPairs(): RegexAndReplacement[] {
   log.debug("Getting regex and replacement pairs");

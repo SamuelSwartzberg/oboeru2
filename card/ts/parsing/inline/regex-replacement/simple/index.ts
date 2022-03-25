@@ -7,6 +7,8 @@ import {
 } from "../regex-builder";
 import {
   ElementReplacement,
+  ElementReplacementDelimitersSE,
+  ElementReplacementDelimitersString,
   getReplacementMapping,
   isStartEnd,
 } from "./replacement-mapping";
@@ -27,44 +29,71 @@ export function getRegexReplacementPairs(): RegexAndReplacement[] {
       ...buildRegexFromMappingElement(replacementMapping[key])
     );
   }
+  log.debug("The simple regex and replacement pairs are:");
+  log.debug(JSON.stringify(regexAndReplacements, null, 2));
   return regexAndReplacements;
 }
 
 function buildRegexFromMappingElement(
   element: ElementReplacement
-): RegexAndReplacement[] {
+): [RegexAndReplacement, RegexAndReplacement] | [RegexAndReplacement] {
   log.debug(
     "Calling buildRegexFromMappingElement(), which disambiguates how to build the regex depending on whether delimiters & replacements are a StartEnd or a string."
   );
   log.debug("The element is " + JSON.stringify(element));
+  let regexAndReplacements:
+    | [RegexAndReplacement, RegexAndReplacement]
+    | [RegexAndReplacement];
   if (isStartEnd(element.delimiters)) {
-    if (isStartEnd(element.replacements)) {
-      log.debug("Both delimiters and replacements are StartEnd.");
-      return [
-        [
-          unescapedDelimiter(element.delimiters.start),
-          element.replacements.start,
-        ],
-        [unescapedDelimiter(element.delimiters.end), element.replacements.end],
-      ];
-    } else
-      throw new Error(
-        "delimiters is StartEnd but replacements is a string. It's unwise to try and replace two different delimiters with the same replacement."
-      );
+    regexAndReplacements = buildTwoRegexesFromMappingElement(
+      element as ElementReplacementDelimitersSE
+    );
   } else {
     // is string
-    if (isStartEnd(element.replacements)) {
-      log.debug("Delimiters is a string and replacements is StartEnd.");
-      return [
-        [
-          buildRegexFromDelimiter(element.delimiters),
-          buildReplacementsFromReplacementDelimiters(element.replacements),
-        ],
-      ];
-    } else {
-      // is string
-      log.debug("Both delimiters and replacements are strings.");
-      return [[unescapedDelimiter(element.delimiters), element.replacements]];
-    }
+    regexAndReplacements = buildOneRegexFromMappingElement(
+      element as ElementReplacementDelimitersString
+    );
   }
+  log.debug("The regex and replacement pairs are:");
+  log.debug(JSON.stringify(regexAndReplacements, null, 2));
+  return regexAndReplacements;
+}
+
+function buildTwoRegexesFromMappingElement(
+  element: ElementReplacementDelimitersSE
+): [RegexAndReplacement, RegexAndReplacement] {
+  if (isStartEnd(element.replacements)) {
+    log.debug("Both delimiters and replacements are StartEnd.");
+    return [
+      [
+        unescapedDelimiter(element.delimiters.start),
+        element.replacements.start,
+      ],
+      [unescapedDelimiter(element.delimiters.end), element.replacements.end],
+    ];
+  } else
+    throw new Error(
+      "delimiters is StartEnd but replacements is a string. It's unwise to try and replace two different delimiters with the same replacement."
+    );
+}
+
+function buildOneRegexFromMappingElement(
+  element: ElementReplacementDelimitersString
+): [RegexAndReplacement] {
+  let regexAndReplacements: RegexAndReplacement;
+  if (isStartEnd(element.replacements)) {
+    log.debug("Delimiters is a string and replacements is StartEnd.");
+    regexAndReplacements = [
+      buildRegexFromDelimiter(element.delimiters),
+      buildReplacementsFromReplacementDelimiters(element.replacements),
+    ];
+  } else {
+    // is string
+    log.debug("Both delimiters and replacements are strings.");
+    regexAndReplacements = [
+      unescapedDelimiter(element.delimiters),
+      element.replacements,
+    ];
+  }
+  return [regexAndReplacements];
 }
