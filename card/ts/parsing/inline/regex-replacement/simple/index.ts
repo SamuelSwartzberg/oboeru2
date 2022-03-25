@@ -30,7 +30,7 @@ export function getRegexReplacementPairs(): RegexAndReplacement[] {
     );
   }
   log.debug("The simple regex and replacement pairs are:");
-  log.debug(JSON.stringify(regexAndReplacements, null, 2));
+  log.debug(regexAndReplacements);
   return regexAndReplacements;
 }
 
@@ -55,7 +55,7 @@ function buildRegexFromMappingElement(
     );
   }
   log.debug("The regex and replacement pairs are:");
-  log.debug(JSON.stringify(regexAndReplacements, null, 2));
+  log.debug(regexAndReplacements);
   return regexAndReplacements;
 }
 
@@ -66,10 +66,13 @@ function buildTwoRegexesFromMappingElement(
     log.debug("Both delimiters and replacements are StartEnd.");
     return [
       [
-        unescapedDelimiter(element.delimiters.start),
+        new RegExp(unescapedDelimiter(element.delimiters.start), "g"),
         element.replacements.start,
       ],
-      [unescapedDelimiter(element.delimiters.end), element.replacements.end],
+      [
+        new RegExp(unescapedDelimiter(element.delimiters.end), "g"),
+        element.replacements.end,
+      ],
     ];
   } else
     throw new Error(
@@ -82,7 +85,6 @@ function buildOneRegexFromMappingElement(
 ): [RegexAndReplacement] {
   let regexAndReplacements: RegexAndReplacement;
   if (isStartEnd(element.replacements)) {
-    log.debug("Delimiters is a string and replacements is StartEnd.");
     regexAndReplacements = [
       buildRegexFromDelimiter(element.delimiters),
       buildReplacementsFromReplacementDelimiters(element.replacements),
@@ -95,7 +97,5 @@ function buildOneRegexFromMappingElement(
       element.replacements,
     ];
   }
-  log.debug("The regex and replacement pairs are:");
-  log.debug(JSON.stringify(regexAndReplacements, null, 2));
   return [regexAndReplacements];
 }
