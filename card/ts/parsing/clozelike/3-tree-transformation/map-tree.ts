@@ -9,6 +9,6 @@ export function mapTree<T, U>(
     mapTree(child, false, mapFunction)
   );
   const newElement = mapFunction(treeElement);
-
+  newElement.children = newChildren;
   return newElement;
 }

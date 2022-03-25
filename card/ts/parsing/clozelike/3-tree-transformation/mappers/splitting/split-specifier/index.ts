@@ -29,10 +29,9 @@ export function splitSpecifierTreeELement(
       treeElement.value[1] = nonspecifier;
     }
     log.debug(
-      "After splitting nonspecifier and actionMappings, what we got is..."
-    );
-    log.debug(
-      `actionMappings: ${actionMappings}; nonspecifier: ${nonspecifier}`
+      `Within splitSpecifierTreeELement, what we now have is actionMappings: ${
+        actionMappings.length > 0 ? actionMappings : "[]"
+      }; nonspecifier: ${nonspecifier}`
     );
     const newTreeElement: TreeElement<WithSpecifier> = {
       ...treeElement,

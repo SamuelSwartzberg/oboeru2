@@ -23,29 +23,45 @@ export function parseActionMappingTreeElement(
   );
   if (treeElement.contents.clozelike) {
     log.debug("...and it was a 🟩  clozelike");
-    if (treeElement.contents.separatedActionMappings) {
-      const parsedActionMappings: { [k: string]: ActionTargetsObject } = {};
-      if (
-        Object.keys(treeElement.contents.separatedActionMappings).length === 0
-      )
-        treeElement.contents.separatedActionMappings["c"] = "+";
-      for (const [key, value] of Object.entries(
-        treeElement.contents.separatedActionMappings
-      )) {
-        parsedActionMappings[key] = parseActionTargets(value, key === "c");
-      }
-      const newTreeElement: TreeElement<WithParsedActionMappings> = {
-        ...treeElement,
-        contents: {
-          ...treeElement.contents,
-          parsedActionMappings,
-        },
-      };
-      return newTreeElement;
-    } else
-      throw new Error(
-        "Cannot parse action mappings without separated action mappings."
+    if (!treeElement.contents.separatedActionMappings) {
+      log.debug("had no separatedActionMappings, adding empty object");
+      treeElement.contents.separatedActionMappings = {};
+    }
+
+    const parsedActionMappings: { [k: string]: ActionTargetsObject } = {};
+    if (
+      Object.keys(treeElement.contents.separatedActionMappings).length === 0
+    ) {
+      log.debug("separatedActionMappings had no key, adding default cloze key");
+      treeElement.contents.separatedActionMappings["c"] = "+";
+    }
+
+    for (const [actionName, actionTargetString] of Object.entries(
+      treeElement.contents.separatedActionMappings
+    )) {
+      log.debug(
+        `Parsing action mapping with: actionName: ${actionName}, actionTargetString: ${actionTargetString}`
       );
+      parsedActionMappings[actionName] = parseActionTargets(
+        actionTargetString,
+        actionName === "c"
+      );
+      log.debug(
+        `Resulted in a parsed action with an action name of ${actionName} and a value of: ${JSON.stringify(
+          parsedActionMappings[actionName]
+        )}`
+      );
+    }
+    log.debug(`parsedActionMappings: ${JSON.stringify(parsedActionMappings)}`);
+    const newTreeElement: TreeElement<WithParsedActionMappings> = {
+      ...treeElement,
+      contents: {
+        ...treeElement.contents,
+        parsedActionMappings,
+      },
+    };
+    log.debug(`Will return: ${JSON.stringify(newTreeElement)}`);
+    return newTreeElement;
   } else {
     log.debug("...but it was not a 🟨  clozelike");
     return { ...treeElement };

@@ -7,15 +7,19 @@ function separateIntoActionMappingsAndNonspecifierInner(
   log.debug(
     "We're in the function separating action mappings and non-specifier."
   );
+  log.debug(`We recieved the parts: ${parts}`);
   let actionMappings: string[] = [];
   while (parts.length > 0) {
     const part = parts.shift() as string;
     if (isActionMapping(part)) {
       actionMappings.push(part);
     } else {
+      parts.unshift(part);
       const nonspecifier = parts.join(";");
       log.debug(
-        `Result: actionMappings: ${actionMappings}; nonspecifier: ${nonspecifier}`
+        `Result: actionMappings: ${
+          actionMappings.length > 0 ? actionMappings : "[]"
+        }; nonspecifier: ${nonspecifier}`
       );
       return [actionMappings, nonspecifier];
     }

@@ -30,7 +30,8 @@ export function mapStructuredTreeToParsedClozelikes(
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
     "splitSpecifierTreeELement",
-    splitSpecifierTreeELement
+    splitSpecifierTreeELement,
+    true
   );
   const splitActionMappingTree = mapAndTestTree<
     WithSpecifier,
@@ -38,7 +39,8 @@ export function mapStructuredTreeToParsedClozelikes(
   >(
     splitSpeciferTree,
     "splitActionMappingTreeElement",
-    splitActionMappingTreeElement
+    splitActionMappingTreeElement,
+    true
   );
   const parsedActionMappingTree = mapAndTestTree<
     WithSplitActionMappings,
