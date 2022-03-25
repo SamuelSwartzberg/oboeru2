@@ -22,7 +22,7 @@ export function parseActionMappingTreeElement(
     "parseActionMappingTreeElement was called to handle a tree element..."
   );
   if (treeElement.contents.clozelike) {
-    log.debug("...and it was a 🟩  clozelike");
+    log.debug("...and it was 🟩  a clozelike");
     if (!treeElement.contents.separatedActionMappings) {
       log.debug("had no separatedActionMappings, adding empty object");
       treeElement.contents.separatedActionMappings = {};
@@ -63,7 +63,7 @@ export function parseActionMappingTreeElement(
     log.debug(`Will return: ${JSON.stringify(newTreeElement)}`);
     return newTreeElement;
   } else {
-    log.debug("...but it was not a 🟨  clozelike");
+    log.debug("...but it was 🟨  not a clozelike");
     return { ...treeElement };
   }
 }

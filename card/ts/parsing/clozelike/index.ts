@@ -2,7 +2,7 @@ import log from "loglevel";
 import { parseClozelikeStringToTree } from "./1-string-to-tree";
 import { mapTreeToStructuredTree } from "./2-tree-to-structured-tree";
 import { mapStructuredTreeToParsedClozelikes } from "./3-tree-transformation";
-import { reduceTreeToHTML } from "./4-parsed-tree-to-html";
+import { reduceTreeToCardHTML } from "./4-parsed-tree-to-html";
 
 export function parseClozelikes(html: string): string {
   const treeWithClozelikesRepresentedAsNestedArrays =
@@ -20,8 +20,5 @@ export function parseClozelikes(html: string): string {
   );
   log.debug("The tree with clozelikes parsed to objects is:");
   log.debug(treeWithClozelikesParsedToObject);
-  return reduceTreeToHTML(
-    treeWithClozelikesStoredInChildrenAndValuesSeparatedOut,
-    true
-  );
+  return reduceTreeToCardHTML(treeWithClozelikesParsedToObject, true);
 }

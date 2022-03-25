@@ -14,7 +14,7 @@ export function splitSpecifierTreeELement(
 ): TreeElement<WithSpecifier> {
   log.debug("splitSpecifierTreeELement was called to handle a tree element...");
   if (treeElement.contents.clozelike) {
-    log.debug("...and it was a 🟩  clozelike");
+    log.debug("...and it was 🟩  a clozelike");
     let actionMappings: string[];
     let nonspecifier: string;
     if (typeof treeElement.value === "string") {
@@ -42,7 +42,7 @@ export function splitSpecifierTreeELement(
     };
     return newTreeElement;
   } else {
-    log.debug("...but it was not a 🟨  clozelike");
+    log.debug("...but it was 🟨  not a clozelike");
     return { ...treeElement };
   }
 }

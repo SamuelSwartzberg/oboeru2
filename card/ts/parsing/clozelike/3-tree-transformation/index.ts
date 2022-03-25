@@ -1,5 +1,6 @@
 import log from "loglevel";
 import { BooleanClozelike } from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
+import { flattenTree } from "./flatten-tree";
 import { TreeElement } from "./globals";
 import { mapTree } from "./map-tree";
 import {
@@ -50,6 +51,9 @@ export function mapStructuredTreeToParsedClozelikes(
     "parseActionMappingTreeElement",
     parseActionMappingTreeElement
   );
+  const testFlattenedTree = flattenTree(parsedActionMappingTree);
+  log.debug("The flattened tree is:");
+  log.debug(testFlattenedTree);
   return parsedActionMappingTree;
 }
 splitSpecifierTreeELement;
@@ -61,11 +65,7 @@ function mapAndTestTree<T, U>(
   dontErrorOnlyWarnIfTreesHaveSameContent: boolean = false
 ): TreeElement<U> {
   log.debug(`Transforming tree with ${name}().`);
-  const newTreeElement = mapTree<T, U>(
-    treeElement,
-    true,
-    transformationCallback
-  );
+  const newTreeElement = mapTree<T, U>(treeElement, transformationCallback);
   log.debug("The new tree is:");
   log.debug(newTreeElement);
   if (treeElement === (newTreeElement as unknown as TreeElement<T>))
