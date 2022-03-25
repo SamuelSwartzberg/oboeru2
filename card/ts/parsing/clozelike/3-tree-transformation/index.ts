@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { BooleanClozelike } from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
 import { TreeElement } from "./globals";
 import { mapTree } from "./map-tree";
@@ -20,18 +21,23 @@ export function mapStructuredTreeToParsedClozelikes(
     true,
     separateHint
   );
+  log.debug(hintSeparatedTree);
   const splitSpeciferTree = mapTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
     true,
     splitSpecifier
   );
+  log.debug(splitSpeciferTree);
   const splitActionMappingTree = mapTree<
     WithSpecifier,
     WithSplitActionMappings
   >(splitSpeciferTree, true, splitSpecifier);
+  log.debug(splitActionMappingTree);
   const parsedActionMappingTree = mapTree<
     WithSplitActionMappings,
     WithParsedActionMappings
   >(splitActionMappingTree, true, parseActionMapping);
+  log.debug(parsedActionMappingTree);
+  return parsedActionMappingTree;
 }
 splitSpecifier;

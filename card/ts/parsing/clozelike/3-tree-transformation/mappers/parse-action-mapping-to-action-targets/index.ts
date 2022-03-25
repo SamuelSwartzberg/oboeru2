@@ -1,5 +1,5 @@
 import { TreeElement } from "../../globals";
-import { WithSeparatedActionMappings } from "../splitting/split-action-mapping";
+import { WithSplitActionMappings } from "../splitting/split-action-mapping";
 import { WithSpecifier } from "../splitting/split-specifier";
 import {
   ActionTargetsObject,
@@ -15,7 +15,7 @@ type ParsedActionMappings = {
 export type WithParsedActionMappings = WithSpecifier & ParsedActionMappings;
 
 export function parseActionMapping(
-  treeElement: TreeElement<WithSeparatedActionMappings>
+  treeElement: TreeElement<WithSplitActionMappings>
 ): TreeElement<WithParsedActionMappings> {
   if (treeElement.contents.clozelike) {
     if (treeElement.contents.separatedActionMappings) {
@@ -41,7 +41,7 @@ export function parseActionMapping(
       throw new Error(
         "Cannot parse action mappings without separated action mappings."
       );
-  } else return treeElement as TreeElement<WithSeparatedActionMappings>;
+  } else return treeElement as TreeElement<WithSplitActionMappings>;
 }
 
 // don't forget to default to cloze

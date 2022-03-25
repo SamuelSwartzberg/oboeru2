@@ -8,19 +8,18 @@ type SeparatedActionMappings = {
   };
 };
 
-export type WithSeparatedActionMappings = WithSpecifier &
-  SeparatedActionMappings;
+export type WithSplitActionMappings = WithSpecifier & SeparatedActionMappings;
 
 export function splitSpecifier(
   treeElement: TreeElement<WithSpecifier>
-): TreeElement<WithSeparatedActionMappings> {
+): TreeElement<WithSplitActionMappings> {
   if (treeElement.contents.clozelike && treeElement.contents.actionMappings) {
     const separatedActionMappings = Object.fromEntries(
       treeElement.contents.actionMappings.map((actionMapping) =>
         splitActionMapping(actionMapping)
       )
     );
-    const newTreeElement: TreeElement<WithSeparatedActionMappings> = {
+    const newTreeElement: TreeElement<WithSplitActionMappings> = {
       ...treeElement,
       contents: {
         ...treeElement.contents,
@@ -28,5 +27,5 @@ export function splitSpecifier(
       },
     };
     return newTreeElement;
-  } else return treeElement as TreeElement<WithSeparatedActionMappings>;
+  } else return treeElement as TreeElement<WithSplitActionMappings>;
 }
