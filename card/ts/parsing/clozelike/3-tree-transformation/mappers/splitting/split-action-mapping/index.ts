@@ -18,7 +18,7 @@ export function splitActionMappingTreeElement(
     "splitActionMappingTreeElement was called to handle a tree element..."
   );
   if (treeElement.contents.clozelike && treeElement.contents.actionMappings) {
-    log.debug("...and it was a clozelike and had actionMappings");
+    log.debug("...and it was a 🟩  clozelike and had actionMappings");
     const separatedActionMappings = Object.fromEntries(
       treeElement.contents.actionMappings.map((actionMapping) =>
         splitActionMapping(actionMapping)
@@ -33,7 +33,7 @@ export function splitActionMappingTreeElement(
     };
     return newTreeElement;
   } else {
-    log.debug("...but it was not a clozelike or had no actionMappings");
-    return treeElement as TreeElement<WithSplitActionMappings>;
+    log.debug("...but it was not a 🟨  clozelike or had no actionMappings");
+    return { ...treeElement };
   }
 }

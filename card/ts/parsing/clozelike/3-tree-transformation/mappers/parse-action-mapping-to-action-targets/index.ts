@@ -22,7 +22,7 @@ export function parseActionMappingTreeElement(
     "parseActionMappingTreeElement was called to handle a tree element..."
   );
   if (treeElement.contents.clozelike) {
-    log.debug("...and it was a clozelike");
+    log.debug("...and it was a 🟩  clozelike");
     if (treeElement.contents.separatedActionMappings) {
       const parsedActionMappings: { [k: string]: ActionTargetsObject } = {};
       if (
@@ -47,8 +47,8 @@ export function parseActionMappingTreeElement(
         "Cannot parse action mappings without separated action mappings."
       );
   } else {
-    log.debug("...but it was not a clozelike");
-    return treeElement as TreeElement<WithSplitActionMappings>;
+    log.debug("...but it was not a 🟨  clozelike");
+    return { ...treeElement };
   }
 }
 

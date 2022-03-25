@@ -3,16 +3,16 @@ import { BooleanClozelike } from "../2-tree-to-structured-tree/map-string-tree-t
 import { TreeElement } from "./globals";
 import { mapTree } from "./map-tree";
 import {
-  parseActionMapping,
+  parseActionMappingTreeElement,
   WithParsedActionMappings,
 } from "./mappers/parse-action-mapping-to-action-targets";
-import { separateHint, WithHint } from "./mappers/separate-hint";
+import { separateHintTreeElement, WithHint } from "./mappers/separate-hint";
 import {
   splitActionMappingTreeElement,
   WithSplitActionMappings,
 } from "./mappers/splitting/split-action-mapping";
 import {
-  splitSpecifier,
+  splitSpecifierTreeELement,
   WithSpecifier,
 } from "./mappers/splitting/split-specifier";
 import { isDifferentTree } from "./tests/diff-tree";
@@ -22,30 +22,41 @@ export function mapStructuredTreeToParsedClozelikes(
 ): TreeElement<WithParsedActionMappings> {
   const hintSeparatedTree = mapAndTestTree<BooleanClozelike, WithHint>(
     structuredTree,
-    separateHint
+    "separateHintTreeElement",
+    separateHintTreeElement
   );
 
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
-    splitSpecifier
+    "splitSpecifierTreeELement",
+    splitSpecifierTreeELement
   );
   const splitActionMappingTree = mapAndTestTree<
     WithSpecifier,
     WithSplitActionMappings
-  >(splitSpeciferTree, splitActionMappingTreeElement);
+  >(
+    splitSpeciferTree,
+    "splitActionMappingTreeElement",
+    splitActionMappingTreeElement
+  );
   const parsedActionMappingTree = mapAndTestTree<
     WithSplitActionMappings,
     WithParsedActionMappings
-  >(splitActionMappingTree, parseActionMapping);
+  >(
+    splitActionMappingTree,
+    "parseActionMappingTreeElement",
+    parseActionMappingTreeElement
+  );
   return parsedActionMappingTree;
 }
-splitSpecifier;
+splitSpecifierTreeELement;
 
 function mapAndTestTree<T, U>(
   treeElement: TreeElement<T>,
+  name: string,
   transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>
 ): TreeElement<U> {
-  log.debug(`Transforming tree with ${transformationCallback.name}().`);
+  log.debug(`Transforming tree with ${name}().`);
   const newTreeElement = mapTree<T, U>(
     treeElement,
     true,

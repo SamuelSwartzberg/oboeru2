@@ -27,7 +27,7 @@ export function separateHintTreeElement(
 ): TreeElement<WithHint> {
   log.debug("separateHintTreeElement was called to handle a tree element...");
   if (treeElement.contents.clozelike) {
-    log.debug("...and it was a clozelike");
+    log.debug("...and it was a 🟩  clozelike");
     let hint;
     let newValue;
     if (typeof treeElement.value === "string") {
@@ -46,7 +46,7 @@ export function separateHintTreeElement(
     }
     return newTreeElement;
   } else {
-    log.debug("...but it was not a clozelike");
-    return treeElement as TreeElement<WithHint>;
+    log.debug("...but it was not a 🟨  clozelike");
+    return { ...treeElement };
   }
 }
