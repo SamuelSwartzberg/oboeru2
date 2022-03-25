@@ -1,10 +1,11 @@
 import { TreeElement } from "./globals";
 
 export function flattenTree<T>(treeElement: TreeElement<T>): TreeElement<T>[] {
-  const newChildren = treeElement.children.flatMap((child) =>
+  const newTreeElement = { ...treeElement };
+  const newChildren = newTreeElement.children.flatMap((child) =>
     flattenTree(child)
   );
-  treeElement.children = [];
-  const selfAndChildArray = [treeElement, ...newChildren];
+  newTreeElement.children = [];
+  const selfAndChildArray = [newTreeElement, ...newChildren];
   return selfAndChildArray;
 }

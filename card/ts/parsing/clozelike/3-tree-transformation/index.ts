@@ -66,7 +66,7 @@ function mapAndTestTree<T, U>(
   log.debug(`Transforming tree with ${name}().`);
   const newTreeElement = mapTree<T, U>(treeElement, transformationCallback);
   log.debug("The new tree is:");
-  log.debug(newTreeElement);
+  log.debug(JSON.stringify(newTreeElement, null, 2));
   if (newTreeElement.children.length === 0) {
     throw new Error(
       `${name}() returned a tree with no children. This is not allowed.`
@@ -85,10 +85,11 @@ function mapAndTestTree<T, U>(
 }
 
 function runTestsOnFinalTree(
-  treeElement: TreeElement<WithParsedActionMappings>
+  treeElementIsFinalTree: TreeElement<WithParsedActionMappings>
 ): void {
   log.debug("Running tests on the final tree.");
-  const flattenedTree = flattenTree(treeElement);
+  const treeElementIsFinalTreeClone = { ...treeElementIsFinalTree };
+  const flattenedTree = flattenTree(treeElementIsFinalTreeClone);
   const flattenedTreeContents = flattenedTree.map(
     (treeElement) => treeElement.contents
   );
@@ -136,6 +137,7 @@ function runTestsOnFinalTree(
   sameClozeNumberSanityCheck(
     flattenedTreeContentsOnlyClozelikesWithParsedActionMappings
   );
+  log.debug("All tests passed.");
 }
 
 function sameClozeNumberSanityCheck(

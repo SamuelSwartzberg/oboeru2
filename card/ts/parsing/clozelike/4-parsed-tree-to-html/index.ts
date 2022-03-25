@@ -14,5 +14,10 @@ export function reduceTreeToCardHTML(
     isTop,
     getStringFromWithParsedActionMappingsTreeElement
   );
+  const REDUCED_TREE_LENGTH_SANITY_MINIMUM = 50;
+  if (reducedTree.length < REDUCED_TREE_LENGTH_SANITY_MINIMUM)
+    throw new Error(
+      `Reduced tree to card HTML was too short. It was ${reducedTree.length} characters long, but the minimum allowed is ${REDUCED_TREE_LENGTH_SANITY_MINIMUM}.`
+    );
   return reducedTree;
 }
