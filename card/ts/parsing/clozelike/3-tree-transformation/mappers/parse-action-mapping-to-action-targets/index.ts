@@ -8,9 +8,11 @@ import {
 } from "./parse-action-targets";
 
 type ParsedActionMappings = {
-  parsedActionMappings?: {
-    [k: string]: ActionTargetsObject;
-  };
+  parsedActionMappings?: ParsedActionMapping;
+};
+
+export type ParsedActionMapping = {
+  [k: string]: ActionTargetsObject;
 };
 
 export type WithParsedActionMappings = WithSpecifier & ParsedActionMappings;
@@ -28,7 +30,7 @@ export function parseActionMappingTreeElement(
       treeElement.contents.separatedActionMappings = {};
     }
 
-    const parsedActionMappings: { [k: string]: ActionTargetsObject } = {};
+    const parsedActionMappings: ParsedActionMapping = {};
     if (
       Object.keys(treeElement.contents.separatedActionMappings).length === 0
     ) {

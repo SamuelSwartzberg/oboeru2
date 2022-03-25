@@ -5,6 +5,7 @@ import { TreeElement } from "./globals";
 import { mapTree } from "./map-tree";
 import {
   parseActionMappingTreeElement,
+  ParsedActionMapping,
   WithParsedActionMappings,
 } from "./mappers/parse-action-mapping-to-action-targets";
 import { separateHintTreeElement, WithHint } from "./mappers/separate-hint";
@@ -51,9 +52,7 @@ export function mapStructuredTreeToParsedClozelikes(
     "parseActionMappingTreeElement",
     parseActionMappingTreeElement
   );
-  const testFlattenedTree = flattenTree(parsedActionMappingTree);
-  log.debug("The flattened tree is:");
-  log.debug(testFlattenedTree);
+  runTestsOnFinalTree(parsedActionMappingTree);
   return parsedActionMappingTree;
 }
 splitSpecifierTreeELement;
@@ -68,6 +67,11 @@ function mapAndTestTree<T, U>(
   const newTreeElement = mapTree<T, U>(treeElement, transformationCallback);
   log.debug("The new tree is:");
   log.debug(newTreeElement);
+  if (newTreeElement.children.length === 0) {
+    throw new Error(
+      `${name}() returned a tree with no children. This is not allowed.`
+    );
+  }
   if (treeElement === (newTreeElement as unknown as TreeElement<T>))
     throw new Error(
       "The new tree is the same object as the old tree, which should be impossible."
@@ -78,4 +82,106 @@ function mapAndTestTree<T, U>(
   } else log.warn("The old tree and the new tree are the same in content.");
 
   return newTreeElement;
+}
+
+function runTestsOnFinalTree(
+  treeElement: TreeElement<WithParsedActionMappings>
+): void {
+  log.debug("Running tests on the final tree.");
+  const flattenedTree = flattenTree(treeElement);
+  const flattenedTreeContents = flattenedTree.map(
+    (treeElement) => treeElement.contents
+  );
+  const flattenedTreeContentsOnlyClozelikes = flattenedTreeContents.filter(
+    (treeElement) => treeElement.clozelike
+  );
+  const flattenedTreeContentsOnlyClozelikesWithParsedActionMappingsOrUndefined: (
+    | ParsedActionMapping
+    | undefined
+  )[] = flattenedTreeContentsOnlyClozelikes.map(
+    (treeElement) => treeElement.parsedActionMappings
+  );
+  const flattenedTreeContentsOnlyClozelikesWithParsedActionMappings: ParsedActionMapping[] =
+    flattenedTreeContentsOnlyClozelikesWithParsedActionMappingsOrUndefined.filter(
+      (parsedActionMappings) => parsedActionMappings !== undefined
+    ) as ParsedActionMapping[];
+
+  const flattenedTreeContentsOnlyNonClozelikes = flattenedTreeContents.filter(
+    (treeElement) => !treeElement.clozelike
+  );
+
+  const NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT = 7;
+
+  if (
+    flattenedTreeContentsOnlyNonClozelikes.length <
+    NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT
+  )
+    throw new Error(
+      `There are less than ${NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT} non-clozelike elements in the flattened tree, this is almost certainly unintended.`
+    );
+
+  const CLOZELIKES_WITH_PARSED_ACTION_MAPPINGS_SANITY_CHECK_LOWER_LIMIT = 5;
+
+  if (
+    flattenedTreeContentsOnlyClozelikesWithParsedActionMappings.length <
+    CLOZELIKES_WITH_PARSED_ACTION_MAPPINGS_SANITY_CHECK_LOWER_LIMIT
+  )
+    throw new Error(
+      `There are less than ${CLOZELIKES_WITH_PARSED_ACTION_MAPPINGS_SANITY_CHECK_LOWER_LIMIT} clozelike elements in the flattened tree, this is almost certainly unintended.`
+    );
+
+  testForMissingClozeNumbers(
+    flattenedTreeContentsOnlyClozelikesWithParsedActionMappings
+  );
+  sameClozeNumberSanityCheck(
+    flattenedTreeContentsOnlyClozelikesWithParsedActionMappings
+  );
+}
+
+function sameClozeNumberSanityCheck(
+  parsedActionMappings: ParsedActionMapping[]
+): void {
+  let clozeIndexCounter: { [key: number]: number } = {};
+  for (const parsedActionMapping of parsedActionMappings) {
+    if (parsedActionMapping.c && parsedActionMapping.c.cardsForWhichToApply) {
+      parsedActionMapping.c.cardsForWhichToApply.forEach((cardIndex) => {
+        clozeIndexCounter[cardIndex] = clozeIndexCounter[cardIndex] + 1 || 1;
+      });
+    }
+  }
+  for (const [clozeIndex, count] of Object.entries(clozeIndexCounter)) {
+    if (count > 6)
+      throw new Error(
+        `There are more than 6 clozes for card index ${clozeIndex}, this is almost certainly unintended.`
+      );
+    if (count > 3)
+      log.warn(
+        `There are more than 3 clozess for card index ${clozeIndex}, which seems excessive.`
+      );
+  }
+}
+function testForMissingClozeNumbers(
+  parsedActionMappings: ParsedActionMapping[]
+): void {
+  const clozeNumberReducedTree = parsedActionMappings.reduce<Set<number>>(
+    (accumulator: Set<number>, currentValue: ParsedActionMapping) => {
+      if (!currentValue.c || !currentValue.c.cardsForWhichToApply)
+        return accumulator;
+      for (const cardForWhichToApply of currentValue.c.cardsForWhichToApply)
+        accumulator.add(cardForWhichToApply);
+      return accumulator;
+    },
+    new Set<number>()
+  );
+  const sortedClozeNumbers = Array.from(clozeNumberReducedTree).sort(
+    (a, b) => a - b
+  );
+  let previousSortedClozeNumber = 0;
+  for (const sortedClozeNumber of sortedClozeNumbers) {
+    if (sortedClozeNumber !== previousSortedClozeNumber + 1)
+      window.alert(
+        `There is a gap in the cloze numbers. The cloze number ${sortedClozeNumber} is the next-largest after ${previousSortedClozeNumber}.`
+      );
+    previousSortedClozeNumber = sortedClozeNumber;
+  }
 }
