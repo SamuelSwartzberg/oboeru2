@@ -23,7 +23,8 @@ export function mapStructuredTreeToParsedClozelikes(
   const hintSeparatedTree = mapAndTestTree<BooleanClozelike, WithHint>(
     structuredTree,
     "separateHintTreeElement",
-    separateHintTreeElement
+    separateHintTreeElement,
+    true
   );
 
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
@@ -54,7 +55,8 @@ splitSpecifierTreeELement;
 function mapAndTestTree<T, U>(
   treeElement: TreeElement<T>,
   name: string,
-  transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>
+  transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>,
+  dontErrorOnlyWarnIfTreesHaveSameContent: boolean = false
 ): TreeElement<U> {
   log.debug(`Transforming tree with ${name}().`);
   const newTreeElement = mapTree<T, U>(
@@ -64,7 +66,14 @@ function mapAndTestTree<T, U>(
   );
   log.debug("The new tree is:");
   log.debug(newTreeElement);
-  if (!isDifferentTree(treeElement, newTreeElement))
-    throw new Error("The old tree and the new tree are the same.");
+  if (treeElement === (newTreeElement as unknown as TreeElement<T>))
+    throw new Error(
+      "The new tree is the same object as the old tree, which should be impossible."
+    );
+  if (!dontErrorOnlyWarnIfTreesHaveSameContent) {
+    if (!isDifferentTree(treeElement, newTreeElement))
+      throw new Error("The old tree and the new tree are the same in content.");
+  } else log.warn("The old tree and the new tree are the same in content.");
+
   return newTreeElement;
 }

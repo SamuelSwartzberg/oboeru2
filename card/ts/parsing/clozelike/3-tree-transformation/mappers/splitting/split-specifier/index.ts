@@ -18,14 +18,22 @@ export function splitSpecifierTreeELement(
     let actionMappings: string[];
     let nonspecifier: string;
     if (typeof treeElement.value === "string") {
+      log.debug("treeElement.value is a string");
       [actionMappings, nonspecifier] =
         separateIntoActionMappingsAndNonspecifier(treeElement.value);
       treeElement.value = nonspecifier;
     } else {
+      log.debug("treeElement.value is an array");
       [actionMappings, nonspecifier] =
         separateIntoActionMappingsAndNonspecifier(treeElement.value[1]);
       treeElement.value[1] = nonspecifier;
     }
+    log.debug(
+      "After splitting nonspecifier and actionMappings, what we got is..."
+    );
+    log.debug(
+      `actionMappings: ${actionMappings}; nonspecifier: ${nonspecifier}`
+    );
     const newTreeElement: TreeElement<WithSpecifier> = {
       ...treeElement,
       contents: {
