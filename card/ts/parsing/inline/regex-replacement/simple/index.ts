@@ -95,5 +95,7 @@ function buildOneRegexFromMappingElement(
       element.replacements,
     ];
   }
+  log.debug("The regex and replacement pairs are:");
+  log.debug(JSON.stringify(regexAndReplacements, null, 2));
   return [regexAndReplacements];
 }
