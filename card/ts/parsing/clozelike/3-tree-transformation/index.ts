@@ -20,12 +20,10 @@ import { isDifferentTree } from "./tests/diff-tree";
 export function mapStructuredTreeToParsedClozelikes(
   structuredTree: TreeElement<BooleanClozelike>
 ): TreeElement<WithParsedActionMappings> {
-  const hintSeparatedTree = mapTree<BooleanClozelike, WithHint>(
+  const hintSeparatedTree = mapAndTestTree<BooleanClozelike, WithHint>(
     structuredTree,
-    true,
     separateHint
   );
-  log.debug(hintSeparatedTree);
 
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
