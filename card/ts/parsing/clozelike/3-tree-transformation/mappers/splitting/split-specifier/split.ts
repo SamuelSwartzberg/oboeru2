@@ -12,6 +12,7 @@ function separateIntoActionMappingsAndNonspecifierInner(
   while (parts.length > 0) {
     const part = parts.shift() as string;
     if (isActionMapping(part)) {
+      log.debug(`${part} is an action mapping`);
       actionMappings.push(part);
     } else {
       parts.unshift(part);

@@ -25,9 +25,13 @@ export function splitSpecifierTreeELement(
     } else {
       log.debug("treeElement.value is an array");
       [actionMappings, nonspecifier] =
-        separateIntoActionMappingsAndNonspecifier(treeElement.value[1]);
-      treeElement.value[1] = nonspecifier;
+        separateIntoActionMappingsAndNonspecifier(treeElement.value[0]);
+      treeElement.value[0] = nonspecifier;
     }
+    if (nonspecifier.includes(";"))
+      log.warn(
+        `Parsed nonspecifier ${nonspecifier} contained a ;, which may indicate that parsing failed (but may also be legitimate).`
+      );
     log.debug(
       `Within splitSpecifierTreeELement, what we now have is actionMappings: ${
         actionMappings.length > 0 ? actionMappings : "[]"
