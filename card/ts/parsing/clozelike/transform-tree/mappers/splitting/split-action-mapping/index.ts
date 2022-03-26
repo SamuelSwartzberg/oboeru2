@@ -1,5 +1,6 @@
 import log from "loglevel";
 import { TreeElement } from "../../../globals";
+import { mapTreeElementIfClozelike } from "../../map-element";
 import { splitActionMapping } from "../globals";
 import { WithSpecifier } from "../split-specifier";
 
@@ -14,11 +15,9 @@ export type WithSplitActionMappings = WithSpecifier & SeparatedActionMappings;
 export function splitActionMappingTreeElement(
   treeElement: TreeElement<WithSpecifier>
 ): TreeElement<WithSplitActionMappings> {
-  log.debug(
-    "splitActionMappingTreeElement was called to handle a tree element..."
-  );
-  if (treeElement.contents.clozelike && treeElement.contents.actionMappings) {
-    log.debug("...and it was 🟩  a clozelike and had actionMappings");
+  return mapTreeElementIfClozelike(treeElement, (treeElement) => {
+    if (!treeElement.contents.actionMappings)
+      throw new Error("no actionMappings");
     const separatedActionMappings = Object.fromEntries(
       treeElement.contents.actionMappings.map((actionMapping) =>
         splitActionMapping(actionMapping)
@@ -32,8 +31,5 @@ export function splitActionMappingTreeElement(
       },
     };
     return newTreeElement;
-  } else {
-    log.debug("...but it was 🟨  not a clozelike or had no actionMappings");
-    return { ...treeElement };
-  }
+  });
 }

@@ -1,5 +1,5 @@
 import log from "loglevel";
-import { BooleanClozelike } from "../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
+import { BooleanClozelike } from "../transform-array-tree-to-structured-tree/map-string-tree-to-structured-tree";
 import { flattenTree } from "./flatten-tree";
 import { TreeElement } from "./globals";
 import { mapTree } from "./map-tree";

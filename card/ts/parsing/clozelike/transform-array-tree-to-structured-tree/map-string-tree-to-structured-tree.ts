@@ -1,4 +1,4 @@
-import { TreeElement } from "../3-tree-transformation/globals";
+import { TreeElement } from "../transform-tree/globals";
 import { possiblyRecursiveTArray } from "../globals";
 
 export type BooleanClozelike = {

@@ -1,5 +1,6 @@
 import log from "loglevel";
 import { TreeElement } from "../../../globals";
+import { mapTreeElementIfClozelike } from "../../map-element";
 import { WithHint } from "../../separate-hint";
 import { separateIntoActionMappingsAndNonspecifier } from "./split";
 
@@ -12,9 +13,7 @@ export type WithSpecifier = WithHint & Specifier;
 export function splitSpecifierTreeELement(
   treeElement: TreeElement<WithHint>
 ): TreeElement<WithSpecifier> {
-  log.debug("splitSpecifierTreeELement was called to handle a tree element...");
-  if (treeElement.contents.clozelike) {
-    log.debug("...and it was 🟩  a clozelike");
+  return mapTreeElementIfClozelike(treeElement, (treeElement) => {
     let actionMappings: string[];
     let nonspecifier: string;
     if (typeof treeElement.value === "string") {
@@ -45,8 +44,5 @@ export function splitSpecifierTreeELement(
       },
     };
     return newTreeElement;
-  } else {
-    log.debug("...but it was 🟨  not a clozelike");
-    return { ...treeElement };
-  }
+  });
 }

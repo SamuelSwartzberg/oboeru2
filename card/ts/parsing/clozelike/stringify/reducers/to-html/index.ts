@@ -1,5 +1,5 @@
 import log from "loglevel";
-import { WithParsedActionMappings } from "../../../3-tree-transformation/mappers/parse-action-mapping-to-action-targets";
+import { WithParsedActionMappings } from "../../../transform-tree/mappers/parse-action-mapping-to-action-targets";
 import { NarrowTreeElement } from "../../reduce-tree-string";
 import { getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers } from "./action-mapping-to-classes";
 import { clozelikeHTMLFromStringConstituents } from "./clozelike-html-from-string-components";

@@ -1,6 +1,7 @@
 import log from "loglevel";
-import { BooleanClozelike } from "../../../2-tree-to-structured-tree/map-string-tree-to-structured-tree";
+import { BooleanClozelike } from "../../../transform-array-tree-to-structured-tree/map-string-tree-to-structured-tree";
 import { TreeElement } from "../../globals";
+import { mapTreeElementIfClozelike } from "../map-element";
 
 type Hint = {
   hint?: string;
@@ -25,9 +26,7 @@ function splitIntoContentAndHint(
 export function separateHintTreeElement(
   treeElement: TreeElement<BooleanClozelike>
 ): TreeElement<WithHint> {
-  log.debug("separateHintTreeElement was called to handle a tree element...");
-  if (treeElement.contents.clozelike) {
-    log.debug("...and it was 🟩  a clozelike");
+  return mapTreeElementIfClozelike(treeElement, (treeElement) => {
     let hint;
     let newValue;
     if (typeof treeElement.value === "string") {
@@ -45,8 +44,5 @@ export function separateHintTreeElement(
       newTreeElement.contents.hint = hint;
     }
     return newTreeElement;
-  } else {
-    log.debug("...but it was 🟨  not a clozelike");
-    return { ...treeElement };
-  }
+  });
 }

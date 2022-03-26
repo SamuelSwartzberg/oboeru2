@@ -1,6 +1,6 @@
 import log from "loglevel";
-import { TreeElement } from "../3-tree-transformation/globals";
-import { WithParsedActionMappings } from "../3-tree-transformation/mappers/parse-action-mapping-to-action-targets";
+import { TreeElement } from "../transform-tree/globals";
+import { WithParsedActionMappings } from "../transform-tree/mappers/parse-action-mapping-to-action-targets";
 import { reduceTreeToString } from "./reduce-tree-string";
 import { getStringFromWithParsedActionMappingsTreeElement } from "./reducers/to-html";
 

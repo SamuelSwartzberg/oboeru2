@@ -1,5 +1,6 @@
 import log from "loglevel";
 import { TreeElement } from "../../globals";
+import { mapTreeElementIfClozelike } from "../map-element";
 import { WithSplitActionMappings } from "../splitting/split-action-mapping";
 import { WithSpecifier } from "../splitting/split-specifier";
 import {
@@ -20,11 +21,7 @@ export type WithParsedActionMappings = WithSpecifier & ParsedActionMappings;
 export function parseActionMappingTreeElement(
   treeElement: TreeElement<WithSplitActionMappings>
 ): TreeElement<WithParsedActionMappings> {
-  log.debug(
-    "parseActionMappingTreeElement was called to handle a tree element..."
-  );
-  if (treeElement.contents.clozelike) {
-    log.debug("...and it was 🟩  a clozelike");
+  return mapTreeElementIfClozelike(treeElement, (treeElement) => {
     if (!treeElement.contents.separatedActionMappings) {
       log.debug("had no separatedActionMappings, adding empty object");
       treeElement.contents.separatedActionMappings = {};
@@ -64,10 +61,5 @@ export function parseActionMappingTreeElement(
     };
     log.debug(`Will return: ${JSON.stringify(newTreeElement)}`);
     return newTreeElement;
-  } else {
-    log.debug("...but it was 🟨  not a clozelike");
-    return { ...treeElement };
-  }
+  });
 }
-
-// don't forget to default to cloze

@@ -1,4 +1,4 @@
-import { TreeElement } from "../3-tree-transformation/globals";
+import { TreeElement } from "../transform-tree/globals";
 
 export type NarrowTreeElement<T> = TreeElement<T> & {
   value: string;

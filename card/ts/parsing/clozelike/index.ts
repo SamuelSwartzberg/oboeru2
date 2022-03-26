@@ -1,8 +1,8 @@
 import log from "loglevel";
-import { parseClozelikeStringToTree } from "./1-string-to-tree";
-import { mapTreeToStructuredTree } from "./2-tree-to-structured-tree";
-import { mapStructuredTreeToParsedClozelikes } from "./3-tree-transformation";
-import { reduceTreeToCardHTML } from "./4-parsed-tree-to-html";
+import { parseClozelikeStringToTree } from "./parse-to-array-tree";
+import { mapTreeToStructuredTree } from "./transform-array-tree-to-structured-tree";
+import { mapStructuredTreeToParsedClozelikes } from "./transform-tree";
+import { reduceTreeToCardHTML } from "./stringify";
 
 export function parseClozelikes(html: string): string {
   const treeWithClozelikesRepresentedAsNestedArrays =
