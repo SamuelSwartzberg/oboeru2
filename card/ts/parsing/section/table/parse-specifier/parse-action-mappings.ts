@@ -1,18 +1,38 @@
+import log from "loglevel";
 import { InnerSpecifier, ParsedSpecifer, SpanSpecifierInner } from ".";
 import { Specifiers } from "../parse";
 
-export function parseSpecifier<T>(
+export function parseSpecifier(
   specifier: Specifiers
 ): ParsedSpecifer<InnerSpecifier> {
-  return {
-    classes: specifier.class ? specifier.class.split(" ") : [],
-    style: specifier.style ? specifier.style.split(" ") : [],
-    individualSpecifiers: {
-      headerrows: parseInt(specifier.headerrows, 10),
-      span: parseSpanSpecifier(specifier.span),
-      type: specifier.type,
-    },
+  log.debug("Parsing specifier:");
+  log.debug(JSON.stringify(specifier, null, 2));
+  const parsedSpecifier = {
+    classes: parseClassOrStyle(specifier.class),
+    style: parseClassOrStyle(specifier.style),
+    individualSpecifiers: {} as InnerSpecifier,
   };
+  if (specifier.headerrows) {
+    parsedSpecifier.individualSpecifiers.headerrows = parseInt(
+      specifier.headerrows,
+      10
+    );
+  }
+  if (specifier.span) {
+    parsedSpecifier.individualSpecifiers.span = parseSpanSpecifier(
+      specifier.span
+    );
+  }
+  if (specifier.type) {
+    parsedSpecifier.individualSpecifiers.type = specifier.type;
+  }
+
+  return parsedSpecifier;
+}
+
+function parseClassOrStyle(str?: string): string[] {
+  if (str && str.length > 0) return str.split(" ");
+  else return [];
 }
 
 function parseSpanSpecifier(spanSpecifier: string): SpanSpecifierInner {

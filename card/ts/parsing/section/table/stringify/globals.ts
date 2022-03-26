@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { SpanSpecifierInner } from "../parse-specifier";
 
 export function buildHTMLElement(
@@ -5,11 +6,16 @@ export function buildHTMLElement(
   attributes: { [key: string]: string },
   children: string[]
 ): string {
+  log.debug("Building an HTML element with children...");
+  log.debug(children);
   const attrString = Object.keys(attributes)
     .map((key) => `${key}="${attributes[key]}"`)
     .join(" ");
-  const childrenString = children.join("");
-  return `<${tagName} ${attrString}>${childrenString}</${tagName}>`;
+  const childrenString = children.join("\n");
+  const resultantHTML = `<${tagName} ${attrString}>\n${childrenString}\n</${tagName}>`;
+
+  log.debug(resultantHTML);
+  return resultantHTML;
 }
 
 export function transformSpanSpecifierInnerToAttributes(

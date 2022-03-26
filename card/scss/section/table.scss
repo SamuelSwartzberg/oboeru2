@@ -3,24 +3,28 @@ table {
   @include font-size-retrievable(1rem);
   min-width: 100%;
   text-align: center;
-  thead, th {
+  thead,
+  th {
     background-color: var(--color-light);
+    font-weight: bold;
   }
   tbody {
     td {
-      br{
+      br {
         display: block;
       }
     }
   }
-  th,td {
+  th,
+  td {
     padding: 0.5rem;
   }
-  &.compact th, &.compact td{
+  &.compact th,
+  &.compact td {
     @include font-size-retrievable(0.7rem);
     padding: 0.25rem;
   }
- 
+
   &.large {
     @include font-size-retrievable(1.2rem);
   }
@@ -34,7 +38,7 @@ table {
   }
 
   &.yesno {
-    td{
+    td {
       background-color: white;
     }
     td.no {
@@ -48,5 +52,4 @@ table {
   .leaf {
     color: green;
   }
-
 }

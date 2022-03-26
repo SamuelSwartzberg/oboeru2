@@ -30,7 +30,8 @@ export function parseAsTable(
   const transformedTable = transformToNextStep(
     parsedSpecifierTable,
     transformTableSpecifier,
-    true
+    true,
+    isGroupShow ? ["cloze-group", "section"] : ["section"]
   );
   log.debug("Transforming table to HTML string...");
   const stringfiedTable = transformToNextStep(transformedTable, stringifyTable);
@@ -40,16 +41,18 @@ export function parseAsTable(
 
 function transformToNextStep<T, U>(
   table: T,
-  //injectedToplevelClasses: string[] = []
-  callback: (table: T) => U,
-  returnsTable: boolean = false
+  callback: (table: T, injectedToplevelClasses: string[]) => U,
+  returnsTable: boolean = false,
+  injectedToplevelClasses: string[] = []
 ): U {
-  const result = callback(table);
+  const result = callback(table, injectedToplevelClasses);
   log.debug("The result is:");
-  log.debug(JSON.stringify(result, null, 2));
   if (returnsTable) {
+    log.debug(JSON.stringify(result, null, 2));
     const table = result as unknown as Table<unknown>;
     warnOrErrorIfLackingRowsOrCells(table);
+  } else {
+    log.debug(result);
   }
   return result;
 }

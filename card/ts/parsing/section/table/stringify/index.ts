@@ -41,7 +41,7 @@ function buildRow(row: Row<TransformedSpecifier<InnerSpecifier>>): string {
 
 function buildCell(cell: Cell<TransformedSpecifier<InnerSpecifier>>): string {
   return buildHTMLElement(
-    cell.specifier.individualSpecifiers.type || "tr",
+    cell.specifier.individualSpecifiers.type || "td",
     {
       ...cell.specifier.precreatedAttrs,
       ...transformSpanSpecifierInnerToAttributes(
