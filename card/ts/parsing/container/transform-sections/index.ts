@@ -1,6 +1,4 @@
-import { parseAsFlexContainer } from "./flex-container";
-import { parseAsTable } from "./table";
-import { parseAsTextSection } from "./text-section";
+import { parseAsTable } from "./sections/table";
 
 export function formatSectionLevel(rawHTMLText: string): string {
   let formattedHTML: string = "";

@@ -1,8 +1,8 @@
 import { formatSectionLevel } from "../section";
 import {
   treeNode,
-  treeNodeGeneric,
-  treeNodeLeaf,
+  TreeNodeSection,
+  TreeNodeLeaf,
 } from "../parse/parse-into-tree";
 
 export function treeToString(parsedSections: treeNode): string {
@@ -10,24 +10,24 @@ export function treeToString(parsedSections: treeNode): string {
     return "";
   } else if (parsedSections.title === "section") {
     return formatSectionLevel(
-      (parsedSections as treeNodeLeaf).children
+      (parsedSections as TreeNodeLeaf).children
         .map((line: string) => line.trim())
         .join("\n")
     ); // we know that this is treeNodeLeaf because of the check, but have no way of expressing that in TS in the types
   } else {
     // we know that this is treeNodeGeneric because of the check, but have no way of expressing that in TS in the types
     let newHeader = `<h2 class="${
-      !(parsedSections as treeNodeGeneric).isGroupShowHeader
+      !(parsedSections as TreeNodeSection).isGroupShowHeader
         ? "cloze-group"
         : " "
     }">${parsedSections.title}</h2>`;
-    let newContent = (parsedSections as treeNodeGeneric).children
+    let newContent = (parsedSections as TreeNodeSection).children
       .map(treeToString)
       .join("\n");
-    if ((parsedSections as treeNodeGeneric).title === "root") return newContent;
+    if ((parsedSections as TreeNodeSection).title === "root") return newContent;
     else
       return `<article class="indent-${
-        (parsedSections as treeNodeGeneric).depth - 1
+        (parsedSections as TreeNodeSection).depth - 1
       } headered-container cloze-group">${newHeader}${newContent}</article>`;
   }
 }
