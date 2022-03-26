@@ -13,7 +13,10 @@ export function buildHTMLElement(
 }
 
 export function transformSpanSpecifierInnerToAttributes(
-  spanSpecifier: SpanSpecifierInner
+  spanSpecifier: SpanSpecifierInner = {
+    col: 1,
+    row: 1,
+  }
 ): { colspan: string; rowspan: string } {
   return {
     colspan: String(spanSpecifier.col),

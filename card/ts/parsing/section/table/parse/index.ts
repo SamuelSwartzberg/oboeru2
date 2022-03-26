@@ -1,4 +1,4 @@
-import { Cell, Row, Table } from "../globals"''
+import { Cell, Row, Table } from "../globals";
 import { splitIntoActionMappingAndNonactionmapping } from "./split-into-action-mappings-and-nonspecifier";
 
 export type Specifiers = {

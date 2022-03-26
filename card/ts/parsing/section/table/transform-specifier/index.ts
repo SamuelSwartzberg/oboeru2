@@ -10,8 +10,13 @@ export type TransformedSpecifier<T> = {
 };
 
 export function transformTableSpecifier<T>(
-  table: Table<ParsedSpecifer<T>>
+  table: Table<ParsedSpecifer<T>>,
+  injectedToplevelClasses: string[] = []
 ): Table<TransformedSpecifier<T>> {
+  table.specifier.classes = [
+    ...injectedToplevelClasses,
+    ...table.specifier.classes,
+  ];
   const newTable = {
     specifier: transformSpecifier(table.specifier),
     rows: table.rows.map((row) => {

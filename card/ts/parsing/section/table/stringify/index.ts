@@ -1,24 +1,25 @@
-import { Row, Table } from "../globals";
-import { CellSpecifier, ParsedSpecifer, TableSpecifier } from "../parse-specifier";
+import { Cell, Row, Table } from "../globals";
+import { InnerSpecifier } from "../parse-specifier";
 import { TransformedSpecifier } from "../transform-specifier";
-import { buildHTMLElement } from "./globals";
+import {
+  buildHTMLElement,
+  transformSpanSpecifierInnerToAttributes,
+} from "./globals";
 
 export function stringifyTable(
-  table: Table<TransformedSpecifier<TableSpecifier>>
+  table: Table<TransformedSpecifier<InnerSpecifier>>
 ): string {
-  const builtRows = table.rows.map(row => 
-    buildRow(row)
-  );
-  const [headerRows, bodyRows] = builtRows.slice(0, table.specifier.headerrows);
-  const [headerRowString, bodyRowsString] = [
-    headerRows.join("\n"),
-    bodyRows.join("\n"),
+  const builtRows = table.rows.map((row) => buildRow(row));
+  const [headerRows, bodyRows] = [
+    builtRows.slice(0, table.specifier.individualSpecifiers.headerrows || 1),
+    builtRows.slice(table.specifier.individualSpecifiers.headerrows || 1),
   ];
   const [headerRowHTML, bodyRowsHTML] = [
-    buildHTMLElement("thead", {}, headerRowString),
-    buildHTMLElement("tbody", {}, bodyRowsString),
+    buildHTMLElement("thead", {}, headerRows),
+    buildHTMLElement("tbody", {}, bodyRows),
   ];
-  const tableHTML = buildHTMLElement("table", 
+  const tableHTML = buildHTMLElement(
+    "table",
     {
       ...table.specifier.precreatedAttrs,
     },
@@ -27,14 +28,26 @@ export function stringifyTable(
   return tableHTML;
 }
 
-function buildRow(row: Row<TransformedSpecifier<never>>): string {
+function buildRow(row: Row<TransformedSpecifier<InnerSpecifier>>): string {
   const cells = row.cells.map((cell) => buildCell(cell));
-  return buildHTMLElement("tr", {
-    ...row.specifier.precreatedAttrs,
-  }, cells);
+  return buildHTMLElement(
+    "tr",
+    {
+      ...row.specifier.precreatedAttrs,
+    },
+    cells
+  );
 }
 
-function buildCell(cell: Cell<TransformedSpecifier<CellSpecifier>>): string {
-  return buildHTMLElement(cell.individualSpecifiers.type, {
-    ...cell.specifier.precreatedAttrs,
-  }, [cell.contents]);
+function buildCell(cell: Cell<TransformedSpecifier<InnerSpecifier>>): string {
+  return buildHTMLElement(
+    cell.specifier.individualSpecifiers.type || "tr",
+    {
+      ...cell.specifier.precreatedAttrs,
+      ...transformSpanSpecifierInnerToAttributes(
+        cell.specifier.individualSpecifiers.span
+      ),
+    },
+    [cell.contents]
+  );
+}

@@ -1,15 +1,14 @@
-type Table<T> = {
-  headerrows: Row<T>[];
-  bodyrows: Row<T>[];
+export type Table<T> = {
+  rows: Row<T>[];
   specifier: T;
 };
 
-type Row<T> = {
+export type Row<T> = {
   cells: Cell<T>[];
   specifier: T;
 };
 
-type Cell<T> = {
+export type Cell<T> = {
   contents: string;
   specifier: T;
 };

@@ -1,52 +1,33 @@
-import {
-  parseSpecifiers,
-  TableSpecifier,
-  CellSpecifier,
-} from "./specifier-utils";
+import { Table } from "./globals";
+import { parseTable } from "./parse";
+import { parseTableSpecifier } from "./parse-specifier";
+import { stringifyTable } from "./stringify";
+import { transformTableSpecifier } from "./transform-specifier";
 
-export function parseAsTable(rawHTMLText: string, isGroupShow: boolean) {
-  let tableSpec = parseSpecifiers(rawHTMLText, {
-    nonspecifier: "",
-    class: "",
-    style: "",
-    headerrows: "1",
-  } as TableSpecifier);
-  let headerrows: number = parseInt(tableSpec.headerrows, 10);
-  if (isNaN(headerrows)) {
-    headerrows = 1;
-  }
-  let rows: string[] = tableSpec.nonspecifier.split("\n");
-  let [header, body] = [
-    parseListOfRows(rows.slice(0, headerrows), "th").join("\n"),
-    parseListOfRows(rows.slice(headerrows), "td").join("\n"),
-  ];
-  return `<table class="${!isGroupShow ? "cloze-group " : ""}${
-    tableSpec.class
-  } section" style="${
-    tableSpec.style
-  }"><thead>${header}</thead><tbody>${body}</tbody></table>`;
+export function parseAsTable(
+  rawHTMLText: string,
+  isGroupShow: boolean
+): string {
+  const specifierNonspecifierTable = transformToNextStep(
+    rawHTMLText,
+    parseTable
+  );
+  const parsedSpecifierTable = transformToNextStep(
+    specifierNonspecifierTable,
+    parseTableSpecifier
+  );
+  const transformedTable = transformToNextStep(
+    parsedSpecifierTable,
+    transformTableSpecifier
+  );
+  const stringfiedTable = transformToNextStep(transformedTable, stringifyTable);
+  return stringfiedTable;
 }
 
-function surroundCellByCellHTML(cellContents: string, cellType: "th" | "td") {
-  let _;
-  let tableSpecs = parseSpecifiers(cellContents, {
-    nonspecifier: "",
-    class: "",
-    style: "",
-    span: "",
-    type: cellType,
-  } as CellSpecifier);
-  let span = tableSpecs.span.split(",");
-  span.push("1", "1"); // default values for span, will be ignored if there are enough already
-  let parsedSpan = span.map((spanSpec: string) => {
-    let parsedSpanSpec = parseInt(spanSpec, 10);
-    return Number.isNaN(parsedSpanSpec) ? 1 : parsedSpanSpec;
-  });
-  return `<${
-    tableSpecs.type
-  } colspan="${parsedSpan}" rowspan="${parsedSpan}" class="${
-    tableSpecs.class
-  }" style="${tableSpecs.style}">${tableSpecs.nonspecifier.trim()}</${
-    tableSpecs.type
-  }>`;
+function transformToNextStep<T, U>(
+  table: T,
+  //injectedToplevelClasses: string[] = []
+  callback: (table: T) => U
+): U {
+  return callback(table);
 }
