@@ -1,5 +1,9 @@
 import { formatSectionLevel } from "../section";
-import { treeNode, treeNodeGeneric, treeNodeLeaf } from "./parse-into-tree";
+import {
+  treeNode,
+  treeNodeGeneric,
+  treeNodeLeaf,
+} from "../parse/parse-into-tree";
 
 export function treeToString(parsedSections: treeNode): string {
   if (parsedSections.children.length === 0) {
