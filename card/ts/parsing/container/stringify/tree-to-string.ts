@@ -1,33 +1,35 @@
-import { formatSectionLevel } from "../section";
-import {
-  treeNode,
-  TreeNodeSection,
-  TreeNodeLeaf,
-} from "../parse/parse-into-tree";
+import { TreeNode, treeNodeIsTreeNodeSection } from "../parse/parse-into-tree";
 
-export function treeToString(parsedSections: treeNode): string {
-  if (parsedSections.children.length === 0) {
-    return "";
-  } else if (parsedSections.title === "section") {
-    return formatSectionLevel(
-      (parsedSections as TreeNodeLeaf).children
-        .map((line: string) => line.trim())
-        .join("\n")
-    ); // we know that this is treeNodeLeaf because of the check, but have no way of expressing that in TS in the types
+export function treeToString(parsedSections: TreeNode<string>): string {
+  const childrenString = parsedSections.children
+    .map((child) => {
+      if (typeof child === "string") {
+        return child;
+      } else {
+        return treeToString(child);
+      }
+    })
+    .join("\n");
+  if (treeNodeIsTreeNodeSection(parsedSections)) {
+    const header = buildHeader(
+      parsedSections.title,
+      parsedSections.isGroupShowHeader
+    );
+    return buildArticle(header, childrenString, parsedSections.depth);
   } else {
-    // we know that this is treeNodeGeneric because of the check, but have no way of expressing that in TS in the types
-    let newHeader = `<h2 class="${
-      !(parsedSections as TreeNodeSection).isGroupShowHeader
-        ? "cloze-group"
-        : " "
-    }">${parsedSections.title}</h2>`;
-    let newContent = (parsedSections as TreeNodeSection).children
-      .map(treeToString)
-      .join("\n");
-    if ((parsedSections as TreeNodeSection).title === "root") return newContent;
-    else
-      return `<article class="indent-${
-        (parsedSections as TreeNodeSection).depth - 1
-      } headered-container cloze-group">${newHeader}${newContent}</article>`;
+    return childrenString;
   }
+}
+
+function buildHeader(title: string, isGroupShowHeader: boolean): string {
+  return `<h2 class="${
+    !isGroupShowHeader ? "cloze-group" : " "
+  }">${title}</h2>`;
+}
+
+function buildArticle(header: string, content: string, depth: number): string {
+  return `<article class="indent-${depth - 1} headered-container cloze-group">
+    ${header}
+    ${content}
+  </article>`;
 }

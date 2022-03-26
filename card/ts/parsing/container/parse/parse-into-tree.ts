@@ -38,6 +38,13 @@ export interface TreeNodeSection<T> extends TreeNode<T> {
   depth: number;
   isGroupShowHeader: boolean;
 }
+
+export function treeNodeIsTreeNodeSection(
+  node: TreeNode<string>
+): node is TreeNodeSection<string> {
+  return node.type === "section";
+}
+
 export interface TreeNodeRoot<T> extends TreeNode<T> {
   type: "root";
 }
