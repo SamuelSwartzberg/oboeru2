@@ -3,7 +3,7 @@ import { ParsedSpecifer } from "../parse-specifier";
 
 export type TransformedSpecifier<T> = {
   precreatedAttrs: {
-    classes: string;
+    class: string;
     style: string;
   };
   individualSpecifiers: T;
@@ -42,7 +42,7 @@ function transformSpecifier<T>(
 ): TransformedSpecifier<T> {
   return {
     precreatedAttrs: {
-      classes: specifier.classes.join(" "),
+      class: specifier.classes.join(" "),
       style: mergeStyleDeclarations(specifier.style),
     },
     individualSpecifiers: specifier.individualSpecifiers,

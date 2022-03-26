@@ -31,7 +31,7 @@ export function parseSpecifier(
 }
 
 function parseClassOrStyle(str?: string): string[] {
-  if (str && str.length > 0) return str.split(" ");
+  if (str && str.length > 0) return str.split("§");
   else return [];
 }
 
