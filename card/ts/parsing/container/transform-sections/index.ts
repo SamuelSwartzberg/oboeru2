@@ -1,4 +1,4 @@
-import { TreeNode } from "../parse/parse-into-tree";
+import { TreeNode } from "../tree-node";
 import { switchParseSection } from "./sections/switch-for-section";
 
 export function transformSectionsToParsedSections(

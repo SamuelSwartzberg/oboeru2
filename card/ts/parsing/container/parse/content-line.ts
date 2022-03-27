@@ -1,5 +1,6 @@
 import { lastElement } from "../../../globals/arr-util";
-import { ParseState, TreeNode } from "./parse-into-tree";
+import { TreeNode } from "../tree-node";
+import { ParseState } from "./parse-into-tree";
 
 export function handleContentLine(
   contentLine: string,

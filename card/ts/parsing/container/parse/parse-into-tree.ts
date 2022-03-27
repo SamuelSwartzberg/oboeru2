@@ -1,4 +1,5 @@
 import { lastElement, nthLastElement } from "../../../globals/arr-util";
+import { TreeNode, TreeNodeRoot, TreeNodeSection } from "../tree-node";
 import { handleContentLine } from "./content-line";
 import {
   countLeadingHashSigns,
@@ -25,28 +26,6 @@ function finishPreviouslyRecordingElement(
   if (contents.length > 0) {
     lastElement(chainOfDepth).children.push(contents.join("\n"));
   }
-}
-
-export interface TreeNode<T> {
-  children: (TreeNode<T> | T)[];
-  type: "section" | "root";
-}
-
-export interface TreeNodeSection<T> extends TreeNode<T> {
-  type: "section";
-  title: string;
-  depth: number;
-  isGroupShowHeader: boolean;
-}
-
-export function treeNodeIsTreeNodeSection(
-  node: TreeNode<string>
-): node is TreeNodeSection<string> {
-  return node.type === "section";
-}
-
-export interface TreeNodeRoot<T> extends TreeNode<T> {
-  type: "root";
 }
 
 export interface ParseState {
@@ -97,6 +76,6 @@ export function parseDocumentToTree(rawHTML: string): TreeNode<string> {
       parseState = handleContentLine(currentline, parseState, chainOfDepth);
     }
   }
-  lastElement(chainOfDepth).children.push(parseState.contents.join("\n"));
+  finishPreviouslyRecordingElement(chainOfDepth, parseState.contents);
   return toplevel;
 }

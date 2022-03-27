@@ -8,12 +8,16 @@ export function parseAsTextSection(
   rawHTMLText: string,
   isGroupShow: boolean
 ): string {
-  log.setLevel("debug");
+  log.debug("Transforming HTML string to parsed text section...");
   const parsedTextSection = parseTextSection(rawHTMLText);
+  log.debug("Parsed text section:");
+  log.debug(parsedTextSection);
   testParsedTextSection(parsedTextSection);
+  log.debug("Transforming parsed text section...");
   const transformedTextSection = transformTextSection(parsedTextSection);
+  log.debug("Transformed text section:");
+  log.debug(transformedTextSection);
   const finalString = stringifySection(transformedTextSection, isGroupShow);
-  log.setLevel("info");
   return finalString;
 }
 

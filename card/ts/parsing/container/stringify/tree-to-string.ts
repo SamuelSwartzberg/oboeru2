@@ -1,5 +1,5 @@
 import { getClassGroupShow } from "../../globals";
-import { TreeNode, treeNodeIsTreeNodeSection } from "../parse/parse-into-tree";
+import { TreeNode, treeNodeIsTreeNodeSection } from "../tree-node";
 
 export function treeToString(parsedSections: TreeNode<string>): string {
   const childrenString = parsedSections.children
