@@ -16,8 +16,8 @@ export interface LineSpecifier {
   properties: {
     small: boolean;
     blockquote: boolean;
-    "list-ordered": boolean;
-    "list-unordered": boolean;
+    listOrdered: boolean;
+    listUnordered: boolean;
     groupShow: boolean;
     code: PossiblyCode;
     indentation: number;

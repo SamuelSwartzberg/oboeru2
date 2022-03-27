@@ -26,8 +26,8 @@ export function transformTextSection(
 var indicatorCharacters: [string, string][] = [
   ["indentation", " +"],
   ["blockquote", "＞ "],
-  ["list-ordered", "\\,\\. "],
-  ["list-unordered", "- "],
+  ["listOrdered", "\\,\\. "],
+  ["listUnordered", "- "],
   ["small", "^"],
   ["groupShow", "!"],
 ];
@@ -47,8 +47,8 @@ function parseLine(
     properties: {
       small: false,
       blockquote: false,
-      "list-ordered": false,
-      "list-unordered": false,
+      listOrdered: false,
+      listUnordered: false,
       groupShow: false,
       code: lineState.code,
       indentation: 0,
@@ -88,8 +88,8 @@ function buildRegexFromIndicatorCharacters(
 type LineSpecifierKeyThatIsBoolean =
   | "small"
   | "blockquote"
-  | "list-ordered"
-  | "list-unordered"
+  | "listOrdered"
+  | "listUnordered"
   | "groupShow";
 
 function parseLineIntoLineSpecifier(

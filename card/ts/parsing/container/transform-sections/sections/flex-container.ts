@@ -1,3 +1,5 @@
+import { getClassGroupShow } from "../../../globals";
+
 export function parseAsFlexContainer(
   rawHTMLText: string,
   isGroupShow: boolean

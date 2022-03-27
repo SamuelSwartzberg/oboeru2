@@ -4,8 +4,8 @@ import { LineSpecifier, Section } from "./types";
 interface BlockElementKeys {
   code: any;
   blockquote: any;
-  "list-ordered": any;
-  "list-unordered": any;
+  listOrdered: any;
+  listUnordered: any;
 }
 
 type BlockElementState = {
@@ -26,12 +26,13 @@ export function stringifySection(
       const blockElementState: BlockElementState = {
         code: false,
         blockquote: false,
-        "list-ordered": false,
-        "list-unordered": false,
+        listOrdered: false,
+        listUnordered: false,
       };
       for (const line of subsection.lines) {
         lines.push(...stringifyLine(line, blockElementState));
       }
+      lines.push(emitHTMLClosingAllBlockElements(blockElementState));
       const subsectionbody = stringifySubsection(lines.join("\n"));
       return subsectionbody;
     })
@@ -43,8 +44,8 @@ export function stringifySection(
 var blockElements: BlockElementElements = {
   blockquote: ["blockquote"],
   code: ["pre", "code"],
-  "list-ordered": ["ol"],
-  "list-unordered": ["ul"],
+  listOrdered: ["ol"],
+  listUnordered: ["ul"],
 };
 
 function getHTMLForElementName(
@@ -114,11 +115,11 @@ function linePropertiesToLineConstituents(
     elementType: "span",
     classes: [],
   };
-  if (line.properties["list-ordered"] || line.properties["list-unordered"]) {
+  if (line.properties["listOrdered"] || line.properties["listUnordered"]) {
     lineConstituents.elementType = "li";
   }
-  if (line.properties["list-ordered"]) lineConstituents.classes.push("ordered");
-  if (line.properties["list-unordered"])
+  if (line.properties["listOrdered"]) lineConstituents.classes.push("ordered");
+  if (line.properties["listUnordered"])
     lineConstituents.classes.push("unordered");
   if (line.properties.small) lineConstituents.classes.push("sub");
   if (line.properties.groupShow)
@@ -144,4 +145,18 @@ function stringifySectionOnly(
   return `<section class="${!getClassGroupShow(
     isGroupShow
   )} section text-section">${subsectionbody}</section>`;
+}
+function emitHTMLClosingAllBlockElements(
+  blockElementState: BlockElementState
+): string {
+  let output = "";
+  for (const elementType in blockElementState) {
+    if (blockElementState[elementType as keyof BlockElementState]) {
+      output += getHTMLForElementName(
+        blockElements[elementType as keyof BlockElementElements],
+        true
+      );
+    }
+  }
+  return output;
 }

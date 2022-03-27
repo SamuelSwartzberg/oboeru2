@@ -9,7 +9,6 @@ export function parseAsTable(
   rawHTMLText: string,
   isGroupShow: boolean
 ): string {
-  log.setLevel("debug");
   log.debug(
     "Transforming HTML string to basic parsed table with specifiers..."
   );
@@ -35,7 +34,6 @@ export function parseAsTable(
   );
   log.debug("Transforming table to HTML string...");
   const stringfiedTable = transformToNextStep(transformedTable, stringifyTable);
-  log.setLevel("info");
   return stringfiedTable;
 }
 
