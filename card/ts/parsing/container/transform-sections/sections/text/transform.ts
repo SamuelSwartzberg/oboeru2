@@ -23,7 +23,14 @@ export function transformTextSection(
   return { subsections: newSubsections };
 }
 
-var indicatorCharacters = {};
+var indicatorCharacters: [string, string][] = [
+  ["indentation", " +"],
+  ["blockquote", "＞ "],
+  ["list-ordered", "\\,\\. "],
+  ["list-unordered", "- "],
+  ["small", "^"],
+  ["groupShow", "!"],
+];
 
 var CODEBLOCK_DELIMITER = "```";
 
@@ -35,6 +42,20 @@ function parseLine(
     switchCodeLineState(linestring, lineState);
     return undefined;
   }
+  const lineSpecifier: LineSpecifier = {
+    content: "",
+    properties: {
+      small: false,
+      blockquote: false,
+      "list-ordered": false,
+      "list-unordered": false,
+      groupShow: false,
+      code: lineState.code,
+      indentation: 0,
+    },
+  };
+  parseLineIntoLineSpecifier(linestring, lineSpecifier);
+  return lineSpecifier;
 }
 
 function switchCodeLineState(linestring: string, lineState: LineState) {
@@ -51,4 +72,45 @@ function switchCodeLineState(linestring: string, lineState: LineState) {
   } else {
     lineState.code = false;
   }
+}
+
+function buildRegexFromIndicatorCharacters(
+  indicatorCharacters: [string, string][]
+): RegExp {
+  const regexStringPartsJoined = indicatorCharacters
+    .map(([key, value]) => {
+      return `(?<${key}>(?:${value})?)`;
+    })
+    .join("");
+  return new RegExp(`^${regexStringPartsJoined}(?<content>.*)$`);
+}
+
+type LineSpecifierKeyThatIsBoolean =
+  | "small"
+  | "blockquote"
+  | "list-ordered"
+  | "list-unordered"
+  | "groupShow";
+
+function parseLineIntoLineSpecifier(
+  linestring: string,
+  lineSpecifier: LineSpecifier
+) {
+  const regex = buildRegexFromIndicatorCharacters(indicatorCharacters);
+  const match = linestring.match(regex);
+  if (match) {
+    if (match.groups) {
+      lineSpecifier.content = match.groups.content;
+      delete match.groups.content;
+      lineSpecifier.properties.indentation = match.groups.indentation.length;
+      delete match.groups.indentation;
+      for (const [matchName, matchContents] of Object.entries(match.groups)) {
+        const propertyName = matchName as LineSpecifierKeyThatIsBoolean;
+        lineSpecifier.properties[propertyName] = matchContents !== undefined;
+      }
+    } else
+      throw new Error(
+        `Line matched regex but did not have groups: ${linestring}`
+      );
+  } else throw new Error(`Line must match regex but doesn't: ${linestring}`);
 }

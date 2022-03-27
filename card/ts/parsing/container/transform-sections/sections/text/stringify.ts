@@ -86,7 +86,11 @@ function emitHTMLForBlockState(
   }
 }
 
-interface LineConstitutents {}
+interface LineConstitutents {
+  content: string;
+  elementType: string;
+  classes: string[];
+}
 
 function stringifyLine(
   line: LineSpecifier,
@@ -98,6 +102,34 @@ function stringifyLine(
     outputLines.push(htmlForBlockState);
   }
 }
+
+function linePropertiesToLineConstituents(
+  line: LineSpecifier
+): LineConstitutents {
+  const lineConstituents: LineConstitutents = {
+    content: line.content,
+    elementType: "span",
+    classes: [],
+  };
+  if (line.properties["list-ordered"] || line.properties["list-unordered"]) {
+    lineConstituents.elementType = "li";
+  }
+  if (line.properties["list-ordered"]) lineConstituents.classes.push("ordered");
+  if (line.properties["list-unordered"])
+    lineConstituents.classes.push("unordered");
+  if (line.properties.small) lineConstituents.classes.push("sub");
+  if (line.properties.groupShow)
+    lineConstituents.classes.push(getClassGroupShow(true));
+}
+
+function lineConstituentsToString(lineConstituents: LineConstitutents): string {
+  return `<${
+    lineConstituents.elementType
+  } class="${lineConstituents.classes.join(" ")}">${
+    lineConstituents.content
+  }</${lineConstituents.elementType}>`;
+}
+
 function stringifySubsection(linebody: string): string {
   return `<section class="sub-section">\n${linebody}\n</section>`;
 }
