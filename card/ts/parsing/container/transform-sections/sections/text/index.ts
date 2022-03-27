@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { parseTextSection } from "./parse";
 import { stringifySection } from "./stringify";
 import { transformTextSection } from "./transform";
@@ -7,10 +8,12 @@ export function parseAsTextSection(
   rawHTMLText: string,
   isGroupShow: boolean
 ): string {
+  log.setLevel("debug");
   const parsedTextSection = parseTextSection(rawHTMLText);
   testParsedTextSection(parsedTextSection);
   const transformedTextSection = transformTextSection(parsedTextSection);
   const finalString = stringifySection(transformedTextSection, isGroupShow);
+  log.setLevel("info");
   return finalString;
 }
 
