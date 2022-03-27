@@ -5,7 +5,7 @@ function parseAsOnionBox(
 ): string {
   let onionBoxStructure = parseOnionBoxStructure(unparsedOnionBoxString);
   return `<section class="${
-    !isGroupShow ? "cloze-group" : " "
+    !getClassGroupShow(isGroupShow)
   } section">${formatOnionBox(onionBoxStructure)}</section>`;
 }
 

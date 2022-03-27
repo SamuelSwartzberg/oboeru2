@@ -1,8 +1,6 @@
 export function parseAsTextSection(rawHTMLText: string, isGroupShow: boolean) {
   let lineLikes: string = parseIntoLineLike(rawHTMLText);
-  return `<section class="${
-    !isGroupShow ? "cloze-group" : " "
-  } section text-section">${lineLikes}</section>`;
+  ;
 }
 
 // new parsing syntax, using markdown-like syntax but customized for cloze demands
@@ -17,7 +15,6 @@ export function parseAsTextSection(rawHTMLText: string, isGroupShow: boolean) {
 
 function parseIntoLineLike(section: string): string {
   section = section.trim();
-  section = section.replace(/^```(.*?)^```/ms, "<pre><code>$1</pre></code>");
   let subsections: string[] = section.split("\n\n");
   let newSection: string[] = [];
   for (let subsection of subsections) {
@@ -59,7 +56,7 @@ function parseIntoLineLike(section: string): string {
           };
 
           newLine += `<${typeOfElement.type} class="${typeOfElement.classes} ${
-            !isGroupShow ? "cloze-group" : " "
+            !getClassGroupShow(isGroupShow)
           }${isSmall ? " sub" : ""}">${content}</${typeOfElement.type}>`;
           return newLine;
         }
@@ -74,6 +71,6 @@ function parseIntoLineLike(section: string): string {
     newSection.push(newSubsection);
   }
   return newSection
-    .map((subsection) => `<section class="sub-section">${subsection}</section>`)
+    .map((subsection) => )
     .join("\n");
 }
