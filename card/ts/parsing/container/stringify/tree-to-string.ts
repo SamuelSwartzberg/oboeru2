@@ -1,3 +1,4 @@
+import { getClassGroupShow } from "../../globals";
 import { TreeNode, treeNodeIsTreeNodeSection } from "../parse/parse-into-tree";
 
 export function treeToString(parsedSections: TreeNode<string>): string {

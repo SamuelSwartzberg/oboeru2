@@ -32,7 +32,7 @@ export function stringifySection(
       for (const line of subsection.lines) {
         lines.push(...stringifyLine(line, blockElementState));
       }
-      const subsectionbody = stringifySubsection(linebody);
+      const subsectionbody = stringifySubsection(lines.join("\n"));
       return subsectionbody;
     })
     .join("\n");
@@ -101,6 +101,9 @@ function stringifyLine(
   if (htmlForBlockState) {
     outputLines.push(htmlForBlockState);
   }
+  const lineConstituents = linePropertiesToLineConstituents(line);
+  outputLines.push(lineConstituentsToString(lineConstituents));
+  return outputLines;
 }
 
 function linePropertiesToLineConstituents(
@@ -120,6 +123,7 @@ function linePropertiesToLineConstituents(
   if (line.properties.small) lineConstituents.classes.push("sub");
   if (line.properties.groupShow)
     lineConstituents.classes.push(getClassGroupShow(true));
+  return lineConstituents;
 }
 
 function lineConstituentsToString(lineConstituents: LineConstitutents): string {
