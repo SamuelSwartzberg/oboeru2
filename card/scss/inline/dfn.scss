@@ -8,3 +8,7 @@ dfn::before {
   padding-right: 0.1em;
   color: #00000088;
 }
+
+dfn {
+  color: var(--color-darkest);
+}

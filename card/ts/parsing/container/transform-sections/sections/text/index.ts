@@ -9,6 +9,8 @@ export function parseAsTextSection(
   isGroupShow: boolean
 ): string {
   log.debug("Transforming HTML string to parsed text section...");
+  log.debug("The raw HTML string is:");
+  log.debug(rawHTMLText);
   const parsedTextSection = parseTextSection(rawHTMLText);
   log.debug("Parsed text section:");
   log.debug(parsedTextSection);

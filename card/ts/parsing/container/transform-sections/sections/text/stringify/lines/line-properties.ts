@@ -8,7 +8,7 @@ export function linePropertiesToLineConstituents(
   const lineConstituents: LineConstitutents = {
     content: line.content,
     elementType: "span",
-    classes: [],
+    classes: ["line"],
   };
   if (line.properties["listOrdered"] || line.properties["listUnordered"]) {
     lineConstituents.elementType = "li";

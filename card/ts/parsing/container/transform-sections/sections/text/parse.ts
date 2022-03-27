@@ -1,6 +1,7 @@
 import { Section, Subsection } from "./types";
 
 export function parseTextSection(html: string): Section<string> {
+  console.log(html);
   const subsectionParts = html.trim().split("\n\n");
   const subsections: Subsection<string>[] = subsectionParts.map(
     (subsection) => {

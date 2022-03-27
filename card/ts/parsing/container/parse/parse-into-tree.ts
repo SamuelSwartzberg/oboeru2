@@ -19,12 +19,14 @@ function changeTreeLevelWithElement(
   return chainOfDepth;
 }
 
-function finishPreviouslyRecordingElement(
+export function finishPreviouslyRecordingElement(
   chainOfDepth: TreeNode<string>[],
   contents: string[]
 ) {
   if (contents.length > 0) {
-    lastElement(chainOfDepth).children.push(contents.join("\n"));
+    const contentsstring = contents.join("\n").trim();
+    if (contentsstring.length > 0)
+      lastElement(chainOfDepth).children.push(contentsstring);
   }
 }
 

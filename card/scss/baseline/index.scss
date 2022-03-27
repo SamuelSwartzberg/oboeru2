@@ -4,7 +4,7 @@
 @import "svg.scss";
 
 body {
-  @include font-size-retrievable(1.1rem);
+  @include font-size-retrievable(1rem);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     "Helvetica Neue", Arial, sans-serif, "Noto Color Emoji", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
@@ -14,6 +14,8 @@ body {
   --color-lightest: #0000000a;
   --color-light: #00000011;
   --color-lightish: #0000002d;
+  --color-dark: #333;
+  --color-darkest: #000;
 }
 code {
   font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier,

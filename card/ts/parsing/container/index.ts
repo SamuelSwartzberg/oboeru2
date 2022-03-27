@@ -5,6 +5,7 @@ import { transformSectionsToParsedSections } from "./transform-sections";
 import { isTreeNode, TreeNode } from "./tree-node";
 
 export function parseStructure(html: string): string {
+  console.log(html);
   log.setLevel("debug");
   log.debug("Parsing HTML string to tree...");
   const tree = parseDocumentToTree(html);
