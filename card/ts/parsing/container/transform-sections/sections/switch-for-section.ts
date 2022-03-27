@@ -1,6 +1,6 @@
 import { parseAsFlexContainer } from "./flex-container";
 import { parseAsTable } from "./table";
-import { parseAsTextSection } from "./text-section";
+import { parseAsTextSection } from "./text";
 
 var sectionIndicatorsAndFunctions = {
   '<span class="cloze-dump">': dropSection,

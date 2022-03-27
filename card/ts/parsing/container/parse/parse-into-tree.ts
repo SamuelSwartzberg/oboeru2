@@ -55,7 +55,7 @@ export interface ParseState {
   lastLineWasNewline: boolean;
 }
 
-export function parseToplevel(rawHTML: string): TreeNode<string> {
+export function parseDocumentToTree(rawHTML: string): TreeNode<string> {
   let unparsedLines: string[] = rawHTML.split("\n");
   let toplevel: TreeNodeRoot<string> = { children: [], type: "root" };
   let chainOfDepth: TreeNode<string>[] = [toplevel];
