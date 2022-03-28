@@ -1,6 +1,6 @@
 import log from "loglevel";
 import { isFront } from "../anki-card";
-import { parseClozelikes } from "./clozelike";
+import { parseAndHTMLStringifyClozelikes } from "./clozelike";
 import { parseStructure } from "./container";
 
 import { formatInlineLevel } from "./inline";
@@ -26,7 +26,8 @@ export function parseCard(futureContainerHTML: string): string {
         "Were on back, and no inline formatting was applied. This is odd, as this means there was no inline formatting on the whole card, which should be very rare or perhaps even never happen."
       );
   } else inlineFormattedHTML = structuredHTML;
-  const clozeLikesParsedHTML = parseClozelikes(inlineFormattedHTML);
+  const clozeLikesParsedHTML =
+    parseAndHTMLStringifyClozelikes(inlineFormattedHTML);
   if (inlineFormattedHTML === clozeLikesParsedHTML)
     throw new Error(
       "The cloze-like parsing did not change the HTML. This would mean there are no clozelikes, and therefore should be impossible."

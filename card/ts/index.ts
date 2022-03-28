@@ -1,5 +1,5 @@
 import { parseCard } from "./parsing";
-import { formatTags, scrollClozeIntoView } from "./anki-card";
+import { formatTags, initBackness, scrollClozeIntoView } from "./anki-card";
 import { applyEventHandlers } from "./dom-event-manipulators";
 import { setActiveGroups } from "./group-activation";
 import { decoratePostBuild } from "./post-build";
@@ -10,7 +10,7 @@ if (!container) throw new Error("No main container.");
 
 log.setLevel("info");
 log.info("Log active.");
-
+initBackness();
 formatTags();
 
 container.innerHTML = parseCard(container.innerHTML.trim());

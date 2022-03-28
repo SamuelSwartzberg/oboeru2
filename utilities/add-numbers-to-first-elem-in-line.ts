@@ -1,8 +1,8 @@
-import { annotateNumber } from "../card/ts/parsing/clozelike";
+import { parseAndReencodeClozelikesWithResolvedNumbers } from "../card/ts/parsing/clozelike";
 import fs from "fs";
 
 const stdin = fs.readFileSync(process.stdin.fd).toString();
-const annotatedStdin = annotateNumber(stdin);
+const annotatedStdin = parseAndReencodeClozelikesWithResolvedNumbers(stdin);
 
 let fusedStdin = [];
 let [stdinLines, annotatedStdinLines] = [

@@ -2,9 +2,29 @@ import log from "loglevel";
 import { parseClozelikeStringToTree } from "./parse-to-array-tree";
 import { mapTreeToStructuredTree } from "./transform-array-tree-to-structured-tree";
 import { mapStructuredTreeToParsedClozelikes } from "./transform-tree";
-import { reduceTreeToCardHTML } from "./stringify";
+import {
+  reduceTreeToCardHTML,
+  reduceTreeToReencodedClozelikesWithResolvedNumbers,
+} from "./stringify";
+import { WithParsedActionMappings } from "./transform-tree/mappers/parse-action-mapping-to-action-targets";
+import { TreeElement } from "./transform-tree/globals";
 
-export function parseClozelikes(html: string): string {
+export function parseAndHTMLStringifyClozelikes(html: string): string {
+  const treeWithClozelikesParsedToObject = parseClozelikes(html);
+  return reduceTreeToCardHTML(treeWithClozelikesParsedToObject, true);
+}
+
+export function parseAndReencodeClozelikesWithResolvedNumbers(
+  html: string
+): string {
+  const treeWithClozelikesParsedToObject = parseClozelikes(html);
+  return reduceTreeToReencodedClozelikesWithResolvedNumbers(
+    treeWithClozelikesParsedToObject,
+    true
+  );
+}
+
+function parseClozelikes(html: string): TreeElement<WithParsedActionMappings> {
   const treeWithClozelikesRepresentedAsNestedArrays =
     parseClozelikeStringToTree(html);
   log.debug("The tree with clozelikes represented as nested arrays is:");
@@ -39,5 +59,5 @@ export function parseClozelikes(html: string): string {
     );
   log.debug("The tree with clozelikes parsed to objects is:");
   log.debug(JSON.stringify(treeWithClozelikesParsedToObject, null, 2));
-  return reduceTreeToCardHTML(treeWithClozelikesParsedToObject, true);
+  return treeWithClozelikesParsedToObject;
 }

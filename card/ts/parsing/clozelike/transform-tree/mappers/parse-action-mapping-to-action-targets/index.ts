@@ -16,7 +16,8 @@ export type ParsedActionMapping = {
   [k: string]: ActionTargetsObject;
 };
 
-export type WithParsedActionMappings = WithSpecifier & ParsedActionMappings;
+export type WithParsedActionMappings = WithSplitActionMappings &
+  ParsedActionMappings;
 
 export function parseActionMappingTreeElement(
   treeElement: TreeElement<WithSplitActionMappings>

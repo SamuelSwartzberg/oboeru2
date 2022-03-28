@@ -1,18 +1,20 @@
-// Backness to attr
-
 import log from "loglevel";
 
-var backIndicator = document.querySelector(".is-back-indicator");
-var isBackOriginal: boolean = !!backIndicator;
-if (backIndicator) backIndicator.remove(); // Remove the temporary back indicator
+export function initBackness() {
+  // Backness to attr
 
-// Toggle back-frontness
+  var backIndicator = document.querySelector(".is-back-indicator");
+  var isBackOriginal: boolean = !!backIndicator;
+  if (backIndicator) backIndicator.remove(); // Remove the temporary back indicator
 
-if (isBackOriginal) {
-  document.body.classList.add("is-back");
-  document.body.classList.remove("is-front");
-} else {
-  document.body.classList.add("is-front");
+  // Toggle back-frontness
+
+  if (isBackOriginal) {
+    document.body.classList.add("is-back");
+    document.body.classList.remove("is-front");
+  } else {
+    document.body.classList.add("is-front");
+  }
 }
 
 export function isFront(): boolean {

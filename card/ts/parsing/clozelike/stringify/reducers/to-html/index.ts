@@ -1,23 +1,18 @@
 import log from "loglevel";
 import { WithParsedActionMappings } from "../../../transform-tree/mappers/parse-action-mapping-to-action-targets";
 import { NarrowTreeElement } from "../../reduce-tree-string";
+import { getStringFromWithParsedActionMappingsTreeElement } from "../globals";
 import { getClassesCorrespondingToCurrentMeaningOfClozelikeSpecifiers } from "./action-mapping-to-classes";
 import { clozelikeHTMLFromStringConstituents } from "./clozelike-html-from-string-components";
 import { getHintStyleDeclarationIfAny } from "./hint";
 
-export function getStringFromWithParsedActionMappingsTreeElement(
+export function getHTMLStringFromWithParsedActionMappingsTreeElement(
   treeElement: NarrowTreeElement<WithParsedActionMappings>
 ): string {
-  log.debug(
-    "Getting card HMTL string for tree element with parsed action mappings..."
+  return getStringFromWithParsedActionMappingsTreeElement(
+    treeElement,
+    getHTMLFromClozelike
   );
-  if (treeElement.contents.clozelike) {
-    log.debug("...and it was 🟩  a clozelike");
-    return getHTMLFromClozelike(treeElement);
-  } else {
-    log.debug("...and it was 🟨  not a clozelike ");
-    return treeElement.value;
-  }
 }
 
 function getHTMLFromClozelike(
