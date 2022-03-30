@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-no_nums="$(pbpaste)"
-with_nums="$(pbpaste | ts-node add-numbers-to-first-elem-in-line.ts)"
-diff -u <(echo "$no_nums") <(echo "$with_nums") | diffr | less -R
-ask "Copy the version with nums to the clipboard?" && echo "$with_nums" | pbcopy

@@ -9,6 +9,7 @@ export function linePropertiesToLineConstituents(
     content: line.content,
     elementType: "span",
     classes: ["line"],
+    prefix: "",
   };
   if (line.properties["listOrdered"] || line.properties["listUnordered"]) {
     lineConstituents.elementType = "li";
@@ -19,5 +20,7 @@ export function linePropertiesToLineConstituents(
   if (line.properties.small) lineConstituents.classes.push("sub");
   if (line.properties.groupShow)
     lineConstituents.classes.push(getClassGroupShow(true));
+  if (line.properties.indentation)
+    lineConstituents.prefix = "&nbsp;".repeat(line.properties.indentation);
   return lineConstituents;
 }

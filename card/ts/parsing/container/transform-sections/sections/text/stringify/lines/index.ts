@@ -7,6 +7,7 @@ export interface LineConstitutents {
   content: string;
   elementType: string;
   classes: string[];
+  prefix: string;
 }
 
 export function stringifyLine(
@@ -26,7 +27,7 @@ export function stringifyLine(
 function lineConstituentsToString(lineConstituents: LineConstitutents): string {
   return `<${
     lineConstituents.elementType
-  } class="${lineConstituents.classes.join(" ")}">${
-    lineConstituents.content
-  }</${lineConstituents.elementType}>`;
+  } class="${lineConstituents.classes.join(" ")}">
+  ${lineConstituents.prefix}
+  ${lineConstituents.content}</${lineConstituents.elementType}>`;
 }
