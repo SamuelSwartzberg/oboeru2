@@ -38,7 +38,7 @@ function stringifySectionOnly(
   subsectionbody: string,
   isGroupShow: boolean
 ): string {
-  return `<section class="${!getClassGroupShow(
+  return `<section class="${getClassGroupShow(
     isGroupShow
   )} section text-section">${subsectionbody}</section>`;
 }

@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
+
+subcommand="$1"
+shift
+
+function add-numbers(){
+  no_nums="$(pbpaste)"
+  with_nums="$(pbpaste | ts-node "$SCRIPT_DIR/add-numbers-to-first-elem-in-line.ts")"
+  diff -u <(echo "$no_nums") <(echo "$with_nums") | diffr | less -R
+  ask "Copy the version with nums to the clipboard?" && echo "$with_nums" | pbcopy
+}
+
+case $subcommand in
+  [aA][nN]|add-numbers) 
+    add-numbers
+    ;;
+  *)
+    echo "Usage: ob2util <subcommand>"
+    echo "Subcommands:"
+    echo "  add-numbers"
+    ;;
+esac
+

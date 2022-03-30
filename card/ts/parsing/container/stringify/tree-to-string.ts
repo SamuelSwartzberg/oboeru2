@@ -23,7 +23,7 @@ export function treeToString(parsedSections: TreeNode<string>): string {
 }
 
 function buildHeader(title: string, isGroupShowHeader: boolean): string {
-  return `<h2 class="${!getClassGroupShow(isGroupShowHeader)}">${title}</h2>`;
+  return `<h2 class="${getClassGroupShow(isGroupShowHeader)}">${title}</h2>`;
 }
 
 function buildArticle(header: string, content: string, depth: number): string {

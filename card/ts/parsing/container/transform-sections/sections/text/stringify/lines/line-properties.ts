@@ -18,8 +18,8 @@ export function linePropertiesToLineConstituents(
   if (line.properties["listUnordered"])
     lineConstituents.classes.push("unordered");
   if (line.properties.small) lineConstituents.classes.push("sub");
-  if (line.properties.groupShow)
-    lineConstituents.classes.push(getClassGroupShow(true));
+  if (!line.properties.groupShow)
+    lineConstituents.classes.push(getClassGroupShow(false));
   if (line.properties.indentation)
     lineConstituents.prefix = "&nbsp;".repeat(line.properties.indentation);
   return lineConstituents;
