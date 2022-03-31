@@ -24,6 +24,9 @@ export function transformTableSpecifier<T>(
         ...row,
         specifier: transformSpecifier(row.specifier),
         cells: row.cells.map((cell) => {
+          cell.specifier.classes = cell.specifier.classes.filter(
+            (arg) => arg !== "cloze-group"
+          );
           const newCell = {
             ...cell,
             specifier: transformSpecifier(cell.specifier),

@@ -9,7 +9,7 @@ export type ParsedSpecifer<T> = {
 };
 
 export type InnerSpecifier = {
-  headerrows?: number;
+  headerrows: number;
   span?: SpanSpecifierInner;
   type?: string;
 };
@@ -39,6 +39,15 @@ export function parseTableSpecifier(
       return newRow;
     }),
   };
+  for (
+    let index = 0;
+    index < newTable.specifier.individualSpecifiers.headerrows;
+    index++
+  ) {
+    newTable.rows[index].specifier.classes = newTable.rows[
+      index
+    ].specifier.classes.filter((ele) => ele !== "cloze-group");
+  }
   return newTable;
 }
 

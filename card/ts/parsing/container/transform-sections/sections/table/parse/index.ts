@@ -44,6 +44,14 @@ function parseNoncell<T>(
 ): WithChildren<T> {
   let nonspecifier: string;
   let specifierObj: Specifiers;
+  let extraClasses: string = "";
+
+  if (str.startsWith("!")) {
+    str = str.slice(1);
+  } else {
+    extraClasses = "cloze-group";
+  }
+
   log.debug("Parsing a string representing a table or row...");
   if (str.includes(NONCELL_SPECIFIER_NONSPECIFIER_SEPARATOR)) {
     log.debug("which had a specifier.");
@@ -59,6 +67,12 @@ function parseNoncell<T>(
   } else {
     nonspecifier = str;
     specifierObj = {};
+  }
+
+  if (specifierObj.class && specifierObj.class.length > 0) {
+    specifierObj.class = `${specifierObj.class} ${extraClasses}`;
+  } else {
+    specifierObj.class = extraClasses;
   }
 
   const children = nonspecifier.split(splitter).map(callback);

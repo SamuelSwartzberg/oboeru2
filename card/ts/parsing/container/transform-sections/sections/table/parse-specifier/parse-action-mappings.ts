@@ -17,6 +17,8 @@ export function parseSpecifier(
       specifier.headerrows,
       10
     );
+  } else {
+    parsedSpecifier.individualSpecifiers.headerrows = 1;
   }
   if (specifier.span) {
     parsedSpecifier.individualSpecifiers.span = parseSpanSpecifier(

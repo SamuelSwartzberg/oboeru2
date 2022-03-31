@@ -19,7 +19,7 @@ case $subcommand in
   *)
     echo "Usage: ob2util <subcommand>"
     echo "Subcommands:"
-    echo "  add-numbers"
+    echo "  an|add-numbers"
     ;;
 esac
 

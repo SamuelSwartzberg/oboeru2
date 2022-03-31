@@ -11,8 +11,8 @@ export function stringifyTable(
 ): string {
   const builtRows = table.rows.map((row) => buildRow(row));
   const [headerRows, bodyRows] = [
-    builtRows.slice(0, table.specifier.individualSpecifiers.headerrows || 1),
-    builtRows.slice(table.specifier.individualSpecifiers.headerrows || 1),
+    builtRows.slice(0, table.specifier.individualSpecifiers.headerrows),
+    builtRows.slice(table.specifier.individualSpecifiers.headerrows),
   ];
   const [headerRowHTML, bodyRowsHTML] = [
     buildHTMLElement("thead", {}, headerRows),

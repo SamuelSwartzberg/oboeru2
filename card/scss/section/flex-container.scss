@@ -10,6 +10,9 @@
     margin: 0.1em;
     max-height: 20em !important;
   }
+  > * > img {
+    max-height: 20em !important;
+  }
   @for $step5 from 1 through 20 {
     .width-#{$step5 * 5} {
       flex-grow: 0;
@@ -27,7 +30,7 @@
     width: unquote(($step5 * 5) + "%");
   }
 }
-span > img {
+span.is-cloze-scramble-or-hide h-active > img {
   width: 100%;
 }
 img {
