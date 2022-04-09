@@ -7,7 +7,7 @@ shift
 
 function add-numbers(){
   no_nums="$(pbpaste)"
-  with_nums="$(pbpaste | ts-node "$SCRIPT_DIR/add-numbers-to-first-elem-in-line.ts")"
+  with_nums="$(echo "$no_nums" | ts-node "$SCRIPT_DIR/add-numbers-to-first-elem-in-line.ts")"
   diff -u <(echo "$no_nums") <(echo "$with_nums") | diffr | less -R
   ask "Copy the version with nums to the clipboard?" && echo "$with_nums" | pbcopy
 }
