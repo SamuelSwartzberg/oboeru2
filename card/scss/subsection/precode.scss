@@ -1,11 +1,11 @@
 pre code {
   box-sizing: border-box;
-  white-space: pre-wrap;
+  white-space: normal;
 
   width: 10000px;
   max-width: 100%;
-  @include font-size-retrievable(1rem);
-  padding: 1.5em;
+  @include font-size-retrievable(0.85rem);
+  padding: 1em 1.5em;
   @include display-retrievable("block");
   border: none;
   word-break: break-all;
@@ -29,6 +29,10 @@ pre code {
     display: inline-block;
     vertical-align: bottom;
     white-space: nowrap;
+  }
+  span.line {
+    margin-block-end: 0;
+    white-space: pre-wrap;
   }
   hr {
     @include display-retrievable("block");

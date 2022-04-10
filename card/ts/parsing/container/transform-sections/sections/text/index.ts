@@ -20,6 +20,8 @@ export function parseAsTextSection(
   log.debug("Transformed text section:");
   log.debug(transformedTextSection);
   const finalString = stringifySection(transformedTextSection, isGroupShow);
+  log.debug("Final string:");
+  log.debug(finalString);
   return finalString;
 }
 

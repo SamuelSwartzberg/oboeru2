@@ -25,14 +25,12 @@ export function mapStructuredTreeToParsedClozelikes(
   const hintSeparatedTree = mapAndTestTree<BooleanClozelike, WithHint>(
     structuredTree,
     "separateHintTreeElement",
-    separateHintTreeElement,
-    true
+    separateHintTreeElement
   );
   const splitSpeciferTree = mapAndTestTree<WithHint, WithSpecifier>(
     hintSeparatedTree,
     "splitSpecifierTreeELement",
-    splitSpecifierTreeELement,
-    true
+    splitSpecifierTreeELement
   );
 
   const splitActionMappingTree = mapAndTestTree<
@@ -41,8 +39,7 @@ export function mapStructuredTreeToParsedClozelikes(
   >(
     splitSpeciferTree,
     "splitActionMappingTreeElement",
-    splitActionMappingTreeElement,
-    true
+    splitActionMappingTreeElement
   );
   const parsedActionMappingTree = mapAndTestTree<
     WithSplitActionMappings,
@@ -60,10 +57,10 @@ splitSpecifierTreeELement;
 function mapAndTestTree<T, U>(
   treeElement: TreeElement<T>,
   name: string,
-  transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>,
-  dontErrorOnlyWarnIfTreesHaveSameContent: boolean = false
+  transformationCallback: (treeElement: TreeElement<T>) => TreeElement<U>
 ): TreeElement<U> {
   log.debug(`Transforming tree with ${name}().`);
+  const oldTreeAsString = JSON.stringify(treeElement);
   const newTreeElement = mapTree<T, U>(treeElement, transformationCallback);
   log.debug("The new tree is:");
   log.debug(JSON.stringify(newTreeElement, null, 2));
@@ -76,15 +73,13 @@ function mapAndTestTree<T, U>(
     throw new Error(
       "The new tree is the same object as the old tree, which should be impossible."
     );
-  if (!dontErrorOnlyWarnIfTreesHaveSameContent) {
-    if (!isDifferentTree(treeElement, newTreeElement))
-      throw new Error(
+  if (!isDifferentTree(treeElement, newTreeElement)) {
+    if (name !== "separateHintTreeElement")
+      // Don't warn for hints, since not all cards have hints, and in those cases the tree will be the same
+      log.warn(
         `After using ${name}, the old tree and the new tree are the same in content.`
       );
-  } else
-    log.warn(
-      `After using ${name}, the old tree and the new tree are the same in content.`
-    );
+  }
 
   return newTreeElement;
 }

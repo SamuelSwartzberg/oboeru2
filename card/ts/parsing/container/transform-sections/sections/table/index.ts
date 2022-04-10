@@ -65,7 +65,13 @@ function warnOrErrorIfLackingRowsOrCells<T>(table: Table<T>) {
       if (!row.cells || row.cells.length === 0) {
         throw new Error(`Row is empty. (specifier: ${row.specifier})`);
       } else if (row.cells.length === 1) {
-        log.warn(`Row only has one cell: ${JSON.stringify(row.cells[0])}`);
+        if (
+          !row.specifier ||
+          typeof row.specifier !== "object" ||
+          !(row.specifier as {}).hasOwnProperty("span")
+        ) {
+          log.info(`Row only has one cell: ${JSON.stringify(row.cells[0])}`);
+        }
       }
     });
   }
