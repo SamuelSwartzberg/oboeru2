@@ -1,7 +1,8 @@
+import log from "loglevel";
 import { Section, Subsection } from "./types";
 
 export function parseTextSection(html: string): Section<string> {
-  console.log(html);
+  log.debug(html);
   const subsectionParts = html.trim().split("\n\n");
   const subsections: Subsection<string>[] = subsectionParts.map(
     (subsection) => {

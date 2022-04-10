@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { getClosestSketchpadSection } from "..";
 import { saveSketchpad } from "../front-back-io";
 import { Stroke } from "../stroke";
@@ -48,8 +49,6 @@ function initializeCanvas(canvas: HTMLCanvasElement) {
 
 export function start(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    console.log("start");
-
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
 
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "true";
@@ -59,7 +58,7 @@ export function start(ctx: CanvasRenderingContext2D) {
 
 export function move(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    console.log("move");
+    log.debug("move");
 
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
 
@@ -79,7 +78,7 @@ export function move(ctx: CanvasRenderingContext2D) {
 
 export function end(ctx: CanvasRenderingContext2D) {
   return function (e: MouseEvent | TouchEvent) {
-    console.log("end");
+    log.debug("end");
     const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
     unsetLastPos(sketchpadSection);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "false";

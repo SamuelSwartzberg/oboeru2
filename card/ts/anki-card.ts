@@ -46,11 +46,10 @@ export function scrollClozeIntoView(): void {
   if (!firstActiveCloze) throw new Error("no active cloze in document");
   log.debug(`Aquired ${firstActiveCloze.outerHTML} for scrolling into view.`);
   firstActiveCloze.scrollIntoView(true);
-  log.setLevel("debug");
-  console.log(window.innerHeight);
-  console.log(document.body.scrollHeight);
+  log.debug(window.innerHeight);
+  log.debug(document.body.scrollHeight);
   if (!(window.innerHeight + window.scrollY >= document.body.scrollHeight)) {
-    console.log("scrolling");
+    log.debug("scrolling");
     // you're not at the bottom of the page
     window.scrollBy(0, -100);
     log.debug(

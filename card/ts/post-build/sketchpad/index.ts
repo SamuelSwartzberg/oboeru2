@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { addSketchpad } from "./sketchpad-builder";
 
 function isKanji(ch: string): boolean {
@@ -7,7 +8,7 @@ function isKanji(ch: string): boolean {
 } // from https://www.darrenlester.com/blog/recognising-japanese-characters-with-javascript
 
 export function addSketchpadIfClozesWithKanji() {
-  console.log("addSketchpadIfClozesWithKanji");
+  log.debug("addSketchpadIfClozesWithKanji");
 
   let activeClozes = document.querySelectorAll(".c-active");
   let clozesWithKanji = Array.from(activeClozes).filter((cloze) => {
@@ -16,7 +17,7 @@ export function addSketchpadIfClozesWithKanji() {
     } else return false;
   });
   clozesWithKanji.forEach((cloze) => {
-    console.log(`Adding sketchpad to cloze ${cloze.textContent}`);
+    log.debug(`Adding sketchpad to cloze ${cloze.textContent}`);
     let nearestSection = cloze.closest(".section");
     if (nearestSection) {
       addSketchpad(nearestSection);

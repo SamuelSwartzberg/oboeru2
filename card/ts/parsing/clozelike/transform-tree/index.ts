@@ -154,11 +154,11 @@ function sameClozeNumberSanityCheck(
   for (const [clozeIndex, count] of Object.entries(clozeIndexCounter)) {
     if (count > 6)
       throw new Error(
-        `There are more than 6 clozes for card index ${clozeIndex}, this is almost certainly unintended.`
+        `There are ${count} clozes for card index ${clozeIndex}, this is almost certainly unintended.`
       );
-    if (count > 3)
-      log.warn(
-        `There are more than 3 clozess for card index ${clozeIndex}, which seems excessive.`
+    if (count > 4)
+      log.info(
+        `There are ${count} clozess for card index ${clozeIndex}, which may be excessive.`
       );
   }
 }

@@ -28,8 +28,8 @@ export function splitSpecifierTreeELement(
       treeElement.value[0] = nonspecifier;
     }
     if (nonspecifier.includes(";"))
-      log.warn(
-        `Parsed nonspecifier ${nonspecifier} contained a ;, which may indicate that parsing failed (but may also be legitimate).`
+      log.info(
+        `Parsed nonspecifier \`${nonspecifier}\` contained a ;, which may indicate that parsing failed (but may also be legitimate).`
       );
     log.debug(
       `Within splitSpecifierTreeELement, what we now have is actionMappings: ${

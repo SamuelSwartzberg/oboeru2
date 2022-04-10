@@ -6,7 +6,6 @@ pre code {
   max-width: 100%;
   @include font-size-retrievable(1rem);
   padding: 1.5em;
-  @include margin-top-bottom();
   @include display-retrievable("block");
   border: none;
   word-break: break-all;

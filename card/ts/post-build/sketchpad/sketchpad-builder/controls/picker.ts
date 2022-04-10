@@ -1,3 +1,4 @@
+import log from "loglevel";
 import { getClosestSketchpadSection } from "..";
 import { Stroke } from "../stroke";
 
@@ -30,7 +31,7 @@ function buildIndividualPicker(value: string, type: string): HTMLDivElement {
 }
 
 function setNew(e: Event) {
-  console.log(e);
+  log.debug(e);
 
   const target = e.target;
   if (target instanceof HTMLElement) {

@@ -57,15 +57,15 @@ function transformToNextStep<T, U>(
 
 function warnOrErrorIfLackingRowsOrCells<T>(table: Table<T>) {
   if (!table.rows || table.rows.length === 0) {
-    throw new Error("Table is empty");
+    throw new Error(`Table has no rows. (specifier: ${table.specifier})`);
   } else if (table.rows.length === 1) {
     log.warn(`Table has only one row.`);
   } else {
     table.rows.forEach((row) => {
       if (!row.cells || row.cells.length === 0) {
-        throw new Error("Row is empty");
+        throw new Error(`Row is empty. (specifier: ${row.specifier})`);
       } else if (row.cells.length === 1) {
-        log.warn(`Row has only one cell.`);
+        log.warn(`Row has only one cell: ${row}`);
       }
     });
   }
