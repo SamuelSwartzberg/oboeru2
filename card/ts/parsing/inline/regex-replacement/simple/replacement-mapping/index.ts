@@ -38,7 +38,14 @@ export function getReplacementMapping(): ElementReplacementMap {
   let escapeEntries: [string, ElementReplacement][] = Object.entries(
     replacementMapping.escapes
   );
-  return Object.fromEntries([...mdStyleEntries, ...escapeEntries]);
+  let ebnfEntries: [string, ElementReplacement][] = Object.entries(
+    replacementMapping.ebnf
+  );
+  return Object.fromEntries([
+    ...mdStyleEntries,
+    ...escapeEntries,
+    ...ebnfEntries,
+  ]);
 }
 
 export function getReplacementMappingUnflattened(): StructuredElementReplacementMap {

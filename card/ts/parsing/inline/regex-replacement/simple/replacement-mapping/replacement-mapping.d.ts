@@ -6,4 +6,5 @@ declare module "replacement-mapping.json" {
 export interface StructuredElementReplacementMap {
   mdStyle: ElementReplacementMap;
   escapes: ElementReplacementMap;
+  ebnf: ElementReplacementMap;
 }

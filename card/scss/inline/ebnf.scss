@@ -1,0 +1,39 @@
+.ebnf-repetition {
+  background-color: #00adff0a;
+  color: #00202fcc;
+  &::before {
+    content: "{";
+  }
+  &::after {
+    content: "}";
+  }
+  &::before,
+  &::after {
+    color: #0083c1aa;
+  }
+}
+
+.ebnf {
+  margin: 0 0.25em;
+  padding: 0 0.2em;
+  font-size: 0.95em;
+  &::before,
+  &::after {
+    font-size: 1.15em;
+  }
+}
+
+.ebnf-option {
+  background: #ff00990a;
+  color: #67003ecc;
+  &::before {
+    content: "[";
+  }
+  &::after {
+    content: "]";
+  }
+  &::before,
+  &::after {
+    color: #ce007caa;
+  }
+}

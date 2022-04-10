@@ -78,8 +78,13 @@ function mapAndTestTree<T, U>(
     );
   if (!dontErrorOnlyWarnIfTreesHaveSameContent) {
     if (!isDifferentTree(treeElement, newTreeElement))
-      throw new Error("The old tree and the new tree are the same in content.");
-  } else log.warn("The old tree and the new tree are the same in content.");
+      throw new Error(
+        `After using ${name}, the old tree and the new tree are the same in content.`
+      );
+  } else
+    log.warn(
+      `After using ${name}, the old tree and the new tree are the same in content.`
+    );
 
   return newTreeElement;
 }

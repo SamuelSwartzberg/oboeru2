@@ -75,23 +75,23 @@
         "end": "｝"
       },
       "replacements": {
-        "start": "<span class=\"enbf-metacharacter repetition\">{</span>",
-        "end": "<span class=\"enbf-metacharacter repetition\">}</span>"
+        "start": "<span class=\"ebnf ebnf-repetition\">",
+        "end": "</span>"
       }
     },
-    "repetition": {
+    "optional": {
       "delimiters": {
         "start": "〖",
         "end": "〗"
       },
       "replacements": {
-        "start": "<span class=\"enbf-metacharacter option\">{</span>",
-        "end": "<span class=\"enbf-metacharacter option\">}</span>"
+        "start": "<span class=\"ebnf ebnf-option\">",
+        "end": "</span>"
       }
     },
     "alternation": {
       "delimiters": "¦",
-      "replacements": "<span class=\"enbf-metacharacter alternation\">|</span>"
+      "replacements": "<span class=\"ebnf-metacharacter ebnf-alternation\">|</span>"
     }
   },
   "escapes": {
