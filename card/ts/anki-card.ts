@@ -45,17 +45,12 @@ export function scrollClozeIntoView(): void {
   let firstActiveCloze = document.querySelector(".c-active");
   if (!firstActiveCloze) throw new Error("no active cloze in document");
   log.debug(`Aquired ${firstActiveCloze.outerHTML} for scrolling into view.`);
-  firstActiveCloze.scrollIntoView(true);
+  firstActiveCloze.scrollIntoView(false);
   log.debug(window.innerHeight);
   log.debug(document.body.scrollHeight);
-  if (!(window.innerHeight + window.scrollY >= document.body.scrollHeight)) {
-    log.debug("scrolling");
-    // you're not at the bottom of the page
-    window.scrollBy(0, -100);
-    log.debug(
-      "Scroll up a bit to better place the cloze (which makes sense since we're not at the bottom of the page)."
-    );
-  }
+  const distanceToBottom =
+    window.innerHeight - firstActiveCloze.getBoundingClientRect().bottom;
+  window.scrollBy(0, 200 - distanceToBottom);
 }
 
 export function formatTags(): void {

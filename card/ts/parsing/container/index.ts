@@ -27,6 +27,7 @@ function testParsedTree(tree: TreeNode<string>) {
     if (value.length === 0) {
       throw new Error("String children should be non-empty, but is empty.");
     } else if (value.length > STRING_CHILD_LENGTH_UPPER_SANITY_LIMIT) {
+      log.error("String value: " + value);
       throw new Error(
         `String child is longer than ${STRING_CHILD_LENGTH_UPPER_SANITY_LIMIT} characters, which is likely a mistake.`
       );

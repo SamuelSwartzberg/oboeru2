@@ -59,13 +59,13 @@ function warnOrErrorIfLackingRowsOrCells<T>(table: Table<T>) {
   if (!table.rows || table.rows.length === 0) {
     throw new Error(`Table has no rows. (specifier: ${table.specifier})`);
   } else if (table.rows.length === 1) {
-    log.warn(`Table has only one row.`);
+    log.warn(`Table only has one row.`);
   } else {
     table.rows.forEach((row) => {
       if (!row.cells || row.cells.length === 0) {
         throw new Error(`Row is empty. (specifier: ${row.specifier})`);
       } else if (row.cells.length === 1) {
-        log.warn(`Row has only one cell: ${row}`);
+        log.warn(`Row only has one cell: ${JSON.stringify(row.cells[0])}`);
       }
     });
   }
