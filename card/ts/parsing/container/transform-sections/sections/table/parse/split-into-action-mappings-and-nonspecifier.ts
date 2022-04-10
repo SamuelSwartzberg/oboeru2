@@ -13,12 +13,6 @@ export function splitIntoActionMappingAndNonactionmapping(
   let parts = str.split(TABLE_SPECIFIERS_SEPARATOR);
   let actionmappings: Specifiers = {};
   let nonactionmapping = "";
-  let extraClasses = "";
-  if (parts[0].startsWith("!")) {
-    parts[0] = parts[0].slice(1);
-  } else {
-    extraClasses = "cloze-group";
-  }
   while (parts.length > 0) {
     const part = parts.shift() as string;
     const [trySplitActionName, trySplitActionValue] = part.split("=");
@@ -34,11 +28,5 @@ export function splitIntoActionMappingAndNonactionmapping(
       break;
     }
   }
-  actionmappings.class = actionmappings.class
-    ? actionmappings.class + " " + extraClasses
-    : extraClasses;
-  log.debug("Resulted in:");
-  log.debug({ ...actionmappings });
-  log.debug(nonactionmapping);
   return [actionmappings, nonactionmapping];
 }
