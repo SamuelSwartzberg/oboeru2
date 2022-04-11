@@ -1,5 +1,5 @@
-export function setActiveGroups(): void {
-  document.querySelectorAll(".cloze-group").forEach((clozeGroup) => {
+export function setActiveGroups(templateTree: DocumentFragment): void {
+  templateTree.querySelectorAll(".cloze-group").forEach((clozeGroup) => {
     if (clozeGroup.querySelector(".c-active")) {
       clozeGroup.classList.add("group-active");
     }
@@ -10,7 +10,7 @@ export function setActiveGroups(): void {
     }
   });
 
-  document.querySelectorAll(".group-active").forEach((activeGroup) => {
+  templateTree.querySelectorAll(".group-active").forEach((activeGroup) => {
     let childrenWhichArePotentialTargets = activeGroup.querySelectorAll(
       ".is-cloze-scramble-or-hide"
     );

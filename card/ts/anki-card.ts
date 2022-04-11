@@ -46,24 +46,15 @@ export function scrollClozeIntoView(): void {
   if (!firstActiveCloze) throw new Error("no active cloze in document");
   log.debug(`Aquired ${firstActiveCloze.outerHTML} for scrolling into view.`);
   firstActiveCloze.scrollIntoView(false);
-  log.debug(window.innerHeight);
-  log.debug(document.body.scrollHeight);
   const distanceToBottom =
     window.innerHeight - firstActiveCloze.getBoundingClientRect().bottom;
-  window.scrollBy(0, 200 - distanceToBottom);
+  window.scrollBy(0, window.innerHeight / 2 - distanceToBottom);
 }
 
-export function formatTags(): void {
-  var tagContainer = document.querySelector("#tag-container");
-  if (tagContainer) {
-    const oldTagContents = tagContainer.innerHTML;
-    const newTagContents = oldTagContents
-      .split("::")
-      .map((tagElement: string) => tagElement.replace(/-/g, " "))
-      .join('<span class="breadcrumb-separator"> / </span>');
-    tagContainer.innerHTML = newTagContents;
-    log.debug(
-      `Called formatTags(), which formatted the tag container from ${oldTagContents} to ${newTagContents}.`
-    );
-  } else throw new Error("No tag container found, but one should be present.");
+export function getTags(rawTags: string): string {
+  const newTagContents = rawTags
+    .split("::")
+    .map((tagElement: string) => tagElement.replace(/-/g, " "))
+    .join('<span class="breadcrumb-separator"> / </span>');
+  return newTagContents;
 }

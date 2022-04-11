@@ -12,3 +12,16 @@
   margin-top: -0.25em;
   margin-block-end: 0.5em;
 }
+
+.is-back .line.cloze-group.group-active {
+  position: relative;
+  &::after {
+    position: absolute;
+    top: 0;
+    border-right: 0.3em solid #bfbfbf;
+    content: "";
+    height: 100%;
+    right: -1em;
+    border-radius: 0.1em;
+  }
+}

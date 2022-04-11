@@ -4,14 +4,17 @@ type HandlerSelectorMapping = {
 };
 
 function applyClickHandlerToElementsMatchingSelector(
-  handlerSelectorMapping: HandlerSelectorMapping
+  handlerSelectorMapping: HandlerSelectorMapping,
+  templateTree: DocumentFragment
 ): void {
-  document.querySelectorAll(handlerSelectorMapping.selector).forEach((item) => {
-    item.addEventListener(
-      "click",
-      handlerSelectorMapping.onclick as (e: Event) => any
-    );
-  });
+  templateTree
+    .querySelectorAll(handlerSelectorMapping.selector)
+    .forEach((item) => {
+      item.addEventListener(
+        "click",
+        handlerSelectorMapping.onclick as (e: Event) => any
+      );
+    });
 }
 let clickHandlers = {
   toggleGrowShrinkElement(e: MouseEvent): any {
@@ -34,14 +37,20 @@ let clickHandlers = {
   },
 };
 
-export function applyClickHandlers(): void {
-  applyClickHandlerToElementsMatchingSelector({
-    selector: "img",
-    onclick: clickHandlers.toggleGrowShrinkElement,
-  });
+export function applyClickHandlers(templateTree: DocumentFragment): void {
+  applyClickHandlerToElementsMatchingSelector(
+    {
+      selector: "img",
+      onclick: clickHandlers.toggleGrowShrinkElement,
+    },
+    templateTree
+  );
 
-  applyClickHandlerToElementsMatchingSelector({
-    selector: ".ipa, ruby, code, q, cite, .term",
-    onclick: clickHandlers.toggleMagnifiedClass,
-  });
+  applyClickHandlerToElementsMatchingSelector(
+    {
+      selector: ".ipa, ruby, code, q, cite, .term",
+      onclick: clickHandlers.toggleMagnifiedClass,
+    },
+    templateTree
+  );
 }

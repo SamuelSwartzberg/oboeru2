@@ -12,8 +12,11 @@ let elementFactory = {
   },
 };
 let DOMInserterFunctions = {
-  appendToExtraInfoButtonSection(button: HTMLDivElement) {
-    let extraInfoButtonSection = document.querySelector(
+  appendToExtraInfoButtonSection(
+    button: HTMLDivElement,
+    templateTree: DocumentFragment
+  ) {
+    let extraInfoButtonSection = templateTree.querySelector(
       ".extra-info-button-section"
     );
     if (!extraInfoButtonSection)
@@ -37,12 +40,12 @@ function showHideFurigana(e: MouseEvent): any {
   }
 }
 
-let furiganaList = document.querySelectorAll("rt");
-
-export function createClickableElements(): void {
+export function createClickableElements(templateTree: DocumentFragment): void {
+  let furiganaList = templateTree.querySelectorAll("rt");
   if (furiganaList.length > 0) {
     DOMInserterFunctions.appendToExtraInfoButtonSection(
-      elementFactory.extraInfoButton("furi u", showHideFurigana)
+      elementFactory.extraInfoButton("furi u", showHideFurigana),
+      templateTree
     );
   }
 }
