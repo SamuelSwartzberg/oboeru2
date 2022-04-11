@@ -11,3 +11,7 @@
     margin-left: #{$indent-level * 0.66}ch;
   }
 }
+
+.headered-container summary {
+  color: var(--color-light);
+}
