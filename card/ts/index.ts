@@ -35,5 +35,7 @@ window.setTimeout(() => {
   let ankiContainer = document.getElementById("qa");
   if (!ankiContainer) throw new Error("No anki container.");
 
+  ankiContainer.appendChild(parsedContainer.content);
+
   window.setTimeout(scrollClozeIntoView, 100);
 }, 0);
