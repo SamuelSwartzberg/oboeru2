@@ -6,6 +6,7 @@ export function formatInlineLevel(htmlBlob: string): string {
     "Formatting inline level (markdown-like stuff, and alternative escapes)"
   );
   for (const [regex, replacement] of getRegexReplacementPairs()) {
+    log.debug(`Replacing ${regex} with ${replacement}`);
     htmlBlob = htmlBlob.replace(regex, replacement as string); // lie since ts can't deal with union types distributed over overloads
   }
   return htmlBlob;

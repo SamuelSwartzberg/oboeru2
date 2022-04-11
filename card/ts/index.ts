@@ -37,5 +37,12 @@ window.setTimeout(() => {
 
   ankiContainer.appendChild(parsedContainer.content);
 
-  window.setTimeout(scrollClozeIntoView, 100);
+  let numberIntervalsRemaining = 5;
+  let interval = window.setInterval(() => {
+    if (numberIntervalsRemaining === 0) {
+      window.clearInterval(interval);
+      return;
+    } else numberIntervalsRemaining--;
+    scrollClozeIntoView();
+  }, 100);
 }, 0);

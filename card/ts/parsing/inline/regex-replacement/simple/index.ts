@@ -93,7 +93,7 @@ function buildOneRegexFromMappingElement(
     // is string
     log.debug("Both delimiters and replacements are strings.");
     regexAndReplacements = [
-      unescapedDelimiter(element.delimiters),
+      new RegExp(unescapedDelimiter(element.delimiters), "g"),
       element.replacements,
     ];
   }

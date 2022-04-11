@@ -15,13 +15,17 @@
 
 .is-back .line.cloze-group.group-active {
   position: relative;
+  width: 100%;
+  background-color: var(--color-lightest);
+  margin-left: -0.85em;
+  padding-left: 0.85em;
+  padding-right: 0.85em;
   &::after {
     position: absolute;
     top: 0;
-    border-right: 0.3em solid #bfbfbf;
+    border-right: 0.15em solid #bfbfbf;
     content: "";
     height: 100%;
-    right: -1em;
-    border-radius: 0.1em;
+    right: 0;
   }
 }
