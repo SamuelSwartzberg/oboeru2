@@ -133,7 +133,49 @@ relative-INATP ::= [_](+|-)[<number>]
 
 As native anki, clozelikes supports hints, here separated by the fullwidth colon `：`.
 
+#### Nesting
+
+Nesting clozelikes is supported, so nest away. 
+
+## Reviewing
+
+During reviewing, the current clozelike will automatically center itself on the screen. Otherwise, reviewing works as normal.
+
 ## Installation
+
+1. Clone the repo
+2. run `npm install` in the repo directory
+3. set the environment variable `ANKI_COLLECTION_MEDIA` to the location of your `collection.media` directory path.
+4. run `npm run build`
+5. You should now have a `_bundle.css` and `_bundle.js` in your `collection.media` directory.
+6. create a card template with:  
+
+    Front:  
+
+    ```
+    <link href="_bundle.css" rel="stylesheet">
+    <template id="raw-tags">{{Tags}}</template>
+    <template id="raw-content">{{cloze:Text}}</template>
+    <template id="parsed-container"></template>
+    <script src="_bundle.js"></script>
+    ```
+
+    Back:  
+
+    ```
+    <div class="is-back-indicator"></div>
+    <link href="_bundle.css" rel="stylesheet">
+    <template id="raw-tags">{{Tags}}</template>
+    <template id="raw-content">{{cloze:Text}}</template>
+    <template id="parsed-container"></template>
+    <script src="_bundle.js"></script>
+    ```
+
+    Notice that these are not the same!  
+7. Create a note, or use the [example note](/documentation/example-card.md).
+8. Ensure that everything works.
+9. ???
+10. Profit
 
 ## Included Tools
 
@@ -145,7 +187,7 @@ Oboeru includes some arcane syntax. For this and for other things, some tools ar
 
 ### Editing
 
-Edit cards in your code editor of choice. Editing large cards in Anki isn't fun, even with the code highlighting update, and it will sometimes chew up your edits if you're too hasty in closing the editor
+Edit cards in your code editor of choice. Editing large cards in Anki isn't fun, even with the code highlighting update, and it will sometimes chew up your edits if you're too hasty in closing the editor.
 
 ## Limitations
 
