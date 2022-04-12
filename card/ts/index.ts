@@ -1,5 +1,10 @@
 import { parseCard } from "./parsing";
-import { getTags, initBackness, scrollClozeIntoView } from "./anki-card";
+import {
+  getTags,
+  initBackness,
+  isFront,
+  scrollClozeIntoView,
+} from "./anki-card";
 import { applyEventHandlers } from "./dom-event-manipulators";
 import { setActiveGroups } from "./group-activation";
 import { decoratePostBuild } from "./post-build";
@@ -35,6 +40,9 @@ window.setTimeout(() => {
   let ankiContainer = document.getElementById("qa");
   if (!ankiContainer) throw new Error("No anki container.");
 
+  let futureContentContainer = document.getElementsByClassName("container")[0];
+  if (futureContentContainer && isFront())
+    ankiContainer.removeChild(futureContentContainer);
   ankiContainer.appendChild(parsedContainer.content);
 
   let numberIntervalsRemaining = 5;

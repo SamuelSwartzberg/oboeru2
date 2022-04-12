@@ -15,7 +15,7 @@ Oboeru has a few overriding design goals:
 ### Cloze Groups
 
 At the core of Oboeru's design is a cloze group. 
-By default, a cloze group is not visible at the front of the card unless an element within is currently being clozed. In the most common case where all currently clozed elements are within the same cloze group, only one cloze group will be visible on the front. All cloze groups will be visible on the back.
+By default, a cloze group is not visible at the front of the card unless an element within is currently being clozed. In the most common case where all currently clozed elements are within the same cloze group, only one cloze group will be visible on the front. All cloze groups will be visible on the back. To show cloze groups, an exclamation mark is used, either the normal `!` or the full-width `！` (for whole sections). Currently, the `!/！ ` is placed at the beginning of the line, except for headings, where it's placed just before the heading string.
 Any content on an Oboeru note is within at least one cloze group, or multiple, if nested (the default for most elements).  
 
 ### Four Elements
@@ -36,21 +36,40 @@ Headered containers are also details elements (with their header as the summary)
 
 ### tables and flex containers
 
-tables, flex containers and onion boxes are begun by `table:` and `flex-container` respectively.
+tables, flex containers and onion boxes are begun by `table:` and `flex-container` respectively. 
 
 #### flex containers
 
-Flex containers are what they sound like, flexbox based containers to contain all listed elements 
+Flex containers are what they sound like, flexbox based containers to contain all listed elements. Useful for images and the like. 
+
+#### Tables
+
+Tables are established by a syntax similar to Markdown, but with less lines. This table:
+
+|header1|header2|
+|---|---|
+|foo|bar|
+|baz|quuz|
+
+would be created like this in Oboeru:
+
+```
+table:header1|header2
+foo|bar
+baz|quuz
+```
+
+However, they also have more flexiblity: Tables, rows and cells can have more properties specified via specifiers. Specifiers may specify `style` and `class` for tables, rows, and cells, `type` (th or td) and `span` for cells only, and `headerrows` for tables only. Specifiers are separated via `;` and have the syntax `key=value`. Multiple classes and style declarations are separated via spaces (ergo style declarations are not delimited by ; (!)). Span sets rowspan and optionally colspan via a &lt;num>[&lt;num>] syntax (so e.g. span=2; or span=1,3; ).
+For tables and rows, the specifier is separated from the body via `,,,`, to prevent parsing confusion (is the specifier for the table, row or first cell?).
 
 ### formatting
 
 #### inline
 
 Oboeru supports a set of inline syntax elements for inline formatting. The inline syntax may be split into three rough categories: Markdownlikes, readable escapes, and enbf-formatting.   
-Markdownlikes are metacharacters for formatting in a similar way as markdown, for things such as `<b>`, `<u>`, `<code>`, `<dfn>`, etc. Oboeru's syntax for inline elements is *reminiscent* of the syntax used in markdown (where extant), but in fact does not use the more common symbols such as \*, but instead unicode lookalikes such as ＊. This decision may be controversial, however I think the increased readability of the plain source text without needing to escape many characters justifies this decision. I can heartily recommend the text expander `espanso` for inserting these characters easily.  
+Markdownlikes are metacharacters for formatting in a similar way as markdown, for things such as `<b>`, `<u>`, `<code>`, `<dfn>`, etc. Oboeru's syntax for inline elements is *reminiscent* of the syntax used in markdown (where extant), but in fact does not use the more common symbols such as \*, but instead unicode lookalikes such as ＊. This decision may be controversial, however I think the increased readability of the plain source text without needing to escape many characters justifies this decision. I can heartily recommend the text expander `espanso` for inserting these characters easily. This grouping also includes a fair amount of elements which Markdown does not support, such as the aforementioned `<dfn>`, `<sub/sub>`, `<ruby>` = furigana, etc. It even contains syntax for `<img>`, which arguably is not very useful, but allows you to validate your card against containing any of `<>` even if using images.    
 Find a full reference of the inline syntax in [the file implementing it](/src/ts/parsing/inline/regex-replacement/index.ts).
-Readable escapes are a handful of characters acting as pseudo-escape characters for common characters needing escape in HTML, mainly `＆` for `&` as well as 
-`‹`, `›` for `<`, `>`.
+Readable escapes are a handful of characters acting as pseudo-escape characters for common characters needing escape in HTML, mainly `＆` for `&` as well as `‹`, `›` for `<`, `>`.  
 Finally, there enbf-formatting characters are a set of characters rendering as the ENBF option [], repetition {} and alternation | characters, but distinguished in CSS, to avoid confusion with actual [], {}, | in the object language described. Feel free to ignore these if you do not use ENBF.
 
 #### block
@@ -75,7 +94,11 @@ as well as arbitrary indentation of any line via spaces.
 
 ### Clozelikes
 
-Oboeru replaces anki's native `{{c<n>::}}` clozes with a more featureful syntax of things called clozelikes. Like the inline syntax, these use some obscure unicode parentheses `⟮`, `⟯` to avoid escaping and make the result more readable. Any clozelike has a specifier, though it may be empty. A specifier consists of n action mappings, which are separated by semicolons (including the final one separating the specifier from the content). An action mapping consists of an action name and an action target. Possible action names are:
+Oboeru replaces anki's native `{{c<n>::}}` clozes with a more featureful syntax of things called clozelikes. Like the inline syntax, these use some obscure unicode parentheses `⟮`, `⟯` to avoid escaping and make the result more readable.
+
+#### Specifiers
+
+Any clozelike has a specifier, though it may be empty. A specifier consists of n action mappings, which are separated by semicolons (including the final one separating the specifier from the content). An action mapping consists of an action name and an action target. Possible action names are:
 
 | action name | does                                                                                   |
 |-------------|----------------------------------------------------------------------------------------|
@@ -106,6 +129,10 @@ individual-NATP ::= <number>|<relative-INATP>
 relative-INATP ::= [_](+|-)[<number>]
 ```
 
+#### Hints
+
+As native anki, clozelikes supports hints, here separated by the fullwidth colon `：`.
+
 ## Installation
 
 ## Included Tools
@@ -114,6 +141,11 @@ Oboeru includes some arcane syntax. For this and for other things, some tools ar
 
 ### Shortcuts
 
+## Opinionated Usage
+
+### Editing
+
+Edit cards in your code editor of choice. Editing large cards in Anki isn't fun, even with the code highlighting update, and it will sometimes chew up your edits if you're too hasty in closing the editor
 
 ## Limitations
 
@@ -123,4 +155,20 @@ Anki does not allow more than 500 clozes per card, sadly. It will also get quite
 
 ### Oboeru
 
+#### Speed
+
 Oboeru may take in the order of a few 100ms to fully render a big card, which may be unnacceptable to some. There is probably some speed to be gained through code improvements, but this is not a priority for me at this time. PRs welcome!
+
+#### More Inline Formatting
+
+In principle, it is extremely easy to add more inline formatting by editing the relevant .json file. However, inline formatting added imposes the performance penalty of running a (fairly simple, but still) regex over the whole card. Writing a custom parser proved to be 15 times slower, however (perhaps because the JS regex engine can take advantage of JIT compiling better?). Again, ideas for solutions welcome.  
+
+### Interaction
+
+#### Audio/Video
+
+Currently, support for audio/video is nearly nonexistent. Anki's native audio/video will play on every card, and is kind of obnoxious generally. `<audio>`/`<video>` kinda work, but have no styling or usability considerations at the moment. If someone has an idea of how these should work, please feel free to open an issue.
+
+## Glossary
+
+**full-width**: Versions of some characters typically used e.g. in Japanese, which are different characters in Unicode (to the computer, essentially), and thus can be used to easily distinguish functions without having to resort to more complex logic.  
