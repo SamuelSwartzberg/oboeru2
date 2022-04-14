@@ -111,7 +111,7 @@ function runTestsOnFinalTree(
     (treeElement) => !treeElement.clozelike
   );
 
-  const NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT = 7;
+  const NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT = 4;
 
   if (
     flattenedTreeContentsOnlyNonClozelikes.length <
@@ -121,7 +121,7 @@ function runTestsOnFinalTree(
       `There are less than ${NON_CLOZELIKES_SANITY_CHECK_LOWER_LIMIT} non-clozelike elements in the flattened tree, this is almost certainly unintended.`
     );
 
-  const CLOZELIKES_WITH_PARSED_ACTION_MAPPINGS_SANITY_CHECK_LOWER_LIMIT = 5;
+  const CLOZELIKES_WITH_PARSED_ACTION_MAPPINGS_SANITY_CHECK_LOWER_LIMIT = 3;
 
   if (
     flattenedTreeContentsOnlyClozelikesWithParsedActionMappings.length <
