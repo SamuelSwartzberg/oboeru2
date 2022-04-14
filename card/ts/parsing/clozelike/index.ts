@@ -27,7 +27,6 @@ export function parseAndReencodeClozelikesWithResolvedNumbers(
 function parseClozelikes(html: string): TreeElement<WithParsedActionMappings> {
   const treeWithClozelikesRepresentedAsNestedArrays =
     parseClozelikeStringToTree(html);
-  log.setLevel("debug");
   log.debug("The tree with clozelikes represented as nested arrays is:");
   log.debug(
     JSON.stringify(treeWithClozelikesRepresentedAsNestedArrays, null, 2)
@@ -60,6 +59,5 @@ function parseClozelikes(html: string): TreeElement<WithParsedActionMappings> {
     );
   log.debug("The tree with clozelikes parsed to objects is:");
   log.debug(JSON.stringify(treeWithClozelikesParsedToObject, null, 2));
-  log.setLevel("info");
   return treeWithClozelikesParsedToObject;
 }

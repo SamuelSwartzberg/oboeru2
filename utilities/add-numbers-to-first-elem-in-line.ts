@@ -1,7 +1,9 @@
 import { parseAndReencodeClozelikesWithResolvedNumbers } from "../card/ts/parsing/clozelike";
 import fs from "fs";
+import log from "loglevel";
 
 const stdin = fs.readFileSync(process.stdin.fd).toString();
+log.setLevel("error");
 const annotatedStdin = parseAndReencodeClozelikesWithResolvedNumbers(stdin);
 
 let fusedStdin = [];
