@@ -4,7 +4,7 @@ import { LineSpecifier } from "../types";
 var indicatorCharacters: [string, string][] = [
   ["indentation", " +"],
   ["blockquote", "＞ "],
-  ["listOrdered", "\\,\\. "],
+  ["listOrdered", "\\d+\\. "],
   ["listUnordered", "- "],
   ["small", "^"],
   ["groupShow", "!"],
