@@ -9,11 +9,8 @@ import {
 export function stringifyTable(
   table: Table<TransformedSpecifier<InnerSpecifier>>
 ): string {
-  const builtRows = table.rows.map((row) => buildRow(row));
-  const [headerRows, bodyRows] = [
-    builtRows.slice(0, table.specifier.individualSpecifiers.headerrows),
-    builtRows.slice(table.specifier.individualSpecifiers.headerrows),
-  ];
+  const headerRows = table.rows.slice(0, table.specifier.individualSpecifiers.headerrows).map((row) => buildRow(row, "th"));
+  const bodyRows = table.rows.slice(table.specifier.individualSpecifiers.headerrows).map((row) => buildRow(row, "td"));
   const [headerRowHTML, bodyRowsHTML] = [
     buildHTMLElement("thead", {}, headerRows),
     buildHTMLElement("tbody", {}, bodyRows),
@@ -28,8 +25,8 @@ export function stringifyTable(
   return tableHTML;
 }
 
-function buildRow(row: Row<TransformedSpecifier<InnerSpecifier>>): string {
-  const cells = row.cells.map((cell) => buildCell(cell));
+function buildRow(row: Row<TransformedSpecifier<InnerSpecifier>>, defaultCellType: string): string {
+  const cells = row.cells.map((cell) => buildCell(cell, defaultCellType));
   return buildHTMLElement(
     "tr",
     {
@@ -39,9 +36,9 @@ function buildRow(row: Row<TransformedSpecifier<InnerSpecifier>>): string {
   );
 }
 
-function buildCell(cell: Cell<TransformedSpecifier<InnerSpecifier>>): string {
+function buildCell(cell: Cell<TransformedSpecifier<InnerSpecifier>>, defaultCellType: string): string {
   return buildHTMLElement(
-    cell.specifier.individualSpecifiers.type || "td",
+    cell.specifier.individualSpecifiers.type || defaultCellType,
     {
       ...cell.specifier.precreatedAttrs,
       ...transformSpanSpecifierInnerToAttributes(

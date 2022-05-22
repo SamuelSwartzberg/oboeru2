@@ -3,7 +3,6 @@ table {
   @include font-size-retrievable(1rem);
   min-width: 100%;
   text-align: center;
-  thead,
   th {
     background-color: var(--color-light);
     font-weight: bold;
