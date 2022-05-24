@@ -19,7 +19,7 @@ export function parseStructure(html: string): string {
   return finalString;
 }
 
-var STRING_CHILD_LENGTH_UPPER_SANITY_LIMIT = 3000;
+var STRING_CHILD_LENGTH_UPPER_SANITY_LIMIT = 6000;
 
 function testParsedTree(tree: TreeNode<string>) {
   testAnyTree(tree);
