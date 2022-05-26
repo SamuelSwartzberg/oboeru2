@@ -9,6 +9,7 @@ import { applyEventHandlers } from "./dom-event-manipulators";
 import { setActiveGroups } from "./group-activation";
 import { decoratePostBuild } from "./post-build";
 import log from "loglevel";
+import { deleteAllChildren } from "./globals/dom-util";
 
 window.setTimeout(() => {
   const rawContentContainer = document.getElementById("raw-content");
@@ -37,13 +38,11 @@ window.setTimeout(() => {
   decoratePostBuild(parsedContainer.content);
   applyEventHandlers(parsedContainer.content);
 
-  let ankiContainer = document.getElementById("qa");
-  if (!ankiContainer) throw new Error("No anki container.");
+  let contentContainer = document.getElementById("content-container");
+  if (!contentContainer) throw new Error("No content container.");
 
-  let futureContentContainer = document.getElementsByClassName("container")[0];
-  if (futureContentContainer && isFront())
-    ankiContainer.removeChild(futureContentContainer);
-  ankiContainer.appendChild(parsedContainer.content);
+  deleteAllChildren(contentContainer);
+  contentContainer.appendChild(parsedContainer.content);
 
   let numberIntervalsRemaining = 5;
   let interval = window.setInterval(() => {
