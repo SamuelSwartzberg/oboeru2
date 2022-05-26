@@ -54,7 +54,10 @@ export function scrollClozeIntoView(): void {
 export function getTags(rawTags: string): string {
   const newTagContents = rawTags
     .split("::")
-    .map((tagElement: string) => tagElement.replace(/-/g, " "))
+    .map(
+      (tagElement: string) =>
+        `<span class="tag-element">${tagElement.replace(/-/g, " ")}</span>`
+    )
     .join('<span class="breadcrumb-separator"> / </span>');
   return newTagContents;
 }

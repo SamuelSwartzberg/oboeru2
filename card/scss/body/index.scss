@@ -1,0 +1,5 @@
+#tag-container {
+  & > .tag-element:last-child {
+    display: none;
+  }
+}
