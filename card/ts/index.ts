@@ -41,7 +41,7 @@ window.setTimeout(() => {
   let contentContainer = document.getElementById("content-container");
   if (!contentContainer) throw new Error("No content container.");
 
-  deleteAllChildren(contentContainer);
+  deleteAllChildren(contentContainer); // clear previous content, which can persist in certain circumstances
   contentContainer.appendChild(parsedContainer.content);
 
   let numberIntervalsRemaining = 5;
