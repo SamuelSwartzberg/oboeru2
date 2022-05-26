@@ -11,6 +11,7 @@ export function setActiveGroups(templateTree: DocumentFragment): void {
   });
 
   templateTree.querySelectorAll(".group-active").forEach((activeGroup) => {
+    if (activeGroup instanceof HTMLDetailsElement) activeGroup.open = true;
     let childrenWhichArePotentialTargets = activeGroup.querySelectorAll(
       ".is-cloze-scramble-or-hide"
     );
