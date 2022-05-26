@@ -1,3 +1,10 @@
+#content-container {
+  margin: 100vh 2em 100vh 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
 #tag-container {
   & > .tag-element:last-child {
     display: none;

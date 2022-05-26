@@ -9,7 +9,6 @@ body {
     "Helvetica Neue", Arial, sans-serif, "Noto Color Emoji", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol";
   line-height: 1.2;
-  margin: 100vh 2em 100vh 1em;
   --color-lightest: #0000000a;
   --color-light: #00000011;
   --color-lightish: #0000002d;
@@ -24,19 +23,4 @@ code {
 ::-webkit-scrollbar {
   width: 0px;
   background: transparent;
-}
-
-/*
-#content is the label applied to the child of body, but containing the div #qa on ankidroid
-On desktop, #qa is a direct child of body, and on both platforms, #qa  contains the actual html we wrote
-since #qa is broken on android, we need to refer to it with .question or .answer respectively - not anymore
-*/
-
-/* Layouting: Sizing and alignment for the regular elements*/
-body > #qa,
-body > #content {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  min-height: 100vh;
 }
