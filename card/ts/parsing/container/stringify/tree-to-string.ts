@@ -29,9 +29,7 @@ function buildHeader(title: string, isGroupShowHeader: boolean): string {
 }
 
 function buildArticle(header: string, content: string, depth: number): string {
-  return `<details open class="indent-${
-    depth - 1
-  } headered-container cloze-group">
+  return `<details open class="depth-${depth} headered-container cloze-group">
     ${header}
     ${content}
   </details>`;
