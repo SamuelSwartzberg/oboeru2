@@ -7,5 +7,6 @@
 .section {
   margin-block-start: 0.75em;
   margin-block-end: 1.75em;
+  overflow: hidden;
   @include boxlike();
 }

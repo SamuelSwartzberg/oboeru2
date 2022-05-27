@@ -29,11 +29,15 @@ export function parseAsTable(
   const transformedTable = transformToNextStep(
     parsedSpecifierTable,
     transformTableSpecifier,
-    true,
-    isGroupShow ? ["cloze-group", "section"] : ["section"]
+    true
   );
   log.debug("Transforming table to HTML string...");
-  const stringfiedTable = transformToNextStep(transformedTable, stringifyTable);
+  const stringfiedTable = transformToNextStep(
+    transformedTable,
+    stringifyTable,
+    false,
+    isGroupShow ? ["cloze-group", "section"] : ["section"]
+  );
   return stringfiedTable;
 }
 
