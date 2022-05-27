@@ -5,10 +5,7 @@ import { parseTableSpecifier } from "./parse-specifier";
 import { stringifyTable } from "./stringify";
 import { transformTableSpecifier } from "./transform-specifier";
 
-export function parseAsTable(
-  rawHTMLText: string,
-  isGroupShow: boolean
-): string {
+export function parseAsTable(rawHTMLText: string): string {
   log.debug(
     "Transforming HTML string to basic parsed table with specifiers..."
   );
@@ -35,19 +32,17 @@ export function parseAsTable(
   const stringfiedTable = transformToNextStep(
     transformedTable,
     stringifyTable,
-    false,
-    isGroupShow ? ["cloze-group", "section"] : ["section"]
+    false
   );
   return stringfiedTable;
 }
 
 function transformToNextStep<T, U>(
   table: T,
-  callback: (table: T, injectedToplevelClasses: string[]) => U,
-  returnsTable: boolean = false,
-  injectedToplevelClasses: string[] = []
+  callback: (table: T) => U,
+  returnsTable: boolean = false
 ): U {
-  const result = callback(table, injectedToplevelClasses);
+  const result = callback(table);
   log.debug("The result is:");
   if (returnsTable) {
     log.debug(JSON.stringify(result, null, 2));

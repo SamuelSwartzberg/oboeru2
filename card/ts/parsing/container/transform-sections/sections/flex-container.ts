@@ -1,10 +1,5 @@
 import { getClassGroupShow } from "../../../globals";
 
-export function parseAsFlexContainer(
-  rawHTMLText: string,
-  isGroupShow: boolean
-) {
-  return `<div class="flex-container ${getClassGroupShow(
-    isGroupShow
-  )} section">${rawHTMLText}</div>`;
+export function parseAsFlexContainer(rawHTMLText: string) {
+  return `<div class="section-inner section-inner-flex-container">${rawHTMLText}</div>`;
 }

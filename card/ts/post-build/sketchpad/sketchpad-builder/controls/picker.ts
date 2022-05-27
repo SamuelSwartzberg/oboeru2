@@ -35,7 +35,7 @@ function setNew(e: Event) {
 
   const target = e.target;
   if (target instanceof HTMLElement) {
-    const parentSketchpadSection = target.closest(".sketchpad-section");
+    const parentSketchpadSection = target.closest(".section-inner-sketchpad");
     if (parentSketchpadSection instanceof HTMLElement) {
       const [_, type, value] = target.classList[1].match(
         /^.+?-picker__(.+)--(.+)$/

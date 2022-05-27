@@ -7,19 +7,6 @@ import {
 } from "./globals";
 
 export function stringifyTable(
-  table: Table<TransformedSpecifier<InnerSpecifier>>,
-  injectedToplevelClasses: string[] = []
-): string {
-  return buildHTMLElement(
-    "section",
-    {
-      class: injectedToplevelClasses.join(" "),
-    },
-    [buildTable(table)]
-  );
-}
-
-function buildTable(
   table: Table<TransformedSpecifier<InnerSpecifier>>
 ): string {
   const headerRows = table.rows

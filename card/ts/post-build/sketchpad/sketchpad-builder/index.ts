@@ -11,17 +11,23 @@ export function addSketchpad(nearestSection: Element) {
 }
 
 export function buildSketchpad(): HTMLElement {
-  const sketchpadSection = document.createElement("section");
-  sketchpadSection.classList.add("section", "sketchpad-section");
-  sketchpadSection.appendChild(buildSizePicker(sketchpadSection));
-  sketchpadSection.appendChild(buildCanvas());
-  sketchpadSection.appendChild(buildColorPicker(sketchpadSection));
-  return sketchpadSection;
+  const section = document.createElement("section");
+  section.classList.add("section");
+  const sectionInnerSketchpad = document.createElement("div");
+  sectionInnerSketchpad.classList.add(
+    "section-inner",
+    "section-inner-sketchpad"
+  );
+  sectionInnerSketchpad.appendChild(buildSizePicker(sectionInnerSketchpad));
+  sectionInnerSketchpad.appendChild(buildCanvas());
+  sectionInnerSketchpad.appendChild(buildColorPicker(sectionInnerSketchpad));
+  section.appendChild(sectionInnerSketchpad);
+  return section;
 }
 
 export function getClosestSketchpadSection(elem: HTMLElement): HTMLElement {
-  const sketchpadSection = elem.closest(".sketchpad-section");
-  if (!(sketchpadSection && sketchpadSection instanceof HTMLElement))
+  const sectionInnerSketchpad = elem.closest(".section-inner-sketchpad");
+  if (!(sectionInnerSketchpad && sectionInnerSketchpad instanceof HTMLElement))
     throw new Error("no parent sketchpad so cannot proceed");
-  return sketchpadSection;
+  return sectionInnerSketchpad;
 }

@@ -6,10 +6,7 @@ import {
   emitHTMLClosingAllBlockElements,
 } from "./lines/block-elements";
 
-export function stringifySection(
-  section: Section<LineSpecifier>,
-  isGroupShow: boolean
-): string {
+export function stringifySection(section: Section<LineSpecifier>): string {
   const subsectionbody = section.subsections
     .map((subsection) => {
       const lines: string[] = [];
@@ -27,18 +24,13 @@ export function stringifySection(
       return subsectionbody;
     })
     .join("\n");
-  const sectionbody = stringifySectionOnly(subsectionbody, isGroupShow);
+  const sectionbody = stringifySectionOnly(subsectionbody);
   return sectionbody;
 }
 
 function stringifySubsection(linebody: string): string {
   return `<section class="sub-section">\n${linebody}\n</section>`;
 }
-function stringifySectionOnly(
-  subsectionbody: string,
-  isGroupShow: boolean
-): string {
-  return `<section class="${getClassGroupShow(
-    isGroupShow
-  )} section text-section">${subsectionbody}</section>`;
+function stringifySectionOnly(subsectionbody: string): string {
+  return `<div class="section-inner section-inner-text">${subsectionbody}</div>`;
 }

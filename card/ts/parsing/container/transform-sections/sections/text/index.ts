@@ -4,10 +4,7 @@ import { stringifySection } from "./stringify";
 import { transformTextSection } from "./transform";
 import { Section } from "./types";
 
-export function parseAsTextSection(
-  rawHTMLText: string,
-  isGroupShow: boolean
-): string {
+export function parseAsTextSection(rawHTMLText: string): string {
   log.debug("Transforming HTML string to parsed text section...");
   log.debug("The raw HTML string is:");
   log.debug(rawHTMLText);
@@ -19,7 +16,7 @@ export function parseAsTextSection(
   const transformedTextSection = transformTextSection(parsedTextSection);
   log.debug("Transformed text section:");
   log.debug(transformedTextSection);
-  const finalString = stringifySection(transformedTextSection, isGroupShow);
+  const finalString = stringifySection(transformedTextSection);
   log.debug("Final string:");
   log.debug(finalString);
   return finalString;
