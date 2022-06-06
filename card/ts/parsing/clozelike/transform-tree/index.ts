@@ -181,7 +181,7 @@ function testForMissingClozeNumbers(
   let previousSortedClozeNumber = 0;
   for (const sortedClozeNumber of sortedClozeNumbers) {
     if (sortedClozeNumber !== previousSortedClozeNumber + 1)
-      log.error(
+      log.warn(
         `There is a gap in the cloze numbers. The cloze number ${sortedClozeNumber} is the next-largest after ${previousSortedClozeNumber}.`
       );
     previousSortedClozeNumber = sortedClozeNumber;
