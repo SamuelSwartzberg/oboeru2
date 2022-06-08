@@ -1,7 +1,7 @@
 import { parseCard } from "./parsing";
 import { getTags } from "./anki-card";
 
-export function makeCard({
+export function makeTextContent({
   rawTags,
   rawContent,
 }: {
