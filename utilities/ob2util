@@ -12,9 +12,16 @@ function add-numbers(){
   ask "Copy the version with nums to the clipboard?" && echo "$with_nums" | pbcopy
 }
 
+function build-view(){
+  ts-node "$SCRIPT_DIR/build-view.ts"
+}
+
 case $subcommand in
   [aA][nN]|add-numbers) 
     add-numbers
+    ;;
+  [bB][vV]|build-view)
+    build-view
     ;;
   *)
     echo "Usage: ob2util <subcommand>"
