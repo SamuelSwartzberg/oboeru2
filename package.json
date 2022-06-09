@@ -17,7 +17,7 @@
     "build-utils": "(cd utilities && tsc)",
     "build-tools": "(cd tools && ts-node index.ts)",
     "build-anki": "npx webpack && sass card/scss/index.scss > dist/card/_bundle.css",
-    "postbuild": "[[ -z \"$ANKI_COLLECTION_MEDIA\" ]] && exit 1; cp dist/card/* \"$ANKI_COLLECTION_MEDIA\""
+    "postbuild": "./postbuild.sh"
   },
   "dependencies": {
     "@types/webpack-env": "^1.16.3",
