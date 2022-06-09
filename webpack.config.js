@@ -1,7 +1,10 @@
 const path = require("path");
 
 module.exports = {
-  entry: "./card/ts/index.ts",
+  entry: {
+    anki: "./card/ts/anki-index.ts",
+    web: "./card/ts/web-index.ts",
+  },
   module: {
     rules: [
       {
@@ -19,7 +22,7 @@ module.exports = {
     extensions: [".tsx", ".ts", ".js"],
   },
   output: {
-    filename: "_bundle.js",
+    filename: "[name]_bundle.js",
     path: path.resolve(__dirname, "dist/card"),
   },
   mode: "production",

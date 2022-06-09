@@ -1,4 +1,5 @@
 import fs from "fs";
+import { makeTextContent } from "../ts/make-text-content";
 
 // read the json file at MDECK/deck.json
 let deckfile = "";
@@ -28,10 +29,8 @@ if (deckfileAsJson.notes && Array.isArray(deckfileAsJson.notes)) {
 // for each entry in the notes array
 // we take the first entry of the fields array
 // we replace '\n' with actual newlines
-// we call the main function to build the view
 // we create a key in a nested object according to the value of the tags field, where we nest more deeply for every :: in the tags field
 // e.g. foo::bar::baz becomes { foo: { bar: { baz: { content: ... } } } }
-// we save the returned html in the nested object
 
 type RecursiveObject = { [k: string]: RecursiveObject | string };
 
@@ -59,10 +58,6 @@ function addToViews(tags: string[], transformedContent: string) {
   }
 }
 
-function buildView(entryContent: string): string {
-  throw new Error("Function not implemented.");
-}
-
 for (let noteEntry of notes) {
   if (
     noteEntry.fields &&
@@ -71,11 +66,17 @@ for (let noteEntry of notes) {
     typeof noteEntry.tags === "string"
   ) {
     let entryContent = noteEntry.fields[0].replace(/\\n/g, "\n");
-    let transformedContent = buildView(entryContent);
     let tags = noteEntry.tags.split(/::/);
-    addToViews(tags, transformedContent);
+    addToViews(tags, entryContent);
   } else {
     console.log("Note entry is not valid");
     process.exit(1);
   }
 }
+
+export default views;
+
+/*makeTextContent({
+      rawTags: noteEntry.tags,
+      rawContent: entryContent,
+    });*/
