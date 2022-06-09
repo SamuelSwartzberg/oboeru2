@@ -15,11 +15,10 @@
 
 .is-back .line.cloze-group.group-active {
   position: relative;
-  width: 100%;
+  width: calc(100% + 1.7em);
   background-color: var(--color-lightest);
   margin-left: -0.85em;
   padding-left: 0.85em;
-  padding-right: 0.85em;
   &::after {
     position: absolute;
     top: 0;
