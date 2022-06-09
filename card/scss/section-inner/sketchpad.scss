@@ -1,4 +1,4 @@
-.section-inner-sketchpad {
+.section-inner .section-inner-sketchpad {
   height: 30vh;
   overflow: hidden;
   background-repeat: no-repeat;
@@ -27,34 +27,37 @@
     }
   }
   .size-picker {
+    --bubble-size: 2em;
     display: flex;
     position: absolute;
     right: 1em;
     top: 1em;
-    width: 3em;
+    width: var(--bubble-size);
     height: 100%;
     flex-flow: column nowrap;
     z-index: 1;
-  }
 
-  .size-picker__size {
-    height: 3em;
-    margin-bottom: 1em;
-    box-sizing: border-box;
-    background-color: black;
-    background-clip: content-box;
-    border-radius: 1.5em;
-  }
+    .size-picker__size {
+      height: var(--bubble-size);
+      margin-bottom: 1em;
+      box-sizing: border-box;
+      background-color: black;
+      background-clip: content-box;
+      border-radius: 1.5em;
+    }
 
-  $sizes: (
-    small: 0.5em,
-    medium: 1em,
-    large: 1.5em,
-  );
+    $sizes: (
+      small: 0.5em,
+      medium: 0.75em,
+      large: 1em,
+    );
 
-  @each $key, $val in $sizes {
-    .size-picker__size--#{$key} {
-      padding: 1.5em - $val;
+    @each $key, $val in $sizes {
+      .size-picker__size--#{$key} {
+        --padding: 1em - $val;
+        padding: var(--padding);
+        margin-bottom: calc(1em - var (--padding));
+      }
     }
   }
 }
