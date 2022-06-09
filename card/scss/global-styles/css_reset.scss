@@ -1,18 +1,8 @@
-/*Reset Anki-specific behaviors*/
-body {
-  overflow-wrap: break-word;
-  overflow-anchor: none;
-}
-img {
-  max-width: 100% !important;
-  max-height: 100% !important;
-}
-
-body font {
+font {
   color: unset;
 }
 
-:root button {
+button {
   font: inherit;
   color: inherit;
 }

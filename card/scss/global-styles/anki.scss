@@ -16,3 +16,20 @@ body.nightMode.card {
 .MJXc-display {
   margin: 0 !important;
 }
+
+body {
+  margin: 0;
+  overflow-wrap: break-word;
+  overflow-anchor: none;
+}
+
+body,
+#qa {
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+}
