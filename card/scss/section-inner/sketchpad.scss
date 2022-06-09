@@ -1,4 +1,4 @@
-.section-inner .section-inner-sketchpad {
+.section-inner.section-inner-sketchpad {
   height: 30vh;
   overflow: hidden;
   background-repeat: no-repeat;
@@ -43,20 +43,19 @@
       box-sizing: border-box;
       background-color: black;
       background-clip: content-box;
-      border-radius: 1.5em;
+      border-radius: 1em;
     }
 
     $sizes: (
-      small: 0.5em,
-      medium: 0.75em,
+      small: 0.6em,
+      medium: 0.8em,
       large: 1em,
     );
 
     @each $key, $val in $sizes {
       .size-picker__size--#{$key} {
-        --padding: 1em - $val;
-        padding: var(--padding);
-        margin-bottom: calc(1em - var (--padding));
+        padding: 1em - $val;
+        margin-bottom: $val;
       }
     }
   }
