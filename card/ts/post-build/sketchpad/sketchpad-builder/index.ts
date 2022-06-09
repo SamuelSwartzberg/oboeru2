@@ -7,7 +7,10 @@ export function addSketchpad(nearestSection: Element) {
     throw new Error(
       "section we wanted to add the sketchpad to doesn't have a parent, which is odd."
     );
-  nearestSection.parentElement.appendChild(buildSketchpad());
+  nearestSection.parentElement.insertBefore(
+    buildSketchpad(),
+    nearestSection.nextSibling
+  );
 }
 
 export function buildSketchpad(): HTMLElement {
