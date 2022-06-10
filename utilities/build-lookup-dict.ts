@@ -1,5 +1,4 @@
 import fs from "fs";
-import { makeTextContent } from "../ts/make-text-content";
 
 // read the json file at MDECK/deck.json
 let deckfile = "";
@@ -63,10 +62,12 @@ for (let noteEntry of notes) {
     noteEntry.fields &&
     typeof noteEntry.fields[0] === "string" &&
     noteEntry.tags &&
-    typeof noteEntry.tags === "string"
+    typeof noteEntry.tags[0] === "string"
   ) {
-    let entryContent = noteEntry.fields[0].replace(/\\n/g, "\n");
-    let tags = noteEntry.tags.split(/::/);
+    let entryContent = noteEntry.fields[0];
+    let tags = noteEntry.tags[0].split(/::/);
+    console.log(tags);
+
     addToViews(tags, entryContent);
   } else {
     console.log("Note entry is not valid");
@@ -74,9 +75,10 @@ for (let noteEntry of notes) {
   }
 }
 
-export default views;
+let viewsAsString = "var lookupDict = " + JSON.stringify(views, null, 2);
 
-/*makeTextContent({
-      rawTags: noteEntry.tags,
-      rawContent: entryContent,
-    });*/
+fs.writeFileSync(
+  process.env.MFLASHCARDS + "/serve/lookup_dict.js",
+  viewsAsString,
+  "utf8"
+);

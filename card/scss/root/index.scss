@@ -3,7 +3,6 @@
 @import "desktop_only.scss";
 
 #true-root-container {
-  box-sizing: border-box;
   @include font-size-retrievable(1rem);
 
   line-height: 1.2;
