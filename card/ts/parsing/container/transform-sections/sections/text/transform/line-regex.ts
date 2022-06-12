@@ -6,7 +6,7 @@ var indicatorCharacters: [string, string][] = [
   ["blockquote", "＞ "],
   ["listOrdered", "\\d+\\. "],
   ["listUnordered", "- "],
-  ["small", "^"],
+  ["small", "\\^"],
   ["groupShow", "!"],
 ];
 
