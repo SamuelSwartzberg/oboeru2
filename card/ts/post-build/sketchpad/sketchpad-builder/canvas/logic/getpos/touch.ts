@@ -6,6 +6,6 @@ export function getTouchPos(e: TouchEvent): Point {
     var touch = e.touches[0]; // Get the information for finger #1
     let touchX = touch.pageX - (touch.target as HTMLElement).offsetLeft;
     let touchY = touch.pageY - (touch.target as HTMLElement).offsetTop;
-    return { x: touchX, y: touchY };
+    return { x: Math.round(touchX), y: Math.round(touchY) };
   } else return { x: 0, y: 0 };
 }

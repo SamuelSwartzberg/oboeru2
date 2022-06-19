@@ -11,6 +11,7 @@ export function addSketchpad(nearestSection: Element) {
     buildSketchpad(),
     nearestSection.nextSibling
   );
+  document.body.dataset.mouseDown = "false";
 }
 
 export function buildSketchpad(): HTMLElement {

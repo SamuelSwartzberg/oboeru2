@@ -32,6 +32,7 @@ function createLine(
   e: MouseEvent | TouchEvent,
   closestElements: ClosestElements
 ) {
+  log.debug("drawing line");
   const end = getPos(e);
   const start = getLastPos(closestElements.sketchpadSection) || end;
   const line: Line = {
@@ -56,18 +57,16 @@ export function start(e: MouseEvent | TouchEvent) {
   log.debug("start");
   const closestElements = getClosestElements(e.target as HTMLElement);
   setLastPos(closestElements.sketchpadSection, getPos(e));
+  if (closestElements.sketchpadSection.dataset.dirty !== "true") {
+    initializeCanvas(closestElements.canvas);
+    closestElements.sketchpadSection.dataset.dirty = "true";
+  }
   if (e instanceof MouseEvent) setMouseDown(true);
 }
 
 export function move(e: MouseEvent | TouchEvent) {
   log.debug("move");
   const closestElements = getClosestElements(e.target as HTMLElement);
-
-  if (closestElements.sketchpadSection.dataset.dirty !== "true") {
-    initializeCanvas(closestElements.canvas);
-    setMouseDown(true);
-    closestElements.sketchpadSection.dataset.dirty = "true";
-  }
 
   if (e instanceof TouchEvent || isMouseDown()) createLine(e, closestElements);
   saveSketchpad(closestElements.ctx.canvas.toDataURL());

@@ -6,6 +6,6 @@ export function saveSketchpad(value: string) {
     saveFrontToBack("sketchpad", value);
   }
 }
-export function loadSketchpad() {
-  loadFromFront("sketchpad", true);
+export function loadSketchpad(): string {
+  return loadFromFront("sketchpad", true);
 }
