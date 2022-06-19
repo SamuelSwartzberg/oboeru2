@@ -1,7 +1,8 @@
+import { Point } from "../drawing";
 import { getMousePos } from "./mouse";
 import { getTouchPos } from "./touch";
 
-export function getPos(e: MouseEvent | TouchEvent): [number, number] {
+export function getPos(e: MouseEvent | TouchEvent): Point {
   if (e instanceof MouseEvent) {
     return getMousePos(e);
   } else if (e instanceof TouchEvent) {

@@ -1,14 +1,11 @@
 import { end, move, start } from "./logic/startendmove";
 
-export function addEvents(
-  canvas: HTMLCanvasElement,
-  ctx: CanvasRenderingContext2D
-) {
-  canvas.addEventListener("mousedown", start(ctx), false);
-  window.addEventListener("mouseup", end(ctx), false);
-  canvas.addEventListener("mousemove", move(ctx), false);
+export function addEvents(canvas: HTMLCanvasElement) {
+  canvas.addEventListener("mousedown", start, false);
+  window.addEventListener("mouseup", end, false);
+  canvas.addEventListener("mousemove", move, false);
   // React to touch events on the canvas
-  canvas.addEventListener("touchstart", start(ctx), false);
-  window.addEventListener("touchend", end(ctx), false);
-  canvas.addEventListener("touchmove", move(ctx), false);
+  canvas.addEventListener("touchstart", start, false);
+  window.addEventListener("touchend", end, false);
+  canvas.addEventListener("touchmove", move, false);
 }

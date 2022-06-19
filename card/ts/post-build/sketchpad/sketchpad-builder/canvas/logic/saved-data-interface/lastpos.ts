@@ -1,4 +1,4 @@
-import { Point } from "./drawing";
+import { Point } from "../drawing";
 
 export function setLastPos(sketchpadSection: HTMLElement, coords: Point) {
   sketchpadSection.dataset.lastX = coords.x.toString();

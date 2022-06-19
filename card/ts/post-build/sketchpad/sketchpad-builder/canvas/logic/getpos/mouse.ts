@@ -1,4 +1,6 @@
-export function getMousePos(e: MouseEvent): [number, number] {
+import { Point } from "../drawing";
+
+export function getMousePos(e: MouseEvent): Point {
   let [mouseX, mouseY] = [0, 0];
   if (e.offsetX) {
     mouseX = e.offsetX;
@@ -7,5 +9,5 @@ export function getMousePos(e: MouseEvent): [number, number] {
     mouseX = e.layerX;
     mouseY = e.layerY;
       } */
-  return [mouseX, mouseY];
+  return { x: mouseX, y: mouseY };
 }
