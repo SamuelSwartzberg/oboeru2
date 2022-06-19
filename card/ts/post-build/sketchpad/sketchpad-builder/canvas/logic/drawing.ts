@@ -15,7 +15,8 @@ export function drawLine(
   line: Line,
   sizeAndColor: SizeAndColor
 ) {
-  [ctx.lineWidth, ctx.strokeStyle] = [sizeAndColor.size, sizeAndColor.color];
+  ctx.lineWidth = sizeAndColor.size;
+  ctx.strokeStyle = sizeAndColor.color;
   ctx.lineCap = "round";
   ctx.lineJoin = "round";
   ctx.beginPath();
