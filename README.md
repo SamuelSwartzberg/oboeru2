@@ -2,6 +2,14 @@
 
 Oboeru is a card model for the spaced repetition app Anki. Oboeru allows you to write notes like you would write a summary of a topic, and turn this into a highly structured, functional set of flashcards that respect laws of good flashcard design.
 
+## Getting Started
+
+0. install Anki
+1. install the model (see [Installation](#installation))
+2. if unfamiliar with flashcards, read the [20 rules](https://www.supermemo.com/en/archives1990-2015/articles/20rules)
+3. read the documentation below
+4. get some sample cards and grok how the system works
+
 ## Design
 
 Oboeru has a few overriding design goals:
