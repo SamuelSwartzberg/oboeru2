@@ -9,6 +9,7 @@ import {
 import { getPos } from "./getpos";
 import { drawLine, Line, Point } from "./drawing";
 import { getSizeAndColor } from "./saved-data-interface/size-and-color";
+import { isMouseDown, setMouseDown } from "./saved-data-interface/mousedown";
 
 interface ClosestElements {
   canvas: HTMLCanvasElement;
@@ -54,9 +55,8 @@ function initializeCanvas(canvas: HTMLCanvasElement) {
 export function start(e: MouseEvent | TouchEvent) {
   log.debug("start");
   const closestElements = getClosestElements(e.target as HTMLElement);
-  if (e instanceof MouseEvent)
-    closestElements.sketchpadSection.dataset.mousedown = "true";
-  createLine(e, closestElements);
+  setLastPos(closestElements.sketchpadSection, getPos(e));
+  if (e instanceof MouseEvent) setMouseDown(true);
 }
 
 export function move(e: MouseEvent | TouchEvent) {
@@ -65,24 +65,16 @@ export function move(e: MouseEvent | TouchEvent) {
 
   if (closestElements.sketchpadSection.dataset.dirty !== "true") {
     initializeCanvas(closestElements.canvas);
-    closestElements.sketchpadSection.dataset.mousedown = "false";
+    setMouseDown(true);
     closestElements.sketchpadSection.dataset.dirty = "true";
   }
 
-  if (
-    e instanceof TouchEvent ||
-    closestElements.sketchpadSection.dataset.mousedown === "true"
-  )
-    createLine(e, closestElements);
+  if (e instanceof TouchEvent || isMouseDown()) createLine(e, closestElements);
+  saveSketchpad(closestElements.ctx.canvas.toDataURL());
   return true;
 }
 
 export function end(e: MouseEvent | TouchEvent) {
   log.debug("end");
-  const closestElements = getClosestElements(e.target as HTMLElement);
-  unsetLastPos(closestElements.sketchpadSection);
-  if (e instanceof MouseEvent)
-    closestElements.sketchpadSection.dataset.mousedown = "false";
-  saveSketchpad(closestElements.ctx.canvas.toDataURL());
-  return true;
+  if (e instanceof MouseEvent) setMouseDown(false);
 }

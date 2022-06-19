@@ -1,7 +1,10 @@
 import { loadFromFront, saveFrontToBack } from "../../../front-back-io";
+import { isReady } from "../../../globals/optimizers";
 
 export function saveSketchpad(value: string) {
-  saveFrontToBack("sketchpad", value);
+  if (isReady("sketchpad", 100)) {
+    saveFrontToBack("sketchpad", value);
+  }
 }
 export function loadSketchpad() {
   loadFromFront("sketchpad", true);
