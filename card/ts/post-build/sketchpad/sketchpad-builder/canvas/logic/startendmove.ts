@@ -1,10 +1,14 @@
 import log from "loglevel";
-import { getClosestSketchpadSection } from "..";
-import { saveSketchpad } from "../front-back-io";
-import { Stroke } from "../stroke";
-import { getLastPos, setLastPos, unsetLastPos } from "./lastpos";
-import { getMousePos } from "./mouse";
-import { getTouchPos } from "./touch";
+import { getClosestSketchpadSection } from "../..";
+import { saveSketchpad } from "../../front-back-io";
+import {
+  getLastPos,
+  setLastPos,
+  unsetLastPos,
+} from "./saved-data-interface/lastpos";
+import { getPos } from "./getpos";
+import { drawLine, Line, Point } from "./drawing";
+import { getSizeAndColor } from "./saved-data-interface/size-and-color";
 
 export function getClosestSketchpadSectionFromContext(
   ctx: CanvasRenderingContext2D
@@ -12,34 +16,17 @@ export function getClosestSketchpadSectionFromContext(
   return getClosestSketchpadSection(ctx.canvas);
 }
 
-function getSizeAndColor(sketchpadSection: HTMLElement): [number, string] {
-  if (!(sketchpadSection.dataset.color && sketchpadSection.dataset.size))
-    throw new Error("no color or size so cannot proceed");
-  let [rawSize, rawColor] = [
-    sketchpadSection.dataset.size,
-    sketchpadSection.dataset.color,
-  ];
-  let [strokeSize, strokeColor] = [
-    Stroke.getSizeValue(rawSize),
-    Stroke.getColorValue(rawColor),
-  ];
-  return [strokeSize, strokeColor];
-}
-
 // Draws a line between the specified position on the supplied canvas name
 // Parameters are: A canvas context, the x position, the y position, the size of the dot
-function drawLine(ctx: CanvasRenderingContext2D, x: number, y: number) {
+function createLine(ctx: CanvasRenderingContext2D, end: Point) {
   const sketchpadSection = getClosestSketchpadSectionFromContext(ctx);
-  const [lastX, lastY] = getLastPos(sketchpadSection) || [x, y];
-  [ctx.lineWidth, ctx.strokeStyle] = getSizeAndColor(sketchpadSection);
-  ctx.lineCap = "round";
-  ctx.lineJoin = "round";
-  ctx.beginPath();
-  ctx.moveTo(lastX, lastY);
-  ctx.lineTo(x, y);
-  ctx.stroke();
-  ctx.closePath();
-  setLastPos(sketchpadSection, [x, y]);
+  const start = getLastPos(sketchpadSection) || end;
+  const line: Line = {
+    start,
+    end,
+  };
+  drawLine(ctx, line, getSizeAndColor(sketchpadSection));
+  setLastPos(sketchpadSection, end);
 }
 
 function initializeCanvas(canvas: HTMLCanvasElement) {
@@ -53,6 +40,7 @@ export function start(ctx: CanvasRenderingContext2D) {
 
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "true";
     drawFunction(ctx, e);
+    return true;
   };
 }
 
@@ -73,6 +61,7 @@ export function move(ctx: CanvasRenderingContext2D) {
       sketchpadSection.dataset.mousedown === "true"
     )
       drawFunction(ctx, e);
+    return true;
   };
 }
 
@@ -83,6 +72,7 @@ export function end(ctx: CanvasRenderingContext2D) {
     unsetLastPos(sketchpadSection);
     if (e instanceof MouseEvent) sketchpadSection.dataset.mousedown = "false";
     saveSketchpad(ctx.canvas.toDataURL());
+    return true;
   };
 }
 
@@ -90,12 +80,7 @@ function drawFunction(
   ctx: CanvasRenderingContext2D,
   e: MouseEvent | TouchEvent
 ) {
-  let [posX, posY] = [0, 0];
-  if (e instanceof MouseEvent) {
-    [posX, posY] = getMousePos(e);
-  } else if (e instanceof TouchEvent) {
-    [posX, posY] = getTouchPos(e);
-  }
-  drawLine(ctx, posX, posY);
-  e.preventDefault();
+  let [posX, posY] = getPos(e);
+  createLine(ctx, { x: posX, y: posY });
+  if (e.cancelable) e.preventDefault();
 }

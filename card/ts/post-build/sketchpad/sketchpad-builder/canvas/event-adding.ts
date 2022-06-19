@@ -1,4 +1,4 @@
-import { end, move, start } from "./startendmove";
+import { end, move, start } from "./logic/startendmove";
 
 export function addEvents(
   canvas: HTMLCanvasElement,
@@ -9,6 +9,6 @@ export function addEvents(
   canvas.addEventListener("mousemove", move(ctx), false);
   // React to touch events on the canvas
   canvas.addEventListener("touchstart", start(ctx), false);
-  canvas.addEventListener("touchend", end(ctx), false);
+  window.addEventListener("touchend", end(ctx), false);
   canvas.addEventListener("touchmove", move(ctx), false);
 }
