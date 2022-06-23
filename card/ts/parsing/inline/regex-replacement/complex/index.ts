@@ -1,12 +1,31 @@
 import log from "loglevel";
 import { RegexAndReplacement } from "..";
+import { matchNotEscaped, matchUntil } from "../../../../globals/regex";
 import { buildRegexFromDelimiters } from "../regex-builder";
 import { StartEnd } from "../simple/replacement-mapping";
 import { keyReplacementFunction } from "./key";
 
+function buildRubyRegexMatchPart(): RegExp {
+  const rubyDelimiters = {
+    start: "　",
+    kana: {
+      start: "（",
+      end: "）",
+    },
+  };
+  return new RegExp(
+    matchNotEscaped(rubyDelimiters.start) +
+      matchUntil(rubyDelimiters.kana.start) +
+      matchNotEscaped(rubyDelimiters.kana.start) +
+      matchUntil(rubyDelimiters.kana.end) +
+      matchNotEscaped(rubyDelimiters.kana.end),
+    "g"
+  );
+}
+
 function buildRubyRegex(): RegexAndReplacement {
   return [
-    /(?<!\\)　(?<!\\)([^（]+)（([^）]+)(?<!\\)/g,
+    buildRubyRegexMatchPart(),
     function replacements(_, rubyBottom: string, rubyTop: string): string {
       return `<ruby>${rubyBottom}<rp>（</rp><rt>${rubyTop}</rt><rp>）</rp></ruby>`;
     },

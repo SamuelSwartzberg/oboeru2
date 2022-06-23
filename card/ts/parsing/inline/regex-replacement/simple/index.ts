@@ -3,8 +3,8 @@ import { RegexAndReplacement } from "..";
 import {
   buildRegexFromDelimiter,
   buildReplacementsFromReplacementDelimiters,
-  unescapedDelimiter,
 } from "../regex-builder";
+import { matchNotEscaped } from "../../../../globals/regex";
 import {
   ElementReplacement,
   ElementReplacementDelimitersSE,
@@ -66,11 +66,11 @@ function buildTwoRegexesFromMappingElement(
     log.debug("Both delimiters and replacements are StartEnd.");
     return [
       [
-        new RegExp(unescapedDelimiter(element.delimiters.start), "g"),
+        new RegExp(matchNotEscaped(element.delimiters.start), "g"),
         element.replacements.start,
       ],
       [
-        new RegExp(unescapedDelimiter(element.delimiters.end), "g"),
+        new RegExp(matchNotEscaped(element.delimiters.end), "g"),
         element.replacements.end,
       ],
     ];
@@ -93,7 +93,7 @@ function buildOneRegexFromMappingElement(
     // is string
     log.debug("Both delimiters and replacements are strings.");
     regexAndReplacements = [
-      new RegExp(unescapedDelimiter(element.delimiters), "g"),
+      new RegExp(matchNotEscaped(element.delimiters), "g"),
       element.replacements,
     ];
   }

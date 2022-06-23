@@ -1,9 +1,7 @@
 import log from "loglevel";
+import { matchNotEscaped } from "../../../globals/regex";
 import { StartEnd } from "./simple/replacement-mapping";
 
-export function unescapedDelimiter(delimiter: string): string {
-  return `(?<!\\\\)${delimiter}`;
-}
 function captureNot(delimiter: string): string {
   return `([^${delimiter}]+?)`;
 }
@@ -11,9 +9,9 @@ function captureNot(delimiter: string): string {
 export function buildRegexFromDelimiters(delimiter: StartEnd): RegExp {
   log.debug(`Building regex from delimiters ${JSON.stringify(delimiter)}`);
   const regexContents =
-    unescapedDelimiter(delimiter.start) +
+    matchNotEscaped(delimiter.start) +
     captureNot(delimiter.end) +
-    unescapedDelimiter(delimiter.end);
+    matchNotEscaped(delimiter.end);
   const regex = new RegExp(regexContents, "g");
   log.debug(`Built regex ${regex}`);
   return regex;
