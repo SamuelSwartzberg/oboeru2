@@ -46,9 +46,16 @@ export function scrollClozeIntoView(): void {
   if (!firstActiveCloze) throw new Error("no active cloze in document");
   log.debug(`Aquired ${firstActiveCloze.outerHTML} for scrolling into view.`);
   firstActiveCloze.scrollIntoView(false);
-  const distanceToBottom =
-    window.innerHeight - firstActiveCloze.getBoundingClientRect().bottom;
-  window.scrollBy(0, window.innerHeight / 2 - distanceToBottom);
+  window.scrollBy(
+    0,
+    firstActiveCloze.getBoundingClientRect().bottom - window.innerHeight / 2
+  );
+  firstActiveCloze
+    .closest(".section")
+    ?.scrollBy(
+      firstActiveCloze.getBoundingClientRect().right - window.innerWidth / 2,
+      0
+    );
 }
 
 export function getTags(rawTags: string): string {
