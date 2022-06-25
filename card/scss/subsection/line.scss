@@ -13,21 +13,3 @@
     margin-block-end: 0.5em;
   }
 }
-
-.is-back .line.cloze-group.group-active {
-  $spacing: 0.85em;
-  position: relative;
-  width: calc(100% + 1.7em);
-  background-color: var(--color-lightest);
-  margin-left: -$spacing;
-  padding-left: $spacing;
-  padding-right: $spacing;
-  &::after {
-    position: absolute;
-    top: 0;
-    border-right: 0.15em solid #bfbfbf;
-    content: "";
-    height: 100%;
-    right: 0;
-  }
-}
