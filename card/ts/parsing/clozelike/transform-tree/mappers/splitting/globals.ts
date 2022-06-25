@@ -9,6 +9,7 @@ var approvedActionTargetCharacters = [
   "_",
   "∞",
   ",",
+  ":",
   ...numbers.map((n) => n.toString()),
 ];
 
