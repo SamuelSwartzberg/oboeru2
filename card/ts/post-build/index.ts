@@ -10,8 +10,8 @@ export function decoratePostBuild(templateTree: DocumentFragment): void {
 }
 function addAdditionalClasses(templateTree: DocumentFragment) {
   templateTree
-    .querySelectorAll(".section > .section-inner-table")
+    .querySelectorAll(".section > .wide-table")
     .forEach((sectionInnerTable: Element) => {
-      sectionInnerTable.parentElement?.classList.add("contains-table");
+      sectionInnerTable.parentElement?.classList.add("wide-table");
     });
 }
