@@ -3,5 +3,18 @@
     font-size: 1.1rem;
     margin: 0 auto;
     max-width: 750px;
+    --container-max-width: 100vw;
+  }
+  .section.contains-table {
+    left: 50%;
+    position: relative;
+    transform: translateX(-50%);
+    background-color: whitesmoke;
+    margin-block-start: 1.5em;
+    margin-block-end: 3.5em;
+    box-shadow: #ddd 0 1em 1em;
+    min-width: calc(var(--container-max-width) - 5em);
+    max-width: calc(var(--container-max-width) - 5em);
+    margin-left: -1em;
   }
 }
