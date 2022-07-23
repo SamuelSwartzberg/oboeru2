@@ -16,7 +16,7 @@
     "build": "run-p build-anki",
     "build-utils": "(cd utilities && tsc)",
     "build-tools": "(cd tools && ts-node index.ts)",
-    "build-anki": "npx webpack && sass card/scss/index.scss > dist/card/_bundle.css",
+    "build-anki": "npx webpack && sass card/scss/index.scss > dist/card/bundle.css",
     "postbuild": "./postbuild.sh"
   },
   "dependencies": {
