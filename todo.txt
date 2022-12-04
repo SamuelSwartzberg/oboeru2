@@ -1,0 +1,3 @@
+Make cloze age associated with string contents (can change im db manually if necessary, but default would be strimg change = new card)
+Make clozes implicit in the definition and refer to other term syntax
+
